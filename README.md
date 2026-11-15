@@ -21,6 +21,21 @@ pip install -r requirements.txt
 python main.py
 ```
 
+## Executar no Android (Pydroid 3)
+
+1. Instale o **Pydroid 3** pela Google Play.
+2. Baixe o projeto pelo botão **Code > Download ZIP** no GitHub e extraia a pasta.
+3. No terminal do Pydroid 3, instale a dependência:
+   ```bash
+   pip install pygame
+   ```
+4. Abra o arquivo `main.py` dentro da pasta extraída e toque em **Run**.
+5. Se o Android perguntar sobre rotação automática, permita a orientação que preferir. A interface detecta telas verticais e horizontais e ajusta os controles.
+
+Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. As alternativas e botões foram ampliados para toque.
+
+Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` da pasta principal do projeto e se a pasta `data` está no mesmo nível.
+
 ## Controles
 - Enter: iniciar/reiniciar e enviar resposta numérica
 - Clique: selecionar alternativa, validar resposta e avançar
