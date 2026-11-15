@@ -146,7 +146,8 @@ class EscapeRoom:
         color = COLORS["panel2"] if active else (25, 35, 48)
         pygame.draw.rect(self.screen, color, rect, border_radius=9)
         pygame.draw.rect(self.screen, COLORS["cyan"] if active else COLORS["line"], rect, 2, border_radius=9)
-        self.draw_text(label, rect.centerx, rect.centery, COLORS["white"], self.small, True)
+        button_font = getattr(self, "mobile_small", self.small) if self.screen.get_height() > self.screen.get_width() else self.small
+        self.draw_text(label, rect.centerx, rect.centery, COLORS["white"], button_font, True)
         return rect
 
     def wrap_text(self, text, x, y, max_width, color=None, font=None, line_gap=8):
