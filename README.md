@@ -36,5 +36,4 @@ python main.py
 - Nova partida disponível após vitória ou derrota.
 - Janela redimensionável, com layout que acompanha o tamanho da janela.
 
-## Observações
-Este é um protótipo inicial. A interface e a mecânica principal estão implementadas; música, efeitos sonoros, imagens próprias e animações mais elaboradas devem ser adicionados na etapa de polimento. Revise pedagogicamente o banco de questões antes da entrega final.
+Esperamos que seja um aplicativo útil e bem funcional! Sempre em busca de melhoras.
