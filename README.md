@@ -38,8 +38,9 @@ Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` d
 
 ## Controles
 - Enter: iniciar/reiniciar e enviar resposta numérica
-- Clique: selecionar alternativa, validar resposta e avançar
-- Backspace: apagar caractere da resposta numérica
+- Toque/clique: selecionar alternativa, validar resposta e avançar
+- Teclado integrado na tela vertical: inserir números, vírgula e apagar
+- Backspace: apagar caractere da resposta numérica com teclado físico
 - Esc: sair
 
 ## Regras implementadas
@@ -51,4 +52,6 @@ Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` d
 - Nova partida disponível após vitória ou derrota.
 - Janela redimensionável, com layout que acompanha o tamanho da janela.
 
-Esperamos que seja um aplicativo útil e bem funcional! Sempre em busca de melhoras.
+## Observação sobre a versão Android
+
+A interface responsiva foi adicionada, mas a execução ainda precisa ser validada em diferentes tamanhos de tela e versões do Pydroid 3.
