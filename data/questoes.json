@@ -1,0 +1,672 @@
+[
+  {
+    "id": "F1-01",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 2 opções, a segunda 3 e a terceira 4. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 2 × 3 × 4 = 24."
+  },
+  {
+    "id": "F1-02",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 3 opções, a segunda 2 e a terceira 5. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "30",
+      "33",
+      "60",
+      "29"
+    ],
+    "resposta": 30,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 3 × 2 × 5 = 30."
+  },
+  {
+    "id": "F1-03",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 4 opções, a segunda 3 e a terceira 2. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 4 × 3 × 2 = 24."
+  },
+  {
+    "id": "F1-04",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 2 opções, a segunda 4 e a terceira 5. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "40",
+      "42",
+      "160",
+      "39"
+    ],
+    "resposta": 40,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 2 × 4 × 5 = 40."
+  },
+  {
+    "id": "F1-05",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 3 opções, a segunda 3 e a terceira 4. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 36,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 3 × 3 × 4 = 36."
+  },
+  {
+    "id": "F1-06",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 5 opções, a segunda 2 e a terceira 3. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "30",
+      "35",
+      "60",
+      "29"
+    ],
+    "resposta": 30,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 5 × 2 × 3 = 30."
+  },
+  {
+    "id": "F1-07",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 2 opções, a segunda 5 e a terceira 4. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 40,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 2 × 5 × 4 = 40."
+  },
+  {
+    "id": "F1-08",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 4 opções, a segunda 2 e a terceira 6. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "48",
+      "52",
+      "96",
+      "47"
+    ],
+    "resposta": 48,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 4 × 2 × 6 = 48."
+  },
+  {
+    "id": "F1-09",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 3 opções, a segunda 4 e a terceira 2. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 3 × 4 × 2 = 24."
+  },
+  {
+    "id": "F1-10",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 2 opções, a segunda 3 e a terceira 6. Quantas senhas diferentes podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "36",
+      "38",
+      "108",
+      "35"
+    ],
+    "resposta": 36,
+    "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 2 × 3 × 6 = 36."
+  },
+  {
+    "id": "F2-01",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de ABCD em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "24",
+      "26",
+      "48",
+      "12"
+    ],
+    "resposta": 24,
+    "resolucao": "As 4 letras são distintas: 4! = 4 × 3 × 2 × 1 = 24."
+  },
+  {
+    "id": "F2-02",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de AABB em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 6,
+    "resolucao": "Há 4 letras, com 2 A e 2 B repetidos: 4!/(2! × 2!) = 6."
+  },
+  {
+    "id": "F2-03",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de ABCDE em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "120",
+      "122",
+      "240",
+      "60"
+    ],
+    "resposta": 120,
+    "resolucao": "As 5 letras são distintas: 5! = 120."
+  },
+  {
+    "id": "F2-04",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de AAAB em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 4,
+    "resolucao": "Há 4 letras, com 3 A repetidos: 4!/3! = 4."
+  },
+  {
+    "id": "F2-05",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de ABC em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "6",
+      "8",
+      "12",
+      "3"
+    ],
+    "resposta": 6,
+    "resolucao": "As 3 letras são distintas: 3! = 6."
+  },
+  {
+    "id": "F2-06",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de AABBC em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 30,
+    "resolucao": "Há 5 letras, com 2 A e 2 B repetidos: 5!/(2! × 2!) = 30."
+  },
+  {
+    "id": "F2-07",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de WXYZ em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "24",
+      "26",
+      "48",
+      "12"
+    ],
+    "resposta": 24,
+    "resolucao": "As 4 letras são distintas: 4! = 24."
+  },
+  {
+    "id": "F2-08",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de AAAAB em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 5,
+    "resolucao": "Há 5 letras, com 4 A repetidos: 5!/4! = 5."
+  },
+  {
+    "id": "F2-09",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de PQRS em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "24",
+      "26",
+      "48",
+      "12"
+    ],
+    "resposta": 24,
+    "resolucao": "As 4 letras são distintas: 4! = 24."
+  },
+  {
+    "id": "F2-10",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação simples e com repetição",
+    "enunciado": "O painel precisa exibir todas as letras de AABC em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 12,
+    "resolucao": "Há 4 letras, com 2 A repetidos: 4!/2! = 12."
+  },
+  {
+    "id": "F3-01",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 5 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 2 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 20,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(5,2) = 5!/(5-2)! = 20."
+  },
+  {
+    "id": "F3-02",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 6 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 2 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "30",
+      "36",
+      "60",
+      "28"
+    ],
+    "resposta": 30,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(6,2) = 6!/(6-2)! = 30."
+  },
+  {
+    "id": "F3-03",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 5 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 3 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 60,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(5,3) = 5!/(5-3)! = 60."
+  },
+  {
+    "id": "F3-04",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 7 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 2 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "42",
+      "49",
+      "84",
+      "40"
+    ],
+    "resposta": 42,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(7,2) = 7!/(7-2)! = 42."
+  },
+  {
+    "id": "F3-05",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 6 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 3 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 120,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(6,3) = 6!/(6-3)! = 120."
+  },
+  {
+    "id": "F3-06",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 8 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 2 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "56",
+      "64",
+      "112",
+      "54"
+    ],
+    "resposta": 56,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(8,2) = 8!/(8-2)! = 56."
+  },
+  {
+    "id": "F3-07",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 7 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 3 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 210,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(7,3) = 7!/(7-3)! = 210."
+  },
+  {
+    "id": "F3-08",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 5 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 4 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "120",
+      "125",
+      "240",
+      "116"
+    ],
+    "resposta": 120,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(5,4) = 5!/(5-4)! = 120."
+  },
+  {
+    "id": "F3-09",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 8 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 3 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 336,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(8,3) = 8!/(8-3)! = 336."
+  },
+  {
+    "id": "F3-10",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo simples",
+    "enunciado": "Existem 9 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 2 códigos, sem repetição. Quantas sequências podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "72",
+      "81",
+      "144",
+      "70"
+    ],
+    "resposta": 72,
+    "resolucao": "Como a ordem importa e não há repetição, usamos A(9,2) = 9!/(9-2)! = 72."
+  },
+  {
+    "id": "F4-01",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 5 módulos de dados. Para liberar o acesso, é preciso escolher 2 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "10",
+      "11",
+      "20",
+      "8"
+    ],
+    "resposta": 10,
+    "resolucao": "Como a ordem não importa, usamos C(5,2) = 5!/(2! × (5-2)!) = 10."
+  },
+  {
+    "id": "F4-02",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 6 módulos de dados. Para liberar o acesso, é preciso escolher 2 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 15,
+    "resolucao": "Como a ordem não importa, usamos C(6,2) = 6!/(2! × (6-2)!) = 15."
+  },
+  {
+    "id": "F4-03",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 6 módulos de dados. Para liberar o acesso, é preciso escolher 3 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "20",
+      "21",
+      "40",
+      "17"
+    ],
+    "resposta": 20,
+    "resolucao": "Como a ordem não importa, usamos C(6,3) = 6!/(3! × (6-3)!) = 20."
+  },
+  {
+    "id": "F4-04",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 7 módulos de dados. Para liberar o acesso, é preciso escolher 2 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 21,
+    "resolucao": "Como a ordem não importa, usamos C(7,2) = 7!/(2! × (7-2)!) = 21."
+  },
+  {
+    "id": "F4-05",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 7 módulos de dados. Para liberar o acesso, é preciso escolher 3 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "35",
+      "36",
+      "70",
+      "32"
+    ],
+    "resposta": 35,
+    "resolucao": "Como a ordem não importa, usamos C(7,3) = 7!/(3! × (7-3)!) = 35."
+  },
+  {
+    "id": "F4-06",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 8 módulos de dados. Para liberar o acesso, é preciso escolher 2 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 28,
+    "resolucao": "Como a ordem não importa, usamos C(8,2) = 8!/(2! × (8-2)!) = 28."
+  },
+  {
+    "id": "F4-07",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 8 módulos de dados. Para liberar o acesso, é preciso escolher 3 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "56",
+      "57",
+      "112",
+      "53"
+    ],
+    "resposta": 56,
+    "resolucao": "Como a ordem não importa, usamos C(8,3) = 8!/(3! × (8-3)!) = 56."
+  },
+  {
+    "id": "F4-08",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 9 módulos de dados. Para liberar o acesso, é preciso escolher 2 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 36,
+    "resolucao": "Como a ordem não importa, usamos C(9,2) = 9!/(2! × (9-2)!) = 36."
+  },
+  {
+    "id": "F4-09",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 9 módulos de dados. Para liberar o acesso, é preciso escolher 3 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "84",
+      "85",
+      "168",
+      "81"
+    ],
+    "resposta": 84,
+    "resolucao": "Como a ordem não importa, usamos C(9,3) = 9!/(3! × (9-3)!) = 84."
+  },
+  {
+    "id": "F4-10",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação simples",
+    "enunciado": "O cofre possui 10 módulos de dados. Para liberar o acesso, é preciso escolher 2 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 45,
+    "resolucao": "Como a ordem não importa, usamos C(10,2) = 10!/(2! × (10-2)!) = 45."
+  },
+  {
+    "id": "F5-01",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "Uma senha tem 4 algarismos distintos, escolhidos entre 1, 2, 3, 4 e 5. Quantas senhas começam com 1?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "O primeiro algarismo está fixo. Restam 4 opções para a segunda posição, 3 para a terceira e 2 para a quarta: 4 × 3 × 2 = 24."
+  },
+  {
+    "id": "F5-02",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "De 6 pesquisadores, serão escolhidos 3 para uma equipe. Dois pesquisadores específicos não podem estar juntos. Quantas equipes são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "16",
+      "20",
+      "32",
+      "12"
+    ],
+    "resposta": 16,
+    "resolucao": "Total: C(6,3)=20. Equipes que contêm os dois específicos: escolhemos mais 1 entre os outros 4, total 4. Logo, 20−4=16."
+  },
+  {
+    "id": "F5-03",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "Quantas permutações distintas podem ser formadas com as letras de AABCD se as duas letras A devem ficar juntas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "Considere AA como um bloco. Temos os objetos (AA), B, C e D: 4! = 24."
+  },
+  {
+    "id": "F5-04",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "Uma equipe de 4 pessoas será escolhida entre 7, mas uma pessoa específica deve obrigatoriamente participar. Quantas equipes existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "20",
+      "24",
+      "40",
+      "16"
+    ],
+    "resposta": 20,
+    "resolucao": "A pessoa já está garantida. Escolhemos as outras 3 entre as 6 restantes: C(6,3)=20."
+  },
+  {
+    "id": "F5-05",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "Um código de 3 letras distintas é formado com A, B, C, D e E. A primeira letra deve ser A ou B. Quantos códigos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "Há 2 opções para a primeira posição, 4 para a segunda e 3 para a terceira: 2 × 4 × 3 = 24."
+  },
+  {
+    "id": "F5-06",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "De 8 módulos, serão selecionados 3, mas o módulo X deve estar entre eles. Quantas seleções existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "21",
+      "25",
+      "42",
+      "17"
+    ],
+    "resposta": 21,
+    "resolucao": "X já está escolhido. Selecionamos os outros 2 entre os 7 restantes: C(7,2)=21."
+  },
+  {
+    "id": "F5-07",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "Quantas sequências distintas podem ser formadas com as letras de BANANA?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 60,
+    "resolucao": "BANANA tem 6 letras, com A repetido 3 vezes e N repetido 2 vezes: 6!/(3! × 2!) = 60."
+  },
+  {
+    "id": "F5-08",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "Uma senha tem 3 algarismos distintos de 0 a 5 e não pode começar com zero. Quantas senhas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "100",
+      "104",
+      "200",
+      "96"
+    ],
+    "resposta": 100,
+    "resolucao": "A primeira posição tem 5 opções (1 a 5); a segunda, 5 opções restantes (incluindo zero); a terceira, 4: 5 × 5 × 4 = 100."
+  },
+  {
+    "id": "F5-09",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "De 5 pessoas, serão escolhidas 2 para cargos diferentes: coordenador e relator. Quantas designações são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 20,
+    "resolucao": "Como os cargos são diferentes, a ordem importa: A(5,2)=5×4=20."
+  },
+  {
+    "id": "F5-10",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Restrições e integração",
+    "enunciado": "Uma senha de 4 algarismos distintos será formada com 0, 1, 2, 3, 4 e 5. O primeiro algarismo não pode ser zero e o último deve ser par. Quantas senhas podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 156,
+    "resolucao": "Separe em casos pelo último algarismo. Se terminar em 0: há 5 opções para o primeiro algarismo (1 a 5), depois 4 e 3 opções: 5 × 4 × 3 = 60. Se terminar em 2 ou 4: há 2 opções para o último; para o primeiro há 4 opções não nulas diferentes do último; depois 4 e 3 opções: 2 × 4 × 4 × 3 = 96. Total: 60 + 96 = 156."
+  }
+]
