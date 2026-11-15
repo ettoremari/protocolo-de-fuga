@@ -177,7 +177,7 @@ class EscapeRoom:
             pygame.draw.line(self.screen, (11, 29, 48), (0, y), (w, y), 1)
         pygame.draw.rect(self.screen, COLORS["cyan"], (0, 0, w, 5))
 
-    def render(self):
+    def render_desktop(self):
         w, h = self.screen.get_size()
         self.draw_background(w, h)
         margin = max(20, int(w * .055))
@@ -239,6 +239,196 @@ class EscapeRoom:
             self.draw_text("ENTER para reiniciar  •  ESC para sair", w//2, int(h*.82), COLORS["muted"], self.small, True)
         pygame.display.flip()
 
+
+    def mobile_question_layout(self):
+        w, h = self.screen.get_size()
+        margin = max(16, int(w * 0.045))
+        panel = pygame.Rect(margin, 150, w - 2 * margin, h - 178)
+        content_x = panel.x + 22
+        content_width = panel.width - 44
+        question_y = panel.y + 88
+        return panel, content_x, content_width, question_y
+
+    def render_mobile(self):
+        w, h = self.screen.get_size()
+        margin = max(16, int(w * 0.045))
+        self.mobile_small = pygame.font.SysFont("consolas", max(15, min(20, int(w * .018))))
+        self.mobile_font = pygame.font.SysFont("consolas", max(19, min(25, int(w * .022))))
+        self.mobile_title = pygame.font.SysFont("consolas", max(23, min(31, int(w * .027))), bold=True)
+        self.mobile_big = pygame.font.SysFont("consolas", max(34, min(48, int(w * .043))), bold=True)
+        self.draw_background(w, h)
+
+        if self.state == "start":
+            self.draw_text("INSTALAÇÃO CIENTÍFICA // SETOR 07", margin, int(h * .20), COLORS["cyan"], self.mobile_small)
+            self.draw_text("PROTOCOLO", margin, int(h * .32), COLORS["white"], self.mobile_big)
+            self.draw_text("DE FUGA", margin, int(h * .41), COLORS["cyan"], self.mobile_big)
+            self.wrap_text(
+                "O sistema central bloqueou as cinco áreas de saída. Resolva os desafios de Análise Combinatória e recupere o controle da instalação.",
+                margin, int(h * .54), w - 2 * margin, COLORS["muted"], self.mobile_font, 10
+            )
+            self.button(pygame.Rect(margin, int(h * .76), w - 2 * margin, 64), "INICIAR MISSÃO")
+            self.draw_text("Toque em INICIAR MISSÃO", margin, int(h * .86), COLORS["muted"], self.mobile_small)
+
+        elif self.state in ("playing", "phase_complete"):
+            self.draw_text("PROTOCOLO DE FUGA", margin, 15, COLORS["cyan"], self.mobile_small)
+            self.draw_text(f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}", margin, 45, COLORS["white"], self.mobile_title)
+            stats = f"ACERTOS {self.total_hits}/12   ERROS {self.errors}/{MAX_ERRORS}"
+            self.draw_text(stats, margin, 88, COLORS["muted"], self.mobile_small)
+            time_text = f"TEMPO {self.remaining()//60:02}:{self.remaining()%60:02}"
+            self.draw_text(time_text, w - margin, 88, COLORS["yellow"], self.mobile_small, True)
+            bar = pygame.Rect(margin, 119, w - 2 * margin, 8)
+            pygame.draw.rect(self.screen, COLORS["panel2"], bar, border_radius=4)
+            pygame.draw.rect(self.screen, COLORS["cyan"], (bar.x, bar.y, int(bar.width * self.total_hits / 12), bar.height), border_radius=4)
+            panel, cx, cw, question_y = self.mobile_question_layout()
+            pygame.draw.rect(self.screen, COLORS["panel"], panel, border_radius=14)
+            pygame.draw.rect(self.screen, COLORS["line"], panel, 2, border_radius=14)
+
+            if self.state == "phase_complete":
+                self.draw_text("SETOR DESBLOQUEADO", panel.centerx, panel.y + 115, COLORS["green"], self.mobile_title, True)
+                self.wrap_text("Acesso autorizado. O próximo setor está disponível.", cx, panel.y + 165, cw, COLORS["white"], self.mobile_font, 10)
+                self.button(pygame.Rect(cx, panel.bottom - 88, cw, 60), "AVANÇAR DE SETOR")
+            elif self.current:
+                self.draw_text(f"DESAFIO {self.current['id']}", cx, panel.y + 24, COLORS["cyan"], self.mobile_small)
+                self.wrap_text(self.current["conteudo"], cx, panel.y + 52, cw, COLORS["muted"], self.mobile_small, 5)
+                yy = self.wrap_text(self.current["enunciado"], cx, question_y, cw, COLORS["white"], self.mobile_font, 9)
+
+                if self.showing_error:
+                    yy += 14
+                    self.draw_text(self.feedback, cx, yy, COLORS["red"], self.mobile_small)
+                    yy += 30
+                    self.wrap_text(self.current["resolucao"], cx, yy, cw, COLORS["yellow"], self.mobile_font, 8)
+                    self.button(pygame.Rect(cx, panel.bottom - 88, cw, 60), "PRÓXIMA QUESTÃO")
+                elif self.current["tipo_resposta"] == "choice":
+                    option_h = 54
+                    option_gap = 9
+                    self.mobile_option_rects = []
+                    for idx, option in enumerate(self.current["alternativas"]):
+                        rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
+                        self.mobile_option_rects.append(rect)
+                        pygame.draw.rect(self.screen, (24, 75, 91) if self.selected == idx else COLORS["panel2"], rect, border_radius=8)
+                        pygame.draw.rect(self.screen, COLORS["cyan"] if self.selected == idx else COLORS["line"], rect, 2, border_radius=8)
+                        # Vertically center the option label.
+                        label = self.mobile_font.render(f"{chr(65+idx)})  {option}", True, COLORS["white"])
+                        self.screen.blit(label, (rect.x + 16, rect.centery - label.get_height() // 2))
+                    self.mobile_submit_rect = pygame.Rect(cx, panel.bottom - 88, cw, 60)
+                    self.button(self.mobile_submit_rect, "VALIDAR RESPOSTA")
+                else:
+                    input_rect = pygame.Rect(cx, yy + 12, cw, 54)
+                    pygame.draw.rect(self.screen, COLORS["panel2"], input_rect, border_radius=8)
+                    pygame.draw.rect(self.screen, COLORS["cyan"], input_rect, 2, border_radius=8)
+                    shown = self.answer_text if self.answer_text else "RESPOSTA: toque nos números abaixo"
+                    self.draw_text(shown, input_rect.x + 14, input_rect.y + 15, COLORS["white"] if self.answer_text else COLORS["muted"], self.mobile_small)
+
+                    keys = ["1","2","3","4","5","6","7","8","9",",","0","⌫"]
+                    key_gap = 8
+                    key_h = 45
+                    key_w = (cw - 2 * key_gap) // 3
+                    keypad_bottom = panel.bottom - 104
+                    keypad_top = keypad_bottom - (4 * key_h + 3 * key_gap)
+                    self.mobile_key_rects = []
+                    for idx, key in enumerate(keys):
+                        row, col = divmod(idx, 3)
+                        rect = pygame.Rect(cx + col * (key_w + key_gap), keypad_top + row * (key_h + key_gap), key_w, key_h)
+                        self.mobile_key_rects.append((rect, key))
+                        self.button(rect, key)
+                    self.mobile_submit_rect = pygame.Rect(cx, panel.bottom - 88, cw, 60)
+                    self.button(self.mobile_submit_rect, "VALIDAR RESPOSTA")
+
+            self.draw_text(f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}", margin, h - 20, COLORS["muted"], self.mobile_small)
+
+        elif self.state in ("victory", "defeat"):
+            won = self.state == "victory"
+            self.draw_text("MISSÃO CONCLUÍDA" if won else "MISSÃO INTERROMPIDA", w // 2, int(h * .34), COLORS["green"] if won else COLORS["red"], self.mobile_title, True)
+            self.draw_text("Você escapou da instalação!" if won else "O sistema de segurança bloqueou sua tentativa.", w // 2, int(h * .45), COLORS["white"], self.mobile_font, True)
+            self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}", w // 2, int(h * .54), COLORS["muted"], self.mobile_small, True)
+            self.button(pygame.Rect(margin, int(h * .67), w - 2 * margin, 64), "NOVA PARTIDA")
+            self.draw_text("Toque no botão para reiniciar", w // 2, int(h * .79), COLORS["muted"], self.mobile_small, True)
+
+        pygame.display.flip()
+
+    def render(self):
+        w, h = self.screen.get_size()
+        if h > w:
+            self.render_mobile()
+        else:
+            self.render_desktop()
+
+    def handle_mobile_click(self, pos):
+        x, y = pos
+        w, h = self.screen.get_size()
+        margin = max(16, int(w * .045))
+        panel, cx, cw, question_y = self.mobile_question_layout()
+
+        if self.state == "start":
+            if y >= h * .68:
+                self.start_game()
+            return
+        if self.state in ("victory", "defeat"):
+            if y >= h * .62:
+                self.start_game()
+            return
+        if self.state == "phase_complete":
+            if y >= panel.bottom - 105:
+                self.advance()
+            return
+        if self.state != "playing" or not self.current:
+            return
+        if self.showing_error:
+            if y >= panel.bottom - 105:
+                self.advance()
+            return
+
+        # Recalculate the same wrapped question height used by render_mobile.
+        self.mobile_small = pygame.font.SysFont("consolas", max(15, min(20, int(w * .018))))
+        self.mobile_font = pygame.font.SysFont("consolas", max(19, min(25, int(w * .022))))
+        yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, 9, question_y)
+
+        if self.current["tipo_resposta"] == "choice":
+            option_h, option_gap = 54, 9
+            for idx in range(len(self.current["alternativas"])):
+                rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
+                if rect.collidepoint(pos):
+                    self.selected = idx
+                    return
+            if y >= panel.bottom - 105:
+                self.submit()
+        else:
+            keys = ["1","2","3","4","5","6","7","8","9",",","0","⌫"]
+            key_gap, key_h = 8, 45
+            key_w = (cw - 2 * key_gap) // 3
+            keypad_bottom = panel.bottom - 104
+            keypad_top = keypad_bottom - (4 * key_h + 3 * key_gap)
+            for idx, key in enumerate(keys):
+                row, col = divmod(idx, 3)
+                rect = pygame.Rect(cx + col * (key_w + key_gap), keypad_top + row * (key_h + key_gap), key_w, key_h)
+                if rect.collidepoint(pos):
+                    if key == "⌫":
+                        self.answer_text = self.answer_text[:-1]
+                    elif key == ",":
+                        if "," not in self.answer_text and "." not in self.answer_text:
+                            self.answer_text += ","
+                    else:
+                        self.answer_text += key
+                    return
+            if y >= panel.bottom - 105:
+                self.submit()
+
+    @staticmethod
+    def wrap_height(text, max_width, font, line_gap, start_y):
+        words = text.split()
+        line = ""
+        lines = 0
+        for word in words:
+            test = (line + " " + word).strip()
+            if font.size(test)[0] > max_width and line:
+                lines += 1
+                line = word
+            else:
+                line = test
+        if line:
+            lines += 1
+        return start_y + lines * (font.get_linesize() + line_gap)
+
     def run(self):
         running = True
         while running:
@@ -267,6 +457,9 @@ class EscapeRoom:
                             elif event.key == pygame.K_RETURN:
                                 self.submit()
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if h > w:
+                        self.handle_mobile_click(event.pos)
+                        continue
                     x,y = event.pos
                     if self.state == "start":
                         if y > h*.70:
