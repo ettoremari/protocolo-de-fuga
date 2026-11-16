@@ -3,7 +3,8 @@ title = Protocolo de Fuga
 package.name = protocolodefuga
 package.domain = com.ettoremari
 source.dir = .
-source.include_exts = py,json,ogg,md
+source.include_exts = py,json,ogg,md,png
+icon.filename = %(source.dir)s/assets/icon.png
 version = 1.0.0
 requirements = python3==3.10.11,hostpython3==3.10.11,pygame==2.1.0
 orientation = portrait,landscape
