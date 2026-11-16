@@ -28,6 +28,16 @@ COLORS = {
     "yellow": (255, 207, 91), "line": (34, 91, 119)
 }
 
+# Android (S24 e outros aparelhos de alta densidade): fontes móveis são
+# multiplicadas por esta escala para não ficarem pequenas. No desktop, sem efeito.
+MOBILE_FONT_SCALE = 1.4 if hasattr(sys, "getandroidapilevel") else 1.0
+
+
+def mobile_sysfont(size, bold=False):
+    return pygame.font.SysFont("consolas", round(size * MOBILE_FONT_SCALE), bold=bold)
+
+
+
 def load_questions():
     with open(ROOT / "data" / "questoes.json", encoding="utf-8") as file:
         data = json.load(file)
@@ -221,7 +231,7 @@ class EscapeRoom:
 
     def draw_music_button(self):
         if self.screen.get_height() > self.screen.get_width():
-            self.mobile_small = pygame.font.SysFont("consolas", max(15, min(20, int(self.screen.get_width() * .018))))
+            self.mobile_small = mobile_sysfont(max(15, min(20, int(self.screen.get_width() * .018))))
         status = "INDISP." if not self.music_available else ("ON" if self.music_enabled else "OFF")
         self.button(self.music_button_rect(), f"SOM: {status}", active=self.music_available)
 
@@ -312,10 +322,10 @@ class EscapeRoom:
     def render_mobile(self):
         w, h = self.screen.get_size()
         margin = max(16, int(w * 0.045))
-        self.mobile_small = pygame.font.SysFont("consolas", max(15, min(20, int(w * .018))))
-        self.mobile_font = pygame.font.SysFont("consolas", max(19, min(25, int(w * .022))))
-        self.mobile_title = pygame.font.SysFont("consolas", max(23, min(31, int(w * .027))), bold=True)
-        self.mobile_big = pygame.font.SysFont("consolas", max(34, min(48, int(w * .043))), bold=True)
+        self.mobile_small = mobile_sysfont(max(15, min(20, int(w * .018))))
+        self.mobile_font = mobile_sysfont(max(19, min(25, int(w * .022))))
+        self.mobile_title = mobile_sysfont(max(23, min(31, int(w * .027))), bold=True)
+        self.mobile_big = mobile_sysfont(max(34, min(48, int(w * .043))), bold=True)
         self.draw_background(w, h)
 
         if self.state == "start":
@@ -441,8 +451,8 @@ class EscapeRoom:
             return
 
         # Recalculate the same wrapped question height used by render_mobile.
-        self.mobile_small = pygame.font.SysFont("consolas", max(15, min(20, int(w * .018))))
-        self.mobile_font = pygame.font.SysFont("consolas", max(19, min(25, int(w * .022))))
+        self.mobile_small = mobile_sysfont(max(15, min(20, int(w * .018))))
+        self.mobile_font = mobile_sysfont(max(19, min(25, int(w * .022))))
         yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, 9, question_y)
 
         if self.current["tipo_resposta"] == "choice":
