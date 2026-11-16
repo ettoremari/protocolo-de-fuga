@@ -36,8 +36,12 @@ python main.py
    ```bash
    pip install pygame
    ```
+
+
 4. Abra o arquivo `main.py` dentro da pasta extraída e toque em **Run**.
 5. Se o Android perguntar sobre rotação automática, permita a orientação que preferir. A interface detecta telas verticais e horizontais e ajusta os controles.
+
+6. Em processo de desenvolvimento de um .apk e um .exe para rodar de forma mais simples.
 
 Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. As alternativas e botões foram ampliados para toque.
 
