@@ -30,7 +30,7 @@ COLORS = {
 
 # Android (S24 e outros aparelhos de alta densidade): fontes móveis são
 # multiplicadas por esta escala para não ficarem pequenas. No desktop, sem efeito.
-MOBILE_FONT_SCALE = 1.4 if hasattr(sys, "getandroidapilevel") else 1.0
+MOBILE_FONT_SCALE = 1.6 if hasattr(sys, "getandroidapilevel") else 1.0
 
 
 def mobile_sysfont(size, bold=False):
@@ -58,12 +58,18 @@ class EscapeRoom:
         except pygame.error:
             self.music_enabled = False
         pygame.display.set_caption("PROTOCOLO DE FUGA | Escape Room")
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+        is_android = hasattr(sys, "getandroidapilevel")
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if is_android else pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.SysFont("consolas", 23)
-        self.small = pygame.font.SysFont("consolas", 17)
-        self.big = pygame.font.SysFont("consolas", 48, bold=True)
-        self.title = pygame.font.SysFont("consolas", 34, bold=True)
+        self.font = mobile_sysfont(23)
+        self.small = mobile_sysfont(17)
+        self.big = mobile_sysfont(48, bold=True)
+        self.title = mobile_sysfont(34, bold=True)
+        self.logo = None
+        try:
+            self.logo = pygame.image.load(str(ROOT / "assets" / "icon.png")).convert_alpha()
+        except (pygame.error, OSError):
+            pass
         self.questions = load_questions()
         self.state = "start"
         self.reset()
@@ -198,6 +204,13 @@ class EscapeRoom:
             yy += font.get_linesize() + line_gap
         return yy
 
+    def draw_logo(self, w, h):
+        if self.logo is None:
+            return
+        max_size = max(64, min(112, int(w * 0.22)))
+        logo = pygame.transform.smoothscale(self.logo, (max_size, max_size))
+        self.screen.blit(logo, ((w - max_size) // 2, max(12, int(h * 0.045))))
+
     def draw_background(self, w, h):
         self.screen.fill(COLORS["bg"])
         # Subtle futuristic grid.
@@ -250,6 +263,7 @@ class EscapeRoom:
         self.draw_background(w, h)
         margin = max(20, int(w * .055))
         if self.state == "start":
+            self.draw_logo(w, h)
             self.draw_text("INSTALAÇÃO CIENTÍFICA // SETOR 07", margin, int(h*.17), COLORS["cyan"], self.small)
             self.draw_text("PROTOCOLO", margin, int(h*.28), COLORS["white"], self.big)
             self.draw_text("DE FUGA", margin, int(h*.39), COLORS["cyan"], self.big)
@@ -329,6 +343,7 @@ class EscapeRoom:
         self.draw_background(w, h)
 
         if self.state == "start":
+            self.draw_logo(w, h)
             self.draw_text("INSTALAÇÃO CIENTÍFICA // SETOR 07", margin, int(h * .20), COLORS["cyan"], self.mobile_small)
             self.draw_text("PROTOCOLO", margin, int(h * .32), COLORS["white"], self.mobile_big)
             self.draw_text("DE FUGA", margin, int(h * .41), COLORS["cyan"], self.mobile_big)
@@ -512,7 +527,9 @@ class EscapeRoom:
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.VIDEORESIZE:
-                    self.screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
+                    # SDL/Android já redimensiona a superfície ao mudar a orientação.
+                    # Recriar set_mode durante a rotação pode encerrar o processo no Android.
+                    self.screen = pygame.display.get_surface() or self.screen
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
