@@ -36,6 +36,17 @@ def load_questions():
 class EscapeRoom:
     def __init__(self):
         pygame.init()
+        self.music_enabled = True
+        self.music_available = False
+        try:
+            if not pygame.mixer.get_init():
+                pygame.mixer.init()
+            pygame.mixer.music.load(str(ROOT / "assets" / "tensefutureloop.ogg"))
+            pygame.mixer.music.set_volume(0.28)
+            pygame.mixer.music.play(-1)
+            self.music_available = True
+        except pygame.error:
+            self.music_enabled = False
         pygame.display.set_caption("PROTOCOLO DE FUGA | Escape Room")
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
@@ -202,6 +213,28 @@ class EscapeRoom:
         overlay.fill((*self.effect_color, int(54 * (1 - elapsed / duration))))
         self.screen.blit(overlay, (0, 0))
 
+    def music_button_rect(self):
+        w, h = self.screen.get_size()
+        margin = max(16, int(w * 0.045)) if h > w else max(20, int(w * 0.055))
+        width, height = (124, 42) if h > w else (154, 42)
+        return pygame.Rect(w - margin - width, 12, width, height)
+
+    def draw_music_button(self):
+        if self.screen.get_height() > self.screen.get_width():
+            self.mobile_small = pygame.font.SysFont("consolas", max(15, min(20, int(self.screen.get_width() * .018))))
+        status = "INDISP." if not self.music_available else ("ON" if self.music_enabled else "OFF")
+        self.button(self.music_button_rect(), f"SOM: {status}", active=self.music_available)
+
+    def toggle_music(self):
+        if not self.music_available:
+            return
+        if self.music_enabled:
+            pygame.mixer.music.pause()
+            self.music_enabled = False
+        else:
+            pygame.mixer.music.unpause()
+            self.music_enabled = True
+
     def render_desktop(self):
         w, h = self.screen.get_size()
         self.draw_background(w, h)
@@ -262,6 +295,7 @@ class EscapeRoom:
             self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}  |  Tempo restante: {self.remaining()//60:02}:{self.remaining()%60:02}", w//2, int(h*.55), COLORS["muted"], self.small, True)
             self.button(pygame.Rect(w//2-125, int(h*.68), 250, 55), "NOVA PARTIDA")
             self.draw_text("ENTER para reiniciar  •  ESC para sair", w//2, int(h*.82), COLORS["muted"], self.small, True)
+        self.draw_music_button()
         self.draw_feedback_effect()
         pygame.display.flip()
 
@@ -370,6 +404,7 @@ class EscapeRoom:
             self.button(pygame.Rect(margin, int(h * .67), w - 2 * margin, 64), "NOVA PARTIDA")
             self.draw_text("Toque no botão para reiniciar", w // 2, int(h * .79), COLORS["muted"], self.mobile_small, True)
 
+        self.draw_music_button()
         self.draw_feedback_effect()
         pygame.display.flip()
 
@@ -471,6 +506,8 @@ class EscapeRoom:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
+                    elif event.key == pygame.K_m:
+                        self.toggle_music()
                     elif self.state == "start" and event.key == pygame.K_RETURN:
                         self.start_game()
                     elif self.state in ("victory", "defeat") and event.key == pygame.K_RETURN:
@@ -484,6 +521,9 @@ class EscapeRoom:
                             elif event.key == pygame.K_RETURN:
                                 self.submit()
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if self.music_button_rect().collidepoint(event.pos):
+                        self.toggle_music()
+                        continue
                     if h > w:
                         self.handle_mobile_click(event.pos)
                         continue
