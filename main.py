@@ -1,4 +1,5 @@
 import json
+import math
 import random
 import sys
 import time
@@ -59,6 +60,8 @@ class EscapeRoom:
         self.answer_text = ""
         self.selected = None
         self.showing_error = False
+        self.effect_started = None
+        self.effect_color = COLORS['cyan']
 
     def next_question(self):
         pool = self.questions[self.phase]
@@ -102,6 +105,8 @@ class EscapeRoom:
                 self.feedback_until = time.time() + 2
                 return
         correct = str(value).strip().replace(",", ".") == str(self.current["resposta"]).strip()
+        self.effect_started = pygame.time.get_ticks()
+        self.effect_color = COLORS['green'] if correct else COLORS['red']
         if correct:
             self.total_hits += 1
             self.phase_hits += 1
@@ -145,7 +150,11 @@ class EscapeRoom:
     def button(self, rect, label, action=None, active=True):
         color = COLORS["panel2"] if active else (25, 35, 48)
         pygame.draw.rect(self.screen, color, rect, border_radius=9)
-        pygame.draw.rect(self.screen, COLORS["cyan"] if active else COLORS["line"], rect, 2, border_radius=9)
+        pulse = (math.sin(pygame.time.get_ticks() / 260) + 1) / 2
+        border = COLORS["cyan"] if active else COLORS["line"]
+        if active:
+            border = tuple(min(255, int(channel * (0.72 + pulse * 0.28))) for channel in border)
+        pygame.draw.rect(self.screen, border, rect, 1 + int(pulse * 2) if active else 2, border_radius=9)
         button_font = getattr(self, "mobile_small", self.small) if self.screen.get_height() > self.screen.get_width() else self.small
         self.draw_text(label, rect.centerx, rect.centery, COLORS["white"], button_font, True)
         return rect
@@ -176,7 +185,22 @@ class EscapeRoom:
             pygame.draw.line(self.screen, (11, 29, 48), (x, 0), (x, h), 1)
         for y in range(0, h, step):
             pygame.draw.line(self.screen, (11, 29, 48), (0, y), (w, y), 1)
+        # A slow scan line gives the control room a little movement without assets.
+        scan_y = (pygame.time.get_ticks() // 18) % max(1, h)
+        pygame.draw.line(self.screen, (18, 57, 76), (0, scan_y), (w, scan_y), 2)
         pygame.draw.rect(self.screen, COLORS["cyan"], (0, 0, w, 5))
+
+    def draw_feedback_effect(self):
+        if self.effect_started is None:
+            return
+        elapsed = pygame.time.get_ticks() - self.effect_started
+        duration = 360
+        if elapsed >= duration:
+            self.effect_started = None
+            return
+        overlay = pygame.Surface(self.screen.get_size(), pygame.SRCALPHA)
+        overlay.fill((*self.effect_color, int(54 * (1 - elapsed / duration))))
+        self.screen.blit(overlay, (0, 0))
 
     def render_desktop(self):
         w, h = self.screen.get_size()
@@ -238,6 +262,7 @@ class EscapeRoom:
             self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}  |  Tempo restante: {self.remaining()//60:02}:{self.remaining()%60:02}", w//2, int(h*.55), COLORS["muted"], self.small, True)
             self.button(pygame.Rect(w//2-125, int(h*.68), 250, 55), "NOVA PARTIDA")
             self.draw_text("ENTER para reiniciar  •  ESC para sair", w//2, int(h*.82), COLORS["muted"], self.small, True)
+        self.draw_feedback_effect()
         pygame.display.flip()
 
 
@@ -345,6 +370,7 @@ class EscapeRoom:
             self.button(pygame.Rect(margin, int(h * .67), w - 2 * margin, 64), "NOVA PARTIDA")
             self.draw_text("Toque no botão para reiniciar", w // 2, int(h * .79), COLORS["muted"], self.mobile_small, True)
 
+        self.draw_feedback_effect()
         pygame.display.flip()
 
     def render(self):
@@ -507,3 +533,4 @@ class EscapeRoom:
 
 if __name__ == "__main__":
     EscapeRoom().run()
+
