@@ -6,7 +6,7 @@ source.dir = .
 source.include_exts = py,json,ogg,md
 version = 1.0.0
 requirements = python3==3.10.11,pygame==2.1.0
-orientation = all
+orientation = portrait,landscape
 fullscreen = 0
 
 android.api = 35
