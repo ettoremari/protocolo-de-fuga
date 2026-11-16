@@ -103,6 +103,7 @@ jobs:
           name: Protocolo de Fuga 1.0.0
           make_latest: true
           generate_release_notes: false
+          overwrite_files: true
           files: release-assets/*
 
 
