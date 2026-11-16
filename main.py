@@ -37,6 +37,7 @@ class EscapeRoom:
     def __init__(self):
         pygame.init()
         self.music_enabled = True
+        self.mobile_font_scale = 1.0
         self.music_available = False
         try:
             if not pygame.mixer.get_init():
@@ -50,6 +51,10 @@ class EscapeRoom:
         pygame.display.set_caption("PROTOCOLO DE FUGA | Escape Room")
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
+        try:
+            self.logo_image = pygame.image.load(str(ROOT / "assets" / "icon.png")).convert_alpha()
+        except (pygame.error, FileNotFoundError):
+            self.logo_image = None
         self.font = pygame.font.SysFont("consolas", 23)
         self.small = pygame.font.SysFont("consolas", 17)
         self.big = pygame.font.SysFont("consolas", 48, bold=True)
@@ -160,7 +165,7 @@ class EscapeRoom:
         self.screen.blit(surf, rect)
         return rect
 
-    def button(self, rect, label, action=None, active=True):
+    def button(self, rect, label, action=None, active=True, font=None):
         color = COLORS["panel2"] if active else (25, 35, 48)
         pygame.draw.rect(self.screen, color, rect, border_radius=9)
         pulse = (math.sin(pygame.time.get_ticks() / 260) + 1) / 2
@@ -168,7 +173,13 @@ class EscapeRoom:
         if active:
             border = tuple(min(255, int(channel * (0.72 + pulse * 0.28))) for channel in border)
         pygame.draw.rect(self.screen, border, rect, 1 + int(pulse * 2) if active else 2, border_radius=9)
-        button_font = getattr(self, "mobile_small", self.small) if self.screen.get_height() > self.screen.get_width() else self.small
+        button_font = font or (getattr(self, "mobile_small", self.small) if self.screen.get_height() > self.screen.get_width() else self.small)
+        if button_font.size(label)[0] > rect.width - 18:
+            for size in range(button_font.get_height() - 1, 11, -1):
+                candidate = pygame.font.SysFont("consolas", size, bold=button_font.get_bold())
+                if candidate.size(label)[0] <= rect.width - 18:
+                    button_font = candidate
+                    break
         self.draw_text(label, rect.centerx, rect.centery, COLORS["white"], button_font, True)
         return rect
 
@@ -231,23 +242,58 @@ class EscapeRoom:
         overlay.fill((*self.effect_color, int(54 * (1 - elapsed / duration))))
         self.screen.blit(overlay, (0, 0))
 
+    def mobile_control_rects(self):
+        w, h = self.screen.get_size()
+        margin = max(16, int(w * 0.045))
+        top = max(22, int(h * .035))
+        button_h = 38
+        music_w = min(132, max(100, int(w * .29)))
+        music = pygame.Rect(w - margin - music_w, top, music_w, button_h)
+        plus = pygame.Rect(music.left - 38, top, 34, button_h)
+        minus = pygame.Rect(plus.left - 38, top, 34, button_h)
+        return minus, plus, music
+
     def music_button_rect(self):
         w, h = self.screen.get_size()
-        margin = max(16, int(w * 0.045)) if h > w else max(20, int(w * 0.055))
-        width, height = (124, 42) if h > w else (154, 42)
-        top = max(12, int(h * .035)) if h > w else 12
-        return pygame.Rect(w - margin - width, top, width, height)
+        if h > w:
+            return self.mobile_control_rects()[2]
+        margin = max(20, int(w * 0.055))
+        return pygame.Rect(w - margin - 154, 12, 154, 42)
+
+    def draw_mobile_controls(self):
+        minus, plus, music = self.mobile_control_rects()
+        control_font = pygame.font.SysFont("consolas", 16, bold=True)
+        self.button(minus, "A−", font=control_font)
+        self.button(plus, "A+", font=control_font)
+        status = "IND." if not self.music_available else ("ON" if self.music_enabled else "OFF")
+        self.button(music, f"SOM: {status}", active=self.music_available, font=control_font)
 
     def draw_music_button(self):
         if self.screen.get_height() > self.screen.get_width():
             self.configure_mobile_fonts(self.screen.get_width())
+            self.draw_mobile_controls()
+            return
         status = "INDISP." if not self.music_available else ("ON" if self.music_enabled else "OFF")
         self.button(self.music_button_rect(), f"SOM: {status}", active=self.music_available)
 
     def configure_mobile_fonts(self, width):
-        self.mobile_small = pygame.font.SysFont("consolas", max(19, min(28, int(width * .025))))
-        self.mobile_font = pygame.font.SysFont("consolas", max(24, min(36, int(width * .032))))
-        self.mobile_title = pygame.font.SysFont("consolas", max(20, min(30, int(width * .028))), bold=True)
+        scale = self.mobile_font_scale
+        self.mobile_small = pygame.font.SysFont("consolas", max(16, min(39, round(max(19, min(28, int(width * .025))) * scale))))
+        self.mobile_font = pygame.font.SysFont("consolas", max(19, min(50, round(max(24, min(36, int(width * .032))) * scale))))
+        self.mobile_title = pygame.font.SysFont("consolas", max(16, min(42, round(max(20, min(30, int(width * .028))) * scale))), bold=True)
+        self.mobile_big_size = max(27, min(67, round(max(34, min(48, int(width * .043))) * scale)))
+        self.mobile_big = pygame.font.SysFont("consolas", self.mobile_big_size, bold=True)
+
+    def draw_logo(self, rect):
+        if self.logo_image:
+            image = pygame.transform.smoothscale(self.logo_image, rect.size)
+            self.screen.blit(image, rect)
+        else:
+            pygame.draw.rect(self.screen, COLORS["panel2"], rect, border_radius=max(5, rect.width // 5))
+            pygame.draw.rect(self.screen, COLORS["cyan"], rect, 2, border_radius=max(5, rect.width // 5))
+            pygame.draw.line(self.screen, COLORS["cyan"], (rect.x + rect.width // 3, rect.y + rect.height * 4 // 5), (rect.x + rect.width // 3, rect.y + rect.height // 4), 3)
+            pygame.draw.line(self.screen, COLORS["cyan"], (rect.x + rect.width // 3, rect.y + rect.height // 4), (rect.x + rect.width * 2 // 3, rect.y + rect.height // 4), 3)
+            pygame.draw.line(self.screen, COLORS["cyan"], (rect.x + rect.width * 2 // 3, rect.y + rect.height // 4), (rect.x + rect.width * 2 // 3, rect.y + rect.height * 2 // 3), 3)
 
     def toggle_music(self):
         if not self.music_available:
@@ -340,12 +386,15 @@ class EscapeRoom:
         margin = max(16, int(w * 0.045))
         safe_top = max(22, int(h * .035))
         safe_bottom = max(28, int(h * .06))
-        panel_top = safe_top + max(132, int(h * .16))
+        panel_top = getattr(self, "mobile_panel_top", safe_top + max(132, int(h * .16)))
         panel_bottom = h - safe_bottom - 40
         panel = pygame.Rect(margin, panel_top, w - 2 * margin, panel_bottom - panel_top)
         content_x = panel.x + 22
         content_width = panel.width - 44
         question_y = panel.y + 112
+        if self.state == "playing" and self.current:
+            content_bottom = self.wrap_height(self.current["conteudo"], content_width, self.mobile_small, 5, panel.y + 52)
+            question_y = max(question_y, content_bottom + 8)
         return panel, content_x, content_width, question_y
 
     def render_mobile(self):
@@ -354,13 +403,18 @@ class EscapeRoom:
         safe_top = max(22, int(h * .035))
         safe_bottom = max(28, int(h * .06))
         self.configure_mobile_fonts(w)
-        self.mobile_big = pygame.font.SysFont("consolas", max(34, min(48, int(w * .043))), bold=True)
         self.draw_background(w, h)
 
         if self.state == "start":
             self.draw_text("INSTALAÇÃO CIENTÍFICA // SETOR 07", margin, safe_top + int(h * .16), COLORS["cyan"], self.mobile_small)
-            self.draw_text("PROTOCOLO", margin, safe_top + int(h * .27), COLORS["white"], self.mobile_big)
-            self.draw_text("DE FUGA", margin, safe_top + int(h * .36), COLORS["cyan"], self.mobile_big)
+            logo_size = min(88, max(58, int(w * .18)))
+            logo_rect = pygame.Rect(margin, safe_top + int(h * .275), logo_size, logo_size)
+            self.draw_logo(logo_rect)
+            title_x = logo_rect.right + 12
+            title_size = min(self.mobile_big_size, max(24, int((w - margin - title_x) / 6.3)))
+            start_title = pygame.font.SysFont("consolas", title_size, bold=True)
+            self.draw_text("PROTOCOLO", title_x, safe_top + int(h * .275), COLORS["white"], start_title)
+            self.draw_text("DE FUGA", title_x, safe_top + int(h * .36), COLORS["cyan"], start_title)
             self.wrap_text(
                 "O sistema central bloqueou as cinco áreas de saída. Resolva os desafios de Análise Combinatória e recupere o controle da instalação.",
                 margin, safe_top + int(h * .49), w - 2 * margin, COLORS["muted"], self.mobile_font, 10
@@ -370,13 +424,26 @@ class EscapeRoom:
             self.draw_text("Toque em INICIAR MISSÃO", margin, h - safe_bottom - 20, COLORS["muted"], self.mobile_small)
 
         elif self.state in ("playing", "phase_complete"):
-            self.draw_text("PROTOCOLO DE FUGA", margin, safe_top + 8, COLORS["cyan"], self.mobile_small)
-            self.draw_text(f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}", margin, safe_top + 54, COLORS["white"], self.mobile_title)
-            stats = f"ACERTOS {self.total_hits}/12   ERROS {self.errors}/{MAX_ERRORS}"
-            self.draw_text(stats, margin, safe_top + 88, COLORS["muted"], self.mobile_small)
+            brand_icon = pygame.Rect(margin, safe_top + 8, 28, 28)
+            self.draw_logo(brand_icon)
+            self.draw_text("PROTO", brand_icon.right + 7, safe_top + 12, COLORS["cyan"], self.mobile_small)
+            phase_label = f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}"
+            phase_bottom = self.wrap_text(phase_label, margin, safe_top + 54, w - 2 * margin, COLORS["white"], self.mobile_title, 2)
+            stats_y = phase_bottom + 2
+            stats = f"ACERTOS {self.total_hits}/12  ERROS {self.errors}/{MAX_ERRORS}"
+            stats_font = self.mobile_small
+            while stats_font.size(stats)[0] > int((w - 2 * margin) * .62) and stats_font.get_height() > 13:
+                stats_font = pygame.font.SysFont("consolas", stats_font.get_height() - 1)
+            self.draw_text(stats, margin, stats_y, COLORS["muted"], stats_font)
             time_text = f"TEMPO {self.remaining()//60:02}:{self.remaining()%60:02}"
-            self.draw_text(time_text, w - margin - self.mobile_small.size(time_text)[0], safe_top + 88, COLORS["yellow"], self.mobile_small)
-            bar = pygame.Rect(margin, safe_top + 119, w - 2 * margin, 8)
+            time_font = self.mobile_small
+            time_x = w - margin - int((w - 2 * margin) * .36)
+            while time_font.size(time_text)[0] > w - margin - time_x and time_font.get_height() > 13:
+                time_font = pygame.font.SysFont("consolas", time_font.get_height() - 1)
+            self.draw_text(time_text, w - margin - time_font.size(time_text)[0], stats_y, COLORS["yellow"], time_font)
+            bar_top = stats_y + max(stats_font.get_linesize(), time_font.get_linesize()) + 5
+            bar = pygame.Rect(margin, bar_top, w - 2 * margin, 8)
+            self.mobile_panel_top = max(safe_top + max(132, int(h * .16)), bar.bottom + 10)
             pygame.draw.rect(self.screen, COLORS["panel2"], bar, border_radius=4)
             pygame.draw.rect(self.screen, COLORS["cyan"], (bar.x, bar.y, int(bar.width * self.total_hits / 12), bar.height), border_radius=4)
             panel, cx, cw, question_y = self.mobile_question_layout()
@@ -388,8 +455,13 @@ class EscapeRoom:
                 self.wrap_text("Acesso autorizado. O próximo setor está disponível.", cx, panel.y + 165, cw, COLORS["white"], self.mobile_font, 10)
                 self.button(pygame.Rect(cx, panel.bottom - 88, cw, 60), "AVANÇAR DE SETOR")
             elif self.current:
-                self.draw_text(f"DESAFIO {self.current['id']}", cx, panel.y + 24, COLORS["cyan"], self.mobile_small)
-                hint = "DESLIZE ↓"
+                challenge_label = f"DESAFIO {self.current['id']}"
+                challenge_font = self.mobile_small
+                challenge_width = cw - self.mobile_small.size("↓")[0] - 14
+                while challenge_font.size(challenge_label)[0] > challenge_width and challenge_font.get_height() > 13:
+                    challenge_font = pygame.font.SysFont("consolas", challenge_font.get_height() - 1)
+                self.draw_text(challenge_label, cx, panel.y + 24, COLORS["cyan"], challenge_font)
+                hint = "↓"
                 self.draw_text(hint, cx + cw - self.mobile_small.size(hint)[0], panel.y + 24, COLORS["muted"], self.mobile_small)
                 self.wrap_text(self.current["conteudo"], cx, panel.y + 52, cw, COLORS["muted"], self.mobile_small, 5)
                 submit_rect = pygame.Rect(cx, panel.bottom - 76, cw, 48)
@@ -451,7 +523,11 @@ class EscapeRoom:
                         self.button(rect, key)
                     self.button(submit_rect, "VALIDAR RESPOSTA")
 
-            self.draw_text(f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}", margin, h - safe_bottom - 18, COLORS["muted"], self.mobile_small)
+            phase_stats = f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}"
+            footer_font = self.mobile_small
+            while footer_font.size(phase_stats)[0] > w - 2 * margin and footer_font.get_height() > 13:
+                footer_font = pygame.font.SysFont("consolas", footer_font.get_height() - 1)
+            self.draw_text(phase_stats, margin, h - safe_bottom - 18, COLORS["muted"], footer_font)
 
         elif self.state in ("victory", "defeat"):
             won = self.state == "victory"
@@ -581,7 +657,20 @@ class EscapeRoom:
                             elif event.key == pygame.K_RETURN:
                                 self.submit()
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    if self.music_button_rect().collidepoint(event.pos):
+                    if h > w:
+                        minus_rect, plus_rect, music_rect = self.mobile_control_rects()
+                        if minus_rect.collidepoint(event.pos):
+                            self.mobile_font_scale = max(0.7, round(self.mobile_font_scale - 0.1, 1))
+                            self.configure_mobile_fonts(w)
+                            continue
+                        if plus_rect.collidepoint(event.pos):
+                            self.mobile_font_scale = min(1.4, round(self.mobile_font_scale + 0.1, 1))
+                            self.configure_mobile_fonts(w)
+                            continue
+                        if music_rect.collidepoint(event.pos):
+                            self.toggle_music()
+                            continue
+                    elif self.music_button_rect().collidepoint(event.pos):
                         self.toggle_music()
                         continue
                     if h > w:
@@ -633,5 +722,6 @@ class EscapeRoom:
 
 if __name__ == "__main__":
     EscapeRoom().run()
+
 
 

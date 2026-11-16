@@ -32,13 +32,14 @@ python main.py
 4. Abra o arquivo `main.py` dentro da pasta extraída e toque em **Run**.
 5. Se o Android perguntar sobre rotação automática, permita a orientação que preferir. A interface detecta telas verticais e horizontais e ajusta os controles.
 
-Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. As alternativas e botões foram ampliados para toque.
+Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. As alternativas e botões foram ampliados para toque. Use `A−` e `A+` na barra superior para ajustar o tamanho dos textos; o ícone do aplicativo usa a marca futurista do jogo.
 
 Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` da pasta principal do projeto e se a pasta `data` está no mesmo nível.
 
 ## Controles
 - Enter: iniciar/reiniciar e enviar resposta numérica
 - Toque/clique: selecionar alternativa, validar resposta e avançar
+- Android: `A−` e `A+` ajustam o tamanho da fonte durante o jogo; o botão `SOM` controla a trilha sonora
 - Teclado integrado na tela vertical: inserir números, vírgula e apagar
 - Backspace: apagar caractere da resposta numérica com teclado físico
 - Esc: sair
@@ -55,3 +56,4 @@ Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` d
 ## Observação sobre a versão Android
 
 A interface responsiva foi adicionada, mas a execução ainda precisa ser validada em diferentes tamanhos de tela e versões do Pydroid 3.
+
