@@ -14,7 +14,7 @@ android.minapi = 23
 android.ndk = 28c
 android.archs = arm64-v8a,armeabi-v7a
 p4a.bootstrap = sdl2
-p4a.branch = 58d21141f17c889bf8585f5665921d72028f8831
+p4a.branch = develop
 
 [buildozer]
 log_level = 2
