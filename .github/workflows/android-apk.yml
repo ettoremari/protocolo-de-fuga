@@ -1,4 +1,5 @@
 name: Build Android APK
+# Builds the current Add-font-size branch, including the restored app logo.
 
 on:
   push:
