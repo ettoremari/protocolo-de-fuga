@@ -190,6 +190,22 @@ class EscapeRoom:
             yy += font.get_linesize() + line_gap
         return yy
 
+    @staticmethod
+    def wrapped_lines(text, max_width, font):
+        words = str(text).split()
+        lines = []
+        line = ""
+        for word in words:
+            test = (line + " " + word).strip()
+            if font.size(test)[0] > max_width and line:
+                lines.append(line)
+                line = word
+            else:
+                line = test
+        if line:
+            lines.append(line)
+        return lines
+
     def draw_background(self, w, h):
         self.screen.fill(COLORS["bg"])
         # Subtle futuristic grid.
@@ -224,9 +240,14 @@ class EscapeRoom:
 
     def draw_music_button(self):
         if self.screen.get_height() > self.screen.get_width():
-            self.mobile_small = pygame.font.SysFont("consolas", max(15, min(20, int(self.screen.get_width() * .018))))
+            self.configure_mobile_fonts(self.screen.get_width())
         status = "INDISP." if not self.music_available else ("ON" if self.music_enabled else "OFF")
         self.button(self.music_button_rect(), f"SOM: {status}", active=self.music_available)
+
+    def configure_mobile_fonts(self, width):
+        self.mobile_small = pygame.font.SysFont("consolas", max(19, min(28, int(width * .025))))
+        self.mobile_font = pygame.font.SysFont("consolas", max(24, min(36, int(width * .032))))
+        self.mobile_title = pygame.font.SysFont("consolas", max(20, min(30, int(width * .028))), bold=True)
 
     def toggle_music(self):
         if not self.music_available:
@@ -324,7 +345,7 @@ class EscapeRoom:
         panel = pygame.Rect(margin, panel_top, w - 2 * margin, panel_bottom - panel_top)
         content_x = panel.x + 22
         content_width = panel.width - 44
-        question_y = panel.y + 88
+        question_y = panel.y + 112
         return panel, content_x, content_width, question_y
 
     def render_mobile(self):
@@ -332,9 +353,7 @@ class EscapeRoom:
         margin = max(16, int(w * 0.045))
         safe_top = max(22, int(h * .035))
         safe_bottom = max(28, int(h * .06))
-        self.mobile_small = pygame.font.SysFont("consolas", max(15, min(20, int(w * .018))))
-        self.mobile_font = pygame.font.SysFont("consolas", max(19, min(25, int(w * .022))))
-        self.mobile_title = pygame.font.SysFont("consolas", max(18, min(23, int(w * .04))), bold=True)
+        self.configure_mobile_fonts(w)
         self.mobile_big = pygame.font.SysFont("consolas", max(34, min(48, int(w * .043))), bold=True)
         self.draw_background(w, h)
 
@@ -391,17 +410,23 @@ class EscapeRoom:
                     self.screen.set_clip(None)
                     self.button(submit_rect, "PRÓXIMA QUESTÃO")
                 elif self.current["tipo_resposta"] == "choice":
-                    option_h = 54
                     option_gap = 9
                     self.mobile_option_rects = []
+                    option_font = pygame.font.SysFont("consolas", max(20, min(25, self.mobile_font.get_height() - 4)))
+                    option_y = yy
                     for idx, option in enumerate(self.current["alternativas"]):
-                        rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
+                        lines = self.wrapped_lines(f"{chr(65+idx)})  {option}", cw - 28, option_font)
+                        option_h = max(58, len(lines) * (option_font.get_linesize() + 2) + 10)
+                        rect = pygame.Rect(cx, option_y, cw, option_h)
                         self.mobile_option_rects.append(rect)
                         pygame.draw.rect(self.screen, (24, 75, 91) if self.selected == idx else COLORS["panel2"], rect, border_radius=8)
                         pygame.draw.rect(self.screen, COLORS["cyan"] if self.selected == idx else COLORS["line"], rect, 2, border_radius=8)
-                        # Vertically center the option label.
-                        label = self.mobile_font.render(f"{chr(65+idx)})  {option}", True, COLORS["white"])
-                        self.screen.blit(label, (rect.x + 16, rect.centery - label.get_height() // 2))
+                        line_y = rect.centery - len(lines) * option_font.get_linesize() // 2
+                        for line in lines:
+                            label = option_font.render(line, True, COLORS["white"])
+                            self.screen.blit(label, (rect.x + 14, line_y))
+                            line_y += option_font.get_linesize()
+                        option_y += option_h + option_gap
                     self.screen.set_clip(None)
                     self.button(submit_rect, "VALIDAR RESPOSTA")
                 else:
@@ -476,14 +501,10 @@ class EscapeRoom:
             return
 
         # Recalculate the same wrapped question height used by render_mobile.
-        self.mobile_small = pygame.font.SysFont("consolas", max(15, min(20, int(w * .018))))
-        self.mobile_font = pygame.font.SysFont("consolas", max(19, min(25, int(w * .022))))
-        yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, 9, question_y-self.question_scroll)
+        self.configure_mobile_fonts(w)
 
         if self.current["tipo_resposta"] == "choice":
-            option_h, option_gap = 54, 9
-            for idx in range(len(self.current["alternativas"])):
-                rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
+            for idx, rect in enumerate(self.mobile_option_rects):
                 if rect.collidepoint(pos):
                     self.selected = idx
                     return
@@ -612,4 +633,5 @@ class EscapeRoom:
 
 if __name__ == "__main__":
     EscapeRoom().run()
+
 
