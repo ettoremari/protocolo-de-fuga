@@ -2,7 +2,7 @@ name: Build Android APK
 
 on:
   push:
-    branches: [feat/pygame-animations]
+    branches: [Add-font-size]
     paths:
       - "main.py"
       - "data/**"
@@ -51,4 +51,3 @@ jobs:
           path: bin/*.apk
           if-no-files-found: error
           retention-days: 14
-
