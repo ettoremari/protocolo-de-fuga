@@ -1,6 +1,13 @@
 # PROTOCOLO DE FUGA — Escape Room de Análise Combinatória
 
-Protótipo em Python + Pygame, com cinco fases, banco de 50 questões, respostas mistas (alternativas e numéricas), limite de 20 minutos e 10 erros.
+Protótipo em Python + Pygame, com cinco fases, banco de questões, respostas mistas (alternativas e numéricas), limite de 20 minutos e 10 erros.
+
+## Baixar o jogo
+
+- [Windows (.exe)](https://github.com/ettoremari/protocolo-de-fuga/releases/latest/download/ProtocoloDeFuga.exe)
+- [Android (.apk)](https://github.com/ettoremari/protocolo-de-fuga/releases/latest/download/ProtocoloDeFuga.apk)
+
+O APK é uma compilação de depuração para instalação manual.
 
 ## Requisitos
 - Python 3.10 ou superior
