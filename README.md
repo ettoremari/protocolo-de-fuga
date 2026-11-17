@@ -5,9 +5,9 @@ Protótipo em Python + Pygame, com cinco fases, banco de questões, respostas mi
 ## Baixar o jogo
 
 - [Windows (.exe)](https://github.com/ettoremari/protocolo-de-fuga/releases/latest/download/ProtocoloDeFuga.exe)
-- [Android (.apk)](https://github.com/ettoremari/protocolo-de-fuga/releases/latest/download/ProtocoloDeFuga.apk)
+- [Android (.apk) — versão responsiva mais recente](https://github.com/ettoremari/protocolo-de-fuga/actions/runs/44197229588)
 
-O APK é uma compilação de depuração para instalação manual.
+**Android:** abra a página da compilação, localize a seção **Artifacts** e baixe `ProtocoloDeFuga-android-apk`. Extraia o arquivo ZIP e instale o APK no dispositivo. Esta compilação é de depuração para instalação manual; o artefato do GitHub Actions tem prazo de validade.
 
 ## Requisitos
 - Python 3.10 ou superior
@@ -17,7 +17,7 @@ O APK é uma compilação de depuração para instalação manual.
 ```bash
 python -m venv .venv
 # Windows:
-.venv\Scripts\activate
+.venv\\Scripts\\activate
 # Linux/macOS:
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -36,12 +36,8 @@ python main.py
    ```bash
    pip install pygame
    ```
-
-
 4. Abra o arquivo `main.py` dentro da pasta extraída e toque em **Run**.
 5. Se o Android perguntar sobre rotação automática, permita a orientação que preferir. A interface detecta telas verticais e horizontais e ajusta os controles.
-
-6. Em processo de desenvolvimento de um .apk e um .exe para rodar de forma mais simples.
 
 Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. As alternativas e botões foram ampliados para toque.
 
@@ -56,8 +52,7 @@ Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` d
 
 ## Regras implementadas
 - 5 fases com metas de 1, 2, 2, 3 e 4 acertos (12 no total).
-- 10 questões por fase.
-- Sorteio sem repetição até esgotar o banco da fase.
+- Banco de questões ampliável, com sorteio sem repetição até esgotar o banco da fase.
 - Erros não removem acertos; cada erro apresenta a resolução.
 - Derrota ao atingir 10 erros ou 20 minutos.
 - Nova partida disponível após vitória ou derrota.
@@ -65,4 +60,4 @@ Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` d
 
 ## Observação sobre a versão Android
 
-A interface responsiva foi adicionada, mas a execução ainda precisa ser validada em diferentes tamanhos de tela e versões do Pydroid 3.
+A interface responsiva ajusta fontes e componentes conforme a resolução e orientação da tela. Recomenda-se validar em diferentes tamanhos de tela e versões do Android.
