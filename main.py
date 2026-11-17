@@ -28,13 +28,14 @@ COLORS = {
     "yellow": (255, 207, 91), "line": (34, 91, 119)
 }
 
-# Android (S24 e outros aparelhos de alta densidade): fontes móveis são
-# multiplicadas por esta escala para não ficarem pequenas. No desktop, sem efeito.
-MOBILE_FONT_SCALE = 1.6 if hasattr(sys, "getandroidapilevel") else 1.0
+# O SDL/Pygame no Android já trabalha com a resolução física da tela.
+# Multiplicar novamente as fontes por 1.6 fazia textos e botões ficarem
+# desproporcionais em aparelhos de alta densidade (como o Galaxy S24).
+MOBILE_FONT_SCALE = 1.0
 
 
 def mobile_sysfont(size, bold=False):
-    return pygame.font.SysFont("consolas", round(size * MOBILE_FONT_SCALE), bold=bold)
+    return pygame.font.SysFont("consolas", max(12, round(size * MOBILE_FONT_SCALE)), bold=bold)
 
 
 
@@ -61,6 +62,19 @@ class EscapeRoom:
         is_android = hasattr(sys, "getandroidapilevel")
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if is_android else pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
+        # Partículas persistentes: evita recriar objetos a cada quadro e mantém
+        # a animação suave tanto em retrato quanto em paisagem.
+        self.bg_particles = [
+            {
+                "x": random.uniform(0, WIDTH), "y": random.uniform(0, HEIGHT),
+                "speed": random.uniform(9.0, 25.0),
+                "drift": random.uniform(-7.0, 7.0),
+                "radius": random.choice((1, 1, 2)),
+                "phase": random.uniform(0, math.tau),
+            }
+            for _ in range(34)
+        ]
+        self.bg_last_tick = pygame.time.get_ticks()
         self.font = mobile_sysfont(23)
         self.small = mobile_sysfont(17)
         self.big = mobile_sysfont(48, bold=True)
@@ -213,16 +227,57 @@ class EscapeRoom:
 
     def draw_background(self, w, h):
         self.screen.fill(COLORS["bg"])
-        # Subtle futuristic grid.
+        now = pygame.time.get_ticks()
+        dt = min(0.05, max(0.0, (now - self.bg_last_tick) / 1000.0))
+        self.bg_last_tick = now
+
+        # Grade técnica com brilho discreto e pulsação lenta.
         step = max(28, int(w / 35))
+        pulse = (math.sin(now / 1250.0) + 1.0) / 2.0
+        grid_color = (11 + int(pulse * 3), 27 + int(pulse * 5), 45 + int(pulse * 8))
         for x in range(0, w, step):
-            pygame.draw.line(self.screen, (11, 29, 48), (x, 0), (x, h), 1)
+            pygame.draw.line(self.screen, grid_color, (x, 0), (x, h), 1)
         for y in range(0, h, step):
-            pygame.draw.line(self.screen, (11, 29, 48), (0, y), (w, y), 1)
-        # A slow scan line gives the control room a little movement without assets.
-        scan_y = (pygame.time.get_ticks() // 18) % max(1, h)
+            pygame.draw.line(self.screen, grid_color, (0, y), (w, y), 1)
+
+        # Partículas com velocidades, direções e fases diferentes.
+        points = []
+        for particle in self.bg_particles:
+            particle["y"] -= particle["speed"] * dt
+            particle["x"] += particle["drift"] * dt
+            if particle["y"] < -8:
+                particle["y"] = h + random.uniform(0, 24)
+                particle["x"] = random.uniform(0, w)
+            if particle["x"] < -8:
+                particle["x"] = w + 8
+            elif particle["x"] > w + 8:
+                particle["x"] = -8
+            x, y = int(particle["x"]), int(particle["y"])
+            points.append((x, y))
+            shimmer = (math.sin(now / 420.0 + particle["phase"]) + 1.0) / 2.0
+            brightness = int(75 + shimmer * 100)
+            pygame.draw.circle(
+                self.screen, (15, brightness, min(255, brightness + 35)),
+                (x, y), particle["radius"]
+            )
+
+        # Conexões curtas entre pontos próximos dão profundidade sem pesar.
+        max_distance_sq = max(72, min(125, w // 8)) ** 2
+        for i, (x1, y1) in enumerate(points):
+            for x2, y2 in points[i + 1:]:
+                dx, dy = x2 - x1, y2 - y1
+                distance_sq = dx * dx + dy * dy
+                if distance_sq < max_distance_sq:
+                    alpha = max(0, 30 - int(30 * distance_sq / max_distance_sq))
+                    if alpha:
+                        pygame.draw.line(self.screen, (12, 65 + alpha, 88 + alpha), (x1, y1), (x2, y2), 1)
+
+        # Varredura diagonal/luminosa em movimento contínuo.
+        scan_y = (now // 18) % max(1, h)
         pygame.draw.line(self.screen, (18, 57, 76), (0, scan_y), (w, scan_y), 2)
-        pygame.draw.rect(self.screen, COLORS["cyan"], (0, 0, w, 5))
+        glow_y = (now // 31) % max(1, h + 90) - 45
+        pygame.draw.line(self.screen, (10, 37, 55), (0, glow_y), (w, glow_y + 34), 3)
+        pygame.draw.rect(self.screen, COLORS["cyan"], (0, 0, w, 4))
 
     def draw_feedback_effect(self):
         if self.effect_started is None:
@@ -526,10 +581,17 @@ class EscapeRoom:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                elif event.type == pygame.VIDEORESIZE:
-                    # SDL/Android já redimensiona a superfície ao mudar a orientação.
-                    # Recriar set_mode durante a rotação pode encerrar o processo no Android.
-                    self.screen = pygame.display.get_surface() or self.screen
+                elif event.type in (
+                    pygame.VIDEORESIZE,
+                    getattr(pygame, "WINDOWSIZECHANGED", -1000),
+                    getattr(pygame, "WINDOWRESIZED", -1001),
+                ):
+                    # No Android a rotação pode chegar como evento de janela, não
+                    # apenas VIDEORESIZE. Nunca chamar set_mode durante a rotação:
+                    # isso pode invalidar a superfície SDL e encerrar o aplicativo.
+                    surface = pygame.display.get_surface()
+                    if surface is not None:
+                        self.screen = surface
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
