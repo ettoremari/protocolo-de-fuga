@@ -32,10 +32,11 @@ COLORS = {
 # Multiplicar novamente as fontes por 1.6 fazia textos e botões ficarem
 # desproporcionais em aparelhos de alta densidade (como o Galaxy S24).
 MOBILE_FONT_SCALE = 1.0
+MOBILE_UI_SCALE = 1.0
 
 
 def mobile_sysfont(size, bold=False):
-    return pygame.font.SysFont("consolas", max(12, round(size * MOBILE_FONT_SCALE)), bold=bold)
+    return pygame.font.SysFont("consolas", max(12, round(size * MOBILE_FONT_SCALE * MOBILE_UI_SCALE)), bold=bold)
 
 
 
@@ -70,6 +71,7 @@ class EscapeRoom:
         is_android = hasattr(sys, "getandroidapilevel")
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if is_android else pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
+        self.ui_scale = 1.0
         # Partículas persistentes: evita recriar objetos a cada quadro e mantém
         # a animação suave tanto em retrato quanto em paisagem.
         self.bg_particles = [
@@ -321,13 +323,22 @@ class EscapeRoom:
             pygame.mixer.music.unpause()
             self.music_enabled = True
 
+    def ui(self, value):
+        return max(1, round(value * self.ui_scale))
+
+    def update_ui_scale(self):
+        global MOBILE_UI_SCALE
+        w, h = self.screen.get_size()
+        base_w, base_h = (390, 844) if h >= w else (844, 390)
+        self.ui_scale = max(0.75, min(3.0, min(w / base_w, h / base_h)))
+        MOBILE_UI_SCALE = self.ui_scale
+
     def font_control_rects(self):
         w, h = self.screen.get_size()
         cy = int(h * 0.91)
-        return (
-            pygame.Rect(w // 2 - 118, cy - 21, 48, 42),
-            pygame.Rect(w // 2 + 70, cy - 21, 48, 42),
-        )
+        side, height = self.ui(48), self.ui(42)
+        return (pygame.Rect(w // 2 - self.ui(118), cy - height // 2, side, height),
+                pygame.Rect(w // 2 + self.ui(70), cy - height // 2, side, height))
 
     def change_font_scale(self, delta):
         global MOBILE_FONT_SCALE
@@ -425,20 +436,21 @@ class EscapeRoom:
 
     def mobile_question_layout(self):
         w, h = self.screen.get_size()
-        margin = max(16, int(w * 0.045))
-        panel = pygame.Rect(margin, 150, w - 2 * margin, h - 178)
-        content_x = panel.x + 22
-        content_width = panel.width - 44
-        question_y = panel.y + 88
+        margin = max(self.ui(16), int(w * 0.045))
+        panel = pygame.Rect(margin, self.ui(150), w - 2 * margin, h - self.ui(178))
+        content_x = panel.x + self.ui(22)
+        content_width = panel.width - self.ui(44)
+        question_y = panel.y + self.ui(88)
         return panel, content_x, content_width, question_y
 
     def render_mobile(self):
         w, h = self.screen.get_size()
-        margin = max(16, int(w * 0.045))
-        self.mobile_small = mobile_sysfont(max(15, min(20, int(w * .018))))
-        self.mobile_font = mobile_sysfont(max(19, min(25, int(w * .022))))
-        self.mobile_title = mobile_sysfont(max(23, min(31, int(w * .027))), bold=True)
-        self.mobile_big = mobile_sysfont(max(34, min(48, int(w * .043))), bold=True)
+        self.update_ui_scale()
+        margin = max(self.ui(16), int(w * 0.045))
+        self.mobile_small = mobile_sysfont(17)
+        self.mobile_font = mobile_sysfont(21)
+        self.mobile_title = mobile_sysfont(27, bold=True)
+        self.mobile_big = mobile_sysfont(40, bold=True)
         self.draw_background(w, h)
 
         if self.state == "start":
@@ -450,7 +462,7 @@ class EscapeRoom:
                 "O sistema central bloqueou as cinco áreas de saída. Resolva os desafios de Análise Combinatória e recupere o controle da instalação.",
                 margin, int(h * .54), w - 2 * margin, COLORS["muted"], self.mobile_font, 10
             )
-            self.button(pygame.Rect(margin, int(h * .76), w - 2 * margin, 64), "INICIAR MISSÃO")
+            self.button(pygame.Rect(margin, int(h * .76), w - 2 * margin, self.ui(64)), "INICIAR MISSÃO")
             self.draw_font_controls()
 
         elif self.state in ("playing", "phase_complete"):
@@ -470,7 +482,7 @@ class EscapeRoom:
             if self.state == "phase_complete":
                 self.draw_text("SETOR DESBLOQUEADO", panel.centerx, panel.y + 115, COLORS["green"], self.mobile_title, True)
                 self.wrap_text("Acesso autorizado. O próximo setor está disponível.", cx, panel.y + 165, cw, COLORS["white"], self.mobile_font, 10)
-                self.button(pygame.Rect(cx, panel.bottom - 88, cw, 60), "AVANÇAR DE SETOR")
+                self.button(pygame.Rect(cx, panel.bottom - self.ui(88), cw, self.ui(60)), "AVANÇAR DE SETOR")
             elif self.current:
                 self.draw_text(f"DESAFIO {self.current['id']}", cx, panel.y + 24, COLORS["cyan"], self.mobile_small)
                 self.wrap_text(self.current["conteudo"], cx, panel.y + 52, cw, COLORS["muted"], self.mobile_small, 5)
@@ -481,10 +493,10 @@ class EscapeRoom:
                     self.draw_text(self.feedback, cx, yy, COLORS["red"], self.mobile_small)
                     yy += 30
                     self.wrap_text(self.current["resolucao"], cx, yy, cw, COLORS["yellow"], self.mobile_font, 8)
-                    self.button(pygame.Rect(cx, panel.bottom - 88, cw, 60), "PRÓXIMA QUESTÃO")
+                    self.button(pygame.Rect(cx, panel.bottom - self.ui(88), cw, self.ui(60)), "PRÓXIMA QUESTÃO")
                 elif self.current["tipo_resposta"] == "choice":
-                    option_h = 54
-                    option_gap = 9
+                    option_h = self.ui(54)
+                    option_gap = self.ui(9)
                     self.mobile_option_rects = []
                     for idx, option in enumerate(self.current["alternativas"]):
                         rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
@@ -504,10 +516,10 @@ class EscapeRoom:
                     self.draw_text(shown, input_rect.x + 14, input_rect.y + 15, COLORS["white"] if self.answer_text else COLORS["muted"], self.mobile_small)
 
                     keys = ["1","2","3","4","5","6","7","8","9",",","0","⌫"]
-                    key_gap = 8
-                    key_h = 45
+                    key_gap = self.ui(8)
+                    key_h = self.ui(45)
                     key_w = (cw - 2 * key_gap) // 3
-                    keypad_bottom = panel.bottom - 104
+                    keypad_bottom = panel.bottom - self.ui(104)
                     keypad_top = keypad_bottom - (4 * key_h + 3 * key_gap)
                     self.mobile_key_rects = []
                     for idx, key in enumerate(keys):
@@ -542,7 +554,7 @@ class EscapeRoom:
     def handle_mobile_click(self, pos):
         x, y = pos
         w, h = self.screen.get_size()
-        margin = max(16, int(w * .045))
+        margin = max(self.ui(16), int(w * .045))
         panel, cx, cw, question_y = self.mobile_question_layout()
 
         if self.state == "start":
@@ -570,12 +582,12 @@ class EscapeRoom:
             return
 
         # Recalculate the same wrapped question height used by render_mobile.
-        self.mobile_small = mobile_sysfont(max(15, min(20, int(w * .018))))
-        self.mobile_font = mobile_sysfont(max(19, min(25, int(w * .022))))
+        self.mobile_small = mobile_sysfont(17)
+        self.mobile_font = mobile_sysfont(21)
         yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, 9, question_y)
 
         if self.current["tipo_resposta"] == "choice":
-            option_h, option_gap = 54, 9
+            option_h, option_gap = self.ui(54), self.ui(9)
             for idx in range(len(self.current["alternativas"])):
                 rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
                 if rect.collidepoint(pos):
@@ -585,9 +597,9 @@ class EscapeRoom:
                 self.submit()
         else:
             keys = ["1","2","3","4","5","6","7","8","9",",","0","⌫"]
-            key_gap, key_h = 8, 45
+            key_gap, key_h = self.ui(8), self.ui(45)
             key_w = (cw - 2 * key_gap) // 3
-            keypad_bottom = panel.bottom - 104
+            keypad_bottom = panel.bottom - self.ui(104)
             keypad_top = keypad_bottom - (4 * key_h + 3 * key_gap)
             for idx, key in enumerate(keys):
                 row, col = divmod(idx, 3)
