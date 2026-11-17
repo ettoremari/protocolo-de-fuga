@@ -47,6 +47,14 @@ def load_questions():
 class EscapeRoom:
     def __init__(self):
         pygame.init()
+        self.font_scale = 1.0
+        try:
+            settings = json.loads((ROOT / "settings.json").read_text(encoding="utf-8"))
+            self.font_scale = max(0.8, min(1.5, float(settings.get("font_scale", 1.0))))
+        except (OSError, ValueError, TypeError, json.JSONDecodeError):
+            pass
+        global MOBILE_FONT_SCALE
+        MOBILE_FONT_SCALE = self.font_scale
         self.music_enabled = True
         self.music_available = False
         try:
@@ -313,6 +321,41 @@ class EscapeRoom:
             pygame.mixer.music.unpause()
             self.music_enabled = True
 
+    def font_control_rects(self):
+        w, h = self.screen.get_size()
+        cy = int(h * 0.91)
+        return (
+            pygame.Rect(w // 2 - 118, cy - 21, 48, 42),
+            pygame.Rect(w // 2 + 70, cy - 21, 48, 42),
+        )
+
+    def change_font_scale(self, delta):
+        global MOBILE_FONT_SCALE
+        self.font_scale = round(max(0.8, min(1.5, self.font_scale + delta)), 1)
+        MOBILE_FONT_SCALE = self.font_scale
+        self.font = mobile_sysfont(23)
+        self.small = mobile_sysfont(17)
+        self.big = mobile_sysfont(48, bold=True)
+        self.title = mobile_sysfont(34, bold=True)
+        try:
+            (ROOT / "settings.json").write_text(
+                json.dumps({"font_scale": self.font_scale}, ensure_ascii=False, indent=2),
+                encoding="utf-8"
+            )
+        except OSError:
+            pass
+
+    def draw_font_controls(self):
+        minus_rect, plus_rect = self.font_control_rects()
+        label_font = getattr(self, "mobile_small", self.small)
+        self.button(minus_rect, "A-", active=self.font_scale > 0.8)
+        self.button(plus_rect, "A+", active=self.font_scale < 1.5)
+        self.draw_text(
+            f"FONTE: {round(self.font_scale * 100)}%",
+            self.screen.get_width() // 2, minus_rect.centery,
+            COLORS["white"], label_font, True
+        )
+
     def render_desktop(self):
         w, h = self.screen.get_size()
         self.draw_background(w, h)
@@ -324,7 +367,8 @@ class EscapeRoom:
             self.draw_text("DE FUGA", margin, int(h*.39), COLORS["cyan"], self.big)
             self.wrap_text("O sistema central bloqueou as cinco áreas de saída. Resolva os desafios de Análise Combinatória e recupere o controle da instalação.", margin, int(h*.55), w-margin*2, COLORS["muted"], self.font)
             self.button(pygame.Rect(margin, int(h*.76), 250, 55), "INICIAR MISSÃO")
-            self.draw_text("ENTER para iniciar  •  ESC para sair", margin, int(h*.88), COLORS["muted"], self.small)
+            self.draw_font_controls()
+            self.draw_text("ENTER para iniciar  •  ESC para sair", margin, int(h*.975), COLORS["muted"], self.small)
         elif self.state in ("playing", "phase_complete"):
             self.draw_text("PROTOCOLO DE FUGA", margin, 22, COLORS["cyan"], self.small)
             self.draw_text(f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}", margin, 58, COLORS["white"], self.title)
@@ -407,7 +451,7 @@ class EscapeRoom:
                 margin, int(h * .54), w - 2 * margin, COLORS["muted"], self.mobile_font, 10
             )
             self.button(pygame.Rect(margin, int(h * .76), w - 2 * margin, 64), "INICIAR MISSÃO")
-            self.draw_text("Toque em INICIAR MISSÃO", margin, int(h * .86), COLORS["muted"], self.mobile_small)
+            self.draw_font_controls()
 
         elif self.state in ("playing", "phase_complete"):
             self.draw_text("PROTOCOLO DE FUGA", margin, 15, COLORS["cyan"], self.mobile_small)
@@ -502,7 +546,12 @@ class EscapeRoom:
         panel, cx, cw, question_y = self.mobile_question_layout()
 
         if self.state == "start":
-            if y >= h * .68:
+            minus_rect, plus_rect = self.font_control_rects()
+            if minus_rect.collidepoint(pos):
+                self.change_font_scale(-0.1)
+            elif plus_rect.collidepoint(pos):
+                self.change_font_scale(0.1)
+            elif pygame.Rect(margin, int(h * .76), w - 2 * margin, 64).collidepoint(pos):
                 self.start_game()
             return
         if self.state in ("victory", "defeat"):
@@ -618,7 +667,12 @@ class EscapeRoom:
                         continue
                     x,y = event.pos
                     if self.state == "start":
-                        if y > h*.70:
+                        minus_rect, plus_rect = self.font_control_rects()
+                        if minus_rect.collidepoint(event.pos):
+                            self.change_font_scale(-0.1)
+                        elif plus_rect.collidepoint(event.pos):
+                            self.change_font_scale(0.1)
+                        elif pygame.Rect(margin, int(h*.76), 250, 55).collidepoint(event.pos):
                             self.start_game()
                     elif self.state in ("victory", "defeat"):
                         if y > h*.62:
