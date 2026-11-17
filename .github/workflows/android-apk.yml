@@ -3,7 +3,7 @@ name: Build Android APK
 
 on:
   push:
-    branches: [Add-font-size]
+    branches: [Add-font-size, feature/android-font-animation-polish]
     paths:
       - "main.py"
       - "data/**"
