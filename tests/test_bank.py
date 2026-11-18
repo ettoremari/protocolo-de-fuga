@@ -4,7 +4,7 @@ from pathlib import Path
 def test_bank_has_questions_in_each_phase():
     data = json.loads((Path(__file__).parents[1] / "data" / "questoes.json").read_text(encoding="utf-8"))
     # O banco pode crescer com novas questões (por exemplo, do ENEM).
-    assert len(data) >= 50
+    assert len(data) >= 73
     for phase in range(1, 6):
         assert sum(q["fase"] == phase for q in data) >= 1
 
