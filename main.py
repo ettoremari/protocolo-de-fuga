@@ -22,6 +22,13 @@ PHASE_NAMES = [
     "COFRE DE DADOS",
     "NÚCLEO CENTRAL",
 ]
+PHASE_STORIES = [
+    "REGISTRO 01: O bloqueio foi ativado manualmente. Alguém tentou impedir que a equipe deixasse a instalação.",
+    "REGISTRO 02: Os sensores biométricos foram reconfigurados pouco antes do apagão. O acesso de um pesquisador foi apagado.",
+    "REGISTRO 03: As câmeras mostram que o sistema de segurança recebeu comandos de dentro do próprio núcleo.",
+    "REGISTRO 04: Os arquivos revelam que o protocolo não era um teste. A instalação estava isolando um experimento.",
+    "REGISTRO FINAL: O núcleo reconhece sua autorização. A energia restante é suficiente para abrir a saída. Você descobriu a origem do bloqueio.",
+]
 
 COLORS = {
     "bg": (7, 13, 28), "panel": (13, 27, 48), "panel2": (17, 39, 63),
@@ -440,6 +447,7 @@ class EscapeRoom:
             if self.state == "phase_complete":
                 self.draw_text("SETOR DESBLOQUEADO", panel.centerx, panel.y+95, COLORS["green"], self.title, True)
                 self.wrap_text("Acesso autorizado. O próximo setor está disponível.", panel.x+35, panel.y+155, panel.width-70, COLORS["white"], self.font)
+                self.wrap_text(PHASE_STORIES[self.phase-1], panel.x+35, panel.y+205, panel.width-70, COLORS["yellow"], self.small, 5)
                 self.button(pygame.Rect(panel.x+35, panel.bottom-85, 260, 52), "AVANÇAR DE SETOR")
             elif self.current:
                 self.draw_text(f"DESAFIO {self.current['id']}  •  {self.current['conteudo']}", panel.x+30, panel.y+28, COLORS["cyan"], self.small)
@@ -475,6 +483,8 @@ class EscapeRoom:
             won = self.state == "victory"
             self.draw_text("MISSÃO CONCLUÍDA" if won else "MISSÃO INTERROMPIDA", w//2, int(h*.32), COLORS["green"] if won else COLORS["red"], self.big, True)
             self.draw_text("Você escapou da instalação!" if won else "O sistema de segurança bloqueou sua tentativa.", w//2, int(h*.45), COLORS["white"], self.font, True)
+            if won:
+                self.wrap_text(PHASE_STORIES[4], w//2-300, int(h*.49), 600, COLORS["yellow"], self.small, 4)
             self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}  |  Energia: {self.energy.value}%", w//2, int(h*.55), COLORS["muted"], self.small, True)
             if not won and self.defeat_reason:
                 self.draw_text(self.defeat_reason, w//2, int(h*.61), COLORS["red"], self.small, True)
@@ -538,6 +548,7 @@ class EscapeRoom:
             if self.state == "phase_complete":
                 self.draw_text("SETOR DESBLOQUEADO", panel.centerx, panel.y + self.ui(115), COLORS["green"], self.mobile_title, True)
                 self.wrap_text("Acesso autorizado. O próximo setor está disponível.", cx, panel.y + self.ui(165), cw, COLORS["white"], self.mobile_font, self.ui(10))
+                self.wrap_text(PHASE_STORIES[self.phase-1], cx, panel.y + self.ui(220), cw, COLORS["yellow"], self.mobile_small, self.ui(6))
                 self.button(pygame.Rect(cx, panel.bottom - self.ui(88), cw, self.ui(60)), "AVANÇAR DE SETOR")
             elif self.current:
                 self.draw_text(f"DESAFIO {self.current['id']}", cx, panel.y + self.ui(24), COLORS["cyan"], self.mobile_small)
@@ -602,6 +613,8 @@ class EscapeRoom:
             won = self.state == "victory"
             self.draw_text("MISSÃO CONCLUÍDA" if won else "MISSÃO INTERROMPIDA", w // 2, int(h * .34), COLORS["green"] if won else COLORS["red"], self.mobile_title, True)
             self.draw_text("Você escapou da instalação!" if won else "O sistema de segurança bloqueou sua tentativa.", w // 2, int(h * .45), COLORS["white"], self.mobile_font, True)
+            if won:
+                self.wrap_text(PHASE_STORIES[4], margin, int(h * .49), w - 2 * margin, COLORS["yellow"], self.mobile_small, self.ui(4))
             self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}  |  Energia: {self.energy.value}%", w // 2, int(h * .54), COLORS["muted"], self.mobile_small, True)
             if not won and self.defeat_reason:
                 self.draw_text(self.defeat_reason, w // 2, int(h * .60), COLORS["red"], self.mobile_small, True)
