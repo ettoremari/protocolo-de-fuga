@@ -48,7 +48,8 @@ Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` d
 - Toque/clique: selecionar alternativa, validar resposta e avançar
 - Teclado integrado na tela vertical: inserir números, vírgula e apagar
 - Backspace: apagar caractere da resposta numérica com teclado físico
-- Esc: sair
+- Esc/Voltar: abrir o menu principal sem perder o progresso
+- No menu principal: toque em **CONTINUAR MISSÃO** para retomar de onde parou
 
 ## Regras implementadas
 - 5 fases com metas de 1, 2, 2, 3 e 4 acertos (12 no total).
