@@ -5,7 +5,7 @@ Protótipo em Python + Pygame, com cinco fases, banco de questões, respostas mi
 ## Baixar o jogo
 
 - [Windows (.exe)](https://github.com/ettoremari/protocolo-de-fuga/releases/latest/download/ProtocoloDeFuga.exe)
-- [Android (.apk) — versão responsiva mais recente](https://github.com/ettoremari/protocolo-de-fuga/actions/runs/44197229588)
+- [Android (.apk) — versão responsiva mais recente](https://github.com/ettoremari/protocolo-de-fuga/actions/runs/44399409207)
 
 **Android:** abra a página da compilação, localize a seção **Artifacts** e baixe `ProtocoloDeFuga-android-apk`. Extraia o arquivo ZIP e instale o APK no dispositivo. Esta compilação é de depuração para instalação manual; o artefato do GitHub Actions tem prazo de validade.
 
