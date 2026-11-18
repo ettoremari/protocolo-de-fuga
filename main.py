@@ -45,7 +45,7 @@ MOBILE_UI_SCALE = 1.0
 
 
 def mobile_sysfont(size, bold=False):
-    return pygame.font.SysFont("consolas", max(12, round(size * MOBILE_FONT_SCALE * MOBILE_UI_SCALE)), bold=bold)
+    return pygame.font.SysFont("consolas", max(12, round(size * MOBILE_FONT_SCALE)), bold=bold)
 
 
 
@@ -377,7 +377,7 @@ class EscapeRoom:
         global MOBILE_UI_SCALE
         w, h = self.screen.get_size()
         base_w, base_h = (390, 844) if h >= w else (844, 390)
-        self.ui_scale = max(0.75, min(3.0, min(w / base_w, h / base_h)))
+        self.ui_scale = max(0.85, min(1.25, min(w / base_w, h / base_h)))
         MOBILE_UI_SCALE = self.ui_scale
 
     def font_control_rects(self):
@@ -498,20 +498,22 @@ class EscapeRoom:
     def mobile_question_layout(self):
         w, h = self.screen.get_size()
         margin = max(self.ui(16), int(w * 0.045))
-        panel = pygame.Rect(margin, self.ui(150), w - 2 * margin, h - self.ui(178))
+        panel_top = self.ui(158)
+        panel_bottom = h - self.ui(112)
+        panel = pygame.Rect(margin, panel_top, w - 2 * margin, max(self.ui(280), panel_bottom - panel_top))
         content_x = panel.x + self.ui(22)
         content_width = panel.width - self.ui(44)
-        question_y = panel.y + self.ui(88)
+        question_y = panel.y + self.ui(76)
         return panel, content_x, content_width, question_y
 
     def render_mobile(self):
         w, h = self.screen.get_size()
         self.update_ui_scale()
         margin = max(self.ui(16), int(w * 0.045))
-        self.mobile_small = mobile_sysfont(17)
-        self.mobile_font = mobile_sysfont(21)
-        self.mobile_title = mobile_sysfont(27, bold=True)
-        self.mobile_big = mobile_sysfont(40, bold=True)
+        self.mobile_small = mobile_sysfont(15)
+        self.mobile_font = mobile_sysfont(19)
+        self.mobile_title = mobile_sysfont(21, bold=True)
+        self.mobile_big = mobile_sysfont(32, bold=True)
         self.draw_background(w, h)
 
         if self.state == "start":
@@ -528,17 +530,18 @@ class EscapeRoom:
 
         elif self.state in ("playing", "phase_complete"):
             self.draw_text("PROTOCOLO DE FUGA", margin, 15, COLORS["cyan"], self.mobile_small)
-            self.draw_text(f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}", margin, 45, COLORS["white"], self.mobile_title)
+            phase_label = f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}"
+            self.draw_text(phase_label, margin, self.ui(45), COLORS["white"], self.mobile_title)
             stats = f"ACERTOS {self.total_hits}/12   ERROS {self.errors}/{MAX_ERRORS}"
-            self.draw_text(stats, margin, 88, COLORS["muted"], self.mobile_small)
+            self.draw_text(stats, margin, self.ui(82), COLORS["muted"], self.mobile_small)
             energy_color = self.energy.color
-            self.draw_text(f"ENERGIA {self.energy.value}% · {self.energy.status}", margin, 105, energy_color, self.mobile_small)
+            self.draw_text(f"ENERGIA {self.energy.value}% · {self.energy.status}", margin, self.ui(108), energy_color, self.mobile_small)
             time_text = f"TEMPO {self.remaining()//60:02}:{self.remaining()%60:02}"
-            self.draw_text(time_text, w - margin, 88, COLORS["yellow"], self.mobile_small, True)
-            bar = pygame.Rect(margin, 129, w - 2 * margin, 7)
+            self.draw_text(time_text, w - margin, self.ui(82), COLORS["yellow"], self.mobile_small, True)
+            bar = pygame.Rect(margin, self.ui(132), w - 2 * margin, self.ui(5))
             pygame.draw.rect(self.screen, COLORS["panel2"], bar, border_radius=4)
             pygame.draw.rect(self.screen, COLORS["cyan"], (bar.x, bar.y, int(bar.width * self.total_hits / 12), bar.height), border_radius=4)
-            energy_bar = pygame.Rect(margin, 139, w - 2 * margin, 5)
+            energy_bar = pygame.Rect(margin, self.ui(141), w - 2 * margin, self.ui(4))
             pygame.draw.rect(self.screen, COLORS["panel2"], energy_bar, border_radius=3)
             pygame.draw.rect(self.screen, energy_color, (energy_bar.x, energy_bar.y, int(energy_bar.width*self.energy.value/100), energy_bar.height), border_radius=3)
             panel, cx, cw, question_y = self.mobile_question_layout()
@@ -551,9 +554,9 @@ class EscapeRoom:
                 self.wrap_text(PHASE_STORIES[self.phase-1], cx, panel.y + self.ui(220), cw, COLORS["yellow"], self.mobile_small, self.ui(6))
                 self.button(pygame.Rect(cx, panel.bottom - self.ui(88), cw, self.ui(60)), "AVANÇAR DE SETOR")
             elif self.current:
-                self.draw_text(f"DESAFIO {self.current['id']}", cx, panel.y + self.ui(24), COLORS["cyan"], self.mobile_small)
-                self.wrap_text(self.current["conteudo"], cx, panel.y + self.ui(52), cw, COLORS["muted"], self.mobile_small, self.ui(5))
-                yy = self.wrap_text(self.current["enunciado"], cx, question_y, cw, COLORS["white"], self.mobile_font, self.ui(9))
+                self.draw_text(f"DESAFIO {self.current['id']}", cx, panel.y + self.ui(18), COLORS["cyan"], self.mobile_small)
+                self.wrap_text(self.current["conteudo"], cx, panel.y + self.ui(42), cw, COLORS["muted"], self.mobile_small, self.ui(3))
+                yy = self.wrap_text(self.current["enunciado"], cx, question_y, cw, COLORS["white"], self.mobile_font, self.ui(5))
 
                 if self.showing_error:
                     yy += self.ui(14)
@@ -562,8 +565,8 @@ class EscapeRoom:
                     self.wrap_text(self.current["resolucao"], cx, yy, cw, COLORS["yellow"], self.mobile_font, self.ui(8))
                     self.button(pygame.Rect(cx, panel.bottom - self.ui(88), cw, self.ui(60)), "PRÓXIMA QUESTÃO")
                 elif self.current["tipo_resposta"] == "choice":
-                    option_h = self.ui(54)
-                    option_gap = self.ui(9)
+                    option_h = self.ui(46)
+                    option_gap = self.ui(6)
                     self.mobile_option_rects = []
                     for idx, option in enumerate(self.current["alternativas"]):
                         rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
@@ -607,7 +610,7 @@ class EscapeRoom:
                     if self.hint_text:
                         self.wrap_text("PISTA: " + self.hint_text, cx, panel.bottom - self.ui(132), cw, COLORS["yellow"], self.mobile_small, self.ui(3))
 
-            self.draw_text(f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}", margin, h - 20, COLORS["muted"], self.mobile_small)
+            self.draw_text(f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}", margin, h - self.ui(22), COLORS["muted"], self.mobile_small)
 
         elif self.state in ("victory", "defeat"):
             won = self.state == "victory"
@@ -663,9 +666,9 @@ class EscapeRoom:
             return
 
         # Recalculate the same wrapped question height used by render_mobile.
-        self.mobile_small = mobile_sysfont(17)
-        self.mobile_font = mobile_sysfont(21)
-        yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, self.ui(9), question_y)
+        self.mobile_small = mobile_sysfont(15)
+        self.mobile_font = mobile_sysfont(19)
+        yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, self.ui(5), question_y)
 
         hint_w = int(cw * 0.40)
         hint_rect = pygame.Rect(cx, panel.bottom - self.ui(88), hint_w, self.ui(60))
@@ -673,7 +676,7 @@ class EscapeRoom:
             self.use_hint()
             return
         if self.current["tipo_resposta"] == "choice":
-            option_h, option_gap = self.ui(54), self.ui(9)
+            option_h, option_gap = self.ui(46), self.ui(6)
             for idx in range(len(self.current["alternativas"])):
                 rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
                 if rect.collidepoint(pos):
