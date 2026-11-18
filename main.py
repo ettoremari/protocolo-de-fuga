@@ -252,7 +252,7 @@ class EscapeRoom:
         if active:
             border = tuple(min(255, int(channel * (0.72 + pulse * 0.28))) for channel in border)
         pygame.draw.rect(self.screen, border, rect, 1 + int(pulse * 2) if active else 2, border_radius=9)
-        button_font = getattr(self, "mobile_small", self.small) if self.screen.get_height() > self.screen.get_width() else self.small
+        button_font = getattr(self, "mobile_small", self.small) if getattr(self, "is_mobile_layout", self.screen.get_height() > self.screen.get_width()) else self.small
         self.draw_text(label, rect.centerx, rect.centery, COLORS["white"], button_font, True)
         return rect
 
@@ -349,8 +349,8 @@ class EscapeRoom:
 
     def music_button_rect(self):
         w, h = self.screen.get_size()
-        margin = max(16, int(w * 0.045)) if h > w else max(20, int(w * 0.055))
-        width, height = (self.ui(124), self.ui(42)) if h > w else (self.ui(154), self.ui(42))
+        margin = max(16, int(w * 0.045)) if getattr(self, "is_mobile_layout", h > w) else max(20, int(w * 0.055))
+        width, height = (self.ui(124), self.ui(42)) if getattr(self, "is_mobile_layout", h > w) else (self.ui(154), self.ui(42))
         return pygame.Rect(w - margin - width, self.ui(12), width, height)
 
     def draw_music_button(self):
@@ -379,11 +379,12 @@ class EscapeRoom:
 
     def refresh_responsive_metrics(self):
         w, h = self.screen.get_size()
-        mobile = h > w
-        base_w, base_h = (390, 844) if mobile else (1100, 700)
+        mobile = h > w or w < 760
+        base_w, base_h = ((390, 844) if h > w else (844, 390)) if mobile else (1100, 700)
         fit = min(w / base_w, h / base_h)
         self.responsive_scale = max(0.58, min(1.25, fit))
-        self.ui_scale = max(0.68, min(1.2, fit))
+        self.ui_scale = max(0.58, min(1.2, fit))
+        self.is_mobile_layout = mobile
         self.font = self.font_for(23)
         self.small = self.font_for(17)
         self.big = self.font_for(48, bold=True)
@@ -532,11 +533,12 @@ class EscapeRoom:
         w, h = self.screen.get_size()
         margin = max(self.ui(16), int(w * 0.045))
         panel_top = self.ui(158)
-        panel_bottom = h - self.ui(112)
-        panel = pygame.Rect(margin, panel_top, w - 2 * margin, max(self.ui(280), panel_bottom - panel_top))
+        landscape_compact = w >= h
+        panel_bottom = h - self.ui(52 if landscape_compact else 112)
+        panel = pygame.Rect(margin, panel_top, w - 2 * margin, max(self.ui(150 if landscape_compact else 280), panel_bottom - panel_top))
         content_x = panel.x + self.ui(22)
         content_width = panel.width - self.ui(44)
-        question_y = panel.y + self.ui(76)
+        question_y = panel.y + self.ui(58 if landscape_compact else 76)
         return panel, content_x, content_width, question_y
 
     def render_mobile(self):
@@ -673,7 +675,7 @@ class EscapeRoom:
     def render(self):
         w, h = self.screen.get_size()
         self.refresh_responsive_metrics()
-        if h > w:
+        if self.is_mobile_layout:
             self.render_mobile()
         else:
             self.render_desktop()
@@ -717,9 +719,7 @@ class EscapeRoom:
             self.use_hint()
             return
         if self.current["tipo_resposta"] == "choice":
-            option_h, option_gap = self.ui(46), self.ui(6)
-            for idx in range(len(self.current["alternativas"])):
-                rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
+            for idx, rect in enumerate(getattr(self, "mobile_option_rects", [])):
                 if rect.collidepoint(pos):
                     self.selected = idx
                     return
@@ -804,7 +804,7 @@ class EscapeRoom:
                     if self.music_button_rect().collidepoint(event.pos):
                         self.toggle_music()
                         continue
-                    if h > w:
+                    if self.is_mobile_layout:
                         self.handle_mobile_click(event.pos)
                         continue
                     x,y = event.pos
@@ -844,8 +844,7 @@ class EscapeRoom:
                                     line = test
                             yy += (lines+1)*(self.font.get_linesize()+10)
                             if self.current["tipo_resposta"] == "choice":
-                                for idx in range(len(self.current["alternativas"])):
-                                    r = pygame.Rect(panel.x+30, yy+idx*43, min(430,panel.width-60), 35)
+                                for idx, r in enumerate(getattr(self, "desktop_option_rects", [])):
                                     if r.collidepoint(x,y):
                                         self.selected = idx
                             submit_rect = pygame.Rect(panel.x+30, panel.bottom-78, 245, 48)
