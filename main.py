@@ -77,8 +77,8 @@ class EscapeRoom:
         except pygame.error:
             self.music_enabled = False
         pygame.display.set_caption("PROTOCOLO DE FUGA | Escape Room")
-        is_android = hasattr(sys, "getandroidapilevel")
-        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if is_android else pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+        self.is_android = hasattr(sys, "getandroidapilevel")
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if self.is_android else pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
         self.ui_scale = 1.0
         # Partículas persistentes: evita recriar objetos a cada quadro e mantém
@@ -393,7 +393,7 @@ class EscapeRoom:
 
     def refresh_responsive_metrics(self):
         w, h = self.screen.get_size()
-        mobile = h > w or w < 760
+        mobile = self.is_android or h > w or w < 760
         base_w, base_h = ((390, 844) if h > w else (844, 390)) if mobile else (1100, 700)
         fit = min(w / base_w, h / base_h)
         self.responsive_scale = max(0.58, min(1.25, fit))
