@@ -94,10 +94,9 @@ class EscapeRoom:
             for _ in range(34)
         ]
         self.bg_last_tick = pygame.time.get_ticks()
-        self.font = mobile_sysfont(23)
-        self.small = mobile_sysfont(17)
-        self.big = mobile_sysfont(48, bold=True)
-        self.title = mobile_sysfont(34, bold=True)
+        self.font_cache = {}
+        self.responsive_scale = 1.0
+        self.refresh_responsive_metrics()
         self.logo = None
         try:
             self.logo = pygame.image.load(str(ROOT / "assets" / "icon.png")).convert_alpha()
@@ -355,8 +354,6 @@ class EscapeRoom:
         return pygame.Rect(w - margin - width, self.ui(12), width, height)
 
     def draw_music_button(self):
-        if self.screen.get_height() > self.screen.get_width():
-            self.mobile_small = mobile_sysfont(max(15, min(20, int(self.screen.get_width() * .018))))
         status = "INDISP." if not self.music_available else ("ON" if self.music_enabled else "OFF")
         self.button(self.music_button_rect(), f"SOM: {status}", active=self.music_available)
 
@@ -373,12 +370,33 @@ class EscapeRoom:
     def ui(self, value):
         return max(1, round(value * self.ui_scale))
 
-    def update_ui_scale(self):
-        global MOBILE_UI_SCALE
+    def font_for(self, base_size, bold=False):
+        size = max(10, round(base_size * self.responsive_scale * self.font_scale))
+        key = (size, bool(bold))
+        if key not in self.font_cache:
+            self.font_cache[key] = pygame.font.SysFont("consolas", size, bold=bold)
+        return self.font_cache[key]
+
+    def refresh_responsive_metrics(self):
         w, h = self.screen.get_size()
-        base_w, base_h = (390, 844) if h >= w else (844, 390)
-        self.ui_scale = max(0.85, min(1.25, min(w / base_w, h / base_h)))
+        mobile = h > w
+        base_w, base_h = (390, 844) if mobile else (1100, 700)
+        fit = min(w / base_w, h / base_h)
+        self.responsive_scale = max(0.58, min(1.25, fit))
+        self.ui_scale = max(0.68, min(1.2, fit))
+        self.font = self.font_for(23)
+        self.small = self.font_for(17)
+        self.big = self.font_for(48, bold=True)
+        self.title = self.font_for(34, bold=True)
+        self.mobile_font = self.font_for(19)
+        self.mobile_small = self.font_for(15)
+        self.mobile_title = self.font_for(21, bold=True)
+        self.mobile_big = self.font_for(32, bold=True)
+        global MOBILE_UI_SCALE
         MOBILE_UI_SCALE = self.ui_scale
+
+    def update_ui_scale(self):
+        self.refresh_responsive_metrics()
 
     def font_control_rects(self):
         w, h = self.screen.get_size()
@@ -388,13 +406,9 @@ class EscapeRoom:
                 pygame.Rect(w // 2 + self.ui(70), cy - height // 2, side, height))
 
     def change_font_scale(self, delta):
-        global MOBILE_FONT_SCALE
         self.font_scale = round(max(0.8, min(1.5, self.font_scale + delta)), 1)
-        MOBILE_FONT_SCALE = self.font_scale
-        self.font = mobile_sysfont(23)
-        self.small = mobile_sysfont(17)
-        self.big = mobile_sysfont(48, bold=True)
-        self.title = mobile_sysfont(34, bold=True)
+        self.font_cache.clear()
+        self.refresh_responsive_metrics()
         try:
             (ROOT / "settings.json").write_text(
                 json.dumps({"font_scale": self.font_scale}, ensure_ascii=False, indent=2),
@@ -510,10 +524,7 @@ class EscapeRoom:
         w, h = self.screen.get_size()
         self.update_ui_scale()
         margin = max(self.ui(16), int(w * 0.045))
-        self.mobile_small = mobile_sysfont(15)
-        self.mobile_font = mobile_sysfont(19)
-        self.mobile_title = mobile_sysfont(21, bold=True)
-        self.mobile_big = mobile_sysfont(32, bold=True)
+        self.refresh_responsive_metrics()
         self.draw_background(w, h)
 
         if self.state == "start":
@@ -630,6 +641,7 @@ class EscapeRoom:
 
     def render(self):
         w, h = self.screen.get_size()
+        self.refresh_responsive_metrics()
         if h > w:
             self.render_mobile()
         else:
@@ -666,8 +678,6 @@ class EscapeRoom:
             return
 
         # Recalculate the same wrapped question height used by render_mobile.
-        self.mobile_small = mobile_sysfont(15)
-        self.mobile_font = mobile_sysfont(19)
         yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, self.ui(5), question_y)
 
         hint_w = int(cw * 0.40)
