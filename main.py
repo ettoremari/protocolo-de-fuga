@@ -125,6 +125,13 @@ class EscapeRoom:
         self.showing_error = False
         self.effect_started = None
         self.effect_color = COLORS['cyan']
+        self.scroll_offset = 0
+        self.scroll_max = 0
+        self.scroll_drag_start = None
+        self.scroll_drag_origin = 0
+        self.scroll_dragged = False
+        self.scroll_viewport = pygame.Rect(0, 0, 0, 0)
+        self._scrolling_content = False
 
     def next_question(self):
         pool = self.questions[self.phase]
@@ -237,6 +244,8 @@ class EscapeRoom:
     def draw_text(self, text, x, y, color=None, font=None, center=False):
         surf = (font or self.font).render(str(text), True, color or COLORS["white"])
         rect = surf.get_rect()
+        if getattr(self, "_scrolling_content", False):
+            y -= self.scroll_offset
         if center:
             rect.center = (x, y)
         else:
@@ -245,6 +254,8 @@ class EscapeRoom:
         return rect
 
     def button(self, rect, label, action=None, active=True):
+        if getattr(self, "_scrolling_content", False):
+            rect = rect.move(0, -self.scroll_offset)
         color = COLORS["panel2"] if active else (25, 35, 48)
         pygame.draw.rect(self.screen, color, rect, border_radius=9)
         pulse = (math.sin(pygame.time.get_ticks() / 260) + 1) / 2
@@ -589,12 +600,22 @@ class EscapeRoom:
             panel, cx, cw, question_y = self.mobile_question_layout()
             pygame.draw.rect(self.screen, COLORS["panel"], panel, border_radius=14)
             pygame.draw.rect(self.screen, COLORS["line"], panel, 2, border_radius=14)
+            footer_h = self.ui(78)
+            viewport = pygame.Rect(panel.x + self.ui(8), panel.y + self.ui(8), panel.width - self.ui(16), max(self.ui(40), panel.height - footer_h - self.ui(20)))
+            self.scroll_viewport = viewport
+            self.screen.set_clip(viewport)
+            self._scrolling_content = True
+            content_bottom = question_y
 
             if self.state == "phase_complete":
                 self.draw_text("SETOR DESBLOQUEADO", panel.centerx, panel.y + self.ui(115), COLORS["green"], self.mobile_title, True)
                 self.wrap_text("Acesso autorizado. O próximo setor está disponível.", cx, panel.y + self.ui(165), cw, COLORS["white"], self.mobile_font, self.ui(10))
                 self.wrap_text(PHASE_STORIES[self.phase-1], cx, panel.y + self.ui(220), cw, COLORS["yellow"], self.mobile_small, self.ui(6))
-                self.button(pygame.Rect(cx, panel.bottom - self.ui(88), cw, self.ui(60)), "AVANÇAR DE SETOR")
+                content_bottom = self.wrap_height(PHASE_STORIES[self.phase-1], cw, self.mobile_small, self.ui(6), panel.y + self.ui(220))
+                self._scrolling_content = False
+                self.screen.set_clip(None)
+                self.mobile_advance_rect = pygame.Rect(cx, panel.bottom - self.ui(68), cw, self.ui(52))
+                self.button(self.mobile_advance_rect, "AVANÇAR DE SETOR")
             elif self.current:
                 self.draw_text(f"DESAFIO {self.current['id']}", cx, panel.y + self.ui(18), COLORS["cyan"], self.mobile_small)
                 self.wrap_text(self.current["conteudo"], cx, panel.y + self.ui(42), cw, COLORS["muted"], self.mobile_small, self.ui(3))
@@ -604,8 +625,11 @@ class EscapeRoom:
                     yy += self.ui(14)
                     self.draw_text(self.feedback, cx, yy, COLORS["red"], self.mobile_small)
                     yy += self.ui(30)
-                    self.wrap_text(self.current["resolucao"], cx, yy, cw, COLORS["yellow"], self.mobile_font, self.ui(8))
-                    self.button(pygame.Rect(cx, panel.bottom - self.ui(88), cw, self.ui(60)), "PRÓXIMA QUESTÃO")
+                    content_bottom = self.wrap_text(self.current["resolucao"], cx, yy, cw, COLORS["yellow"], self.mobile_font, self.ui(8))
+                    self._scrolling_content = False
+                    self.screen.set_clip(None)
+                    self.mobile_next_rect = pygame.Rect(cx, panel.bottom - self.ui(68), cw, self.ui(52))
+                    self.button(self.mobile_next_rect, "PRÓXIMA QUESTÃO")
                 elif self.current["tipo_resposta"] == "choice":
                     option_h = self.ui(46)
                     option_gap = self.ui(6)
@@ -614,21 +638,25 @@ class EscapeRoom:
                         option_text = f"{chr(65+idx)})  {option}"
                         text_height = self.wrap_height(option_text, cw-self.ui(28), self.mobile_font, self.ui(1), 0)
                         actual_h = max(option_h, text_height + self.ui(12))
-                        rect = pygame.Rect(cx, yy, cw, actual_h)
+                        rect = pygame.Rect(cx, yy - self.scroll_offset, cw, actual_h)
                         self.mobile_option_rects.append(rect)
                         pygame.draw.rect(self.screen, (24, 75, 91) if self.selected == idx else COLORS["panel2"], rect, border_radius=8)
                         pygame.draw.rect(self.screen, COLORS["cyan"] if self.selected == idx else COLORS["line"], rect, 2, border_radius=8)
                         self.wrap_text(option_text, rect.x + self.ui(14), rect.y + max(self.ui(4), (rect.height-text_height)//2), cw-self.ui(28), COLORS["white"], self.mobile_font, self.ui(1))
-                        yy = rect.bottom + option_gap
+                        yy += actual_h + option_gap
+                    if self.hint_text:
+                        content_bottom = self.wrap_text("PISTA: " + self.hint_text, cx, yy + self.ui(8), cw, COLORS["yellow"], self.mobile_small, self.ui(3))
+                    else:
+                        content_bottom = yy
+                    self._scrolling_content = False
+                    self.screen.set_clip(None)
                     hint_w = int(cw * 0.40)
-                    self.mobile_hint_rect = pygame.Rect(cx, panel.bottom - self.ui(88), hint_w, self.ui(60))
-                    self.mobile_submit_rect = pygame.Rect(cx + hint_w + self.ui(8), panel.bottom - self.ui(88), cw - hint_w - self.ui(8), self.ui(60))
+                    self.mobile_hint_rect = pygame.Rect(cx, panel.bottom - self.ui(68), hint_w, self.ui(52))
+                    self.mobile_submit_rect = pygame.Rect(cx + hint_w + self.ui(8), panel.bottom - self.ui(68), cw - hint_w - self.ui(8), self.ui(52))
                     self.button(self.mobile_hint_rect, "DICA -15", active=not self.hint_used and self.energy.value >= 15)
                     self.button(self.mobile_submit_rect, "VALIDAR")
-                    if self.hint_text:
-                        self.wrap_text("PISTA: " + self.hint_text, cx, panel.bottom - self.ui(132), cw, COLORS["yellow"], self.mobile_small, self.ui(3))
                 else:
-                    input_rect = pygame.Rect(cx, yy + self.ui(12), cw, self.ui(54))
+                    input_rect = pygame.Rect(cx, yy + self.ui(12) - self.scroll_offset, cw, self.ui(54))
                     pygame.draw.rect(self.screen, COLORS["panel2"], input_rect, border_radius=8)
                     pygame.draw.rect(self.screen, COLORS["cyan"], input_rect, 2, border_radius=8)
                     shown = self.answer_text if self.answer_text else "RESPOSTA: toque nos números abaixo"
@@ -638,7 +666,7 @@ class EscapeRoom:
                     key_gap = self.ui(8)
                     key_h = self.ui(45)
                     key_w = (cw - 2 * key_gap) // 3
-                    keypad_bottom = panel.bottom - self.ui(104)
+                    keypad_bottom = yy + self.ui(12) + self.ui(54) + self.ui(12) - self.scroll_offset + 4 * key_h + 3 * key_gap
                     keypad_top = keypad_bottom - (4 * key_h + 3 * key_gap)
                     self.mobile_key_rects = []
                     for idx, key in enumerate(keys):
@@ -647,13 +675,26 @@ class EscapeRoom:
                         self.mobile_key_rects.append((rect, key))
                         self.button(rect, key)
                     hint_w = int(cw * 0.40)
-                    self.mobile_hint_rect = pygame.Rect(cx, panel.bottom - self.ui(88), hint_w, self.ui(60))
-                    self.mobile_submit_rect = pygame.Rect(cx + hint_w + self.ui(8), panel.bottom - self.ui(88), cw - hint_w - self.ui(8), self.ui(60))
+                    content_bottom = keypad_bottom + self.ui(12)
+                    if self.hint_text:
+                        content_bottom = self.wrap_text("PISTA: " + self.hint_text, cx, content_bottom, cw, COLORS["yellow"], self.mobile_small, self.ui(3))
+                    self._scrolling_content = False
+                    self.screen.set_clip(None)
+                    self.mobile_hint_rect = pygame.Rect(cx, panel.bottom - self.ui(68), hint_w, self.ui(52))
+                    self.mobile_submit_rect = pygame.Rect(cx + hint_w + self.ui(8), panel.bottom - self.ui(68), cw - hint_w - self.ui(8), self.ui(52))
                     self.button(self.mobile_hint_rect, "DICA -15", active=not self.hint_used and self.energy.value >= 15)
                     self.button(self.mobile_submit_rect, "VALIDAR")
-                    if self.hint_text:
-                        self.wrap_text("PISTA: " + self.hint_text, cx, panel.bottom - self.ui(132), cw, COLORS["yellow"], self.mobile_small, self.ui(3))
 
+            self._scrolling_content = False
+            self.screen.set_clip(None)
+            self.scroll_max = max(0, content_bottom - viewport.bottom + self.ui(12))
+            self.scroll_offset = max(0, min(self.scroll_offset, self.scroll_max))
+            if self.scroll_max:
+                track = pygame.Rect(panel.right - self.ui(5), viewport.y, self.ui(3), viewport.height)
+                thumb_h = max(self.ui(24), int(track.height * viewport.height / (viewport.height + self.scroll_max)))
+                thumb_y = track.y + int((track.height-thumb_h) * self.scroll_offset / self.scroll_max)
+                pygame.draw.rect(self.screen, COLORS["line"], track, border_radius=2)
+                pygame.draw.rect(self.screen, COLORS["cyan"], (track.x, thumb_y, track.width, thumb_h), border_radius=2)
             self.draw_text(f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}", margin, h - self.ui(22), COLORS["muted"], self.mobile_small)
 
         elif self.state in ("victory", "defeat"):
@@ -700,30 +741,32 @@ class EscapeRoom:
                 self.start_game()
             return
         if self.state == "phase_complete":
-            if y >= panel.bottom - 105:
+            if getattr(self, "mobile_advance_rect", pygame.Rect(0,0,0,0)).collidepoint(pos):
                 self.advance()
             return
         if self.state != "playing" or not self.current:
             return
         if self.showing_error:
-            if y >= panel.bottom - 105:
+            if getattr(self, "mobile_next_rect", pygame.Rect(0,0,0,0)).collidepoint(pos):
                 self.advance()
             return
 
-        # Recalculate the same wrapped question height used by render_mobile.
+        if not self.scroll_viewport.collidepoint(pos):
+            if getattr(self, "mobile_hint_rect", pygame.Rect(0,0,0,0)).collidepoint(pos):
+                self.use_hint()
+            elif getattr(self, "mobile_submit_rect", pygame.Rect(0,0,0,0)).collidepoint(pos):
+                self.submit()
+            return
+        # Content clicks are tested against the clipped, translated option rectangles.
         yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, self.ui(5), question_y)
 
         hint_w = int(cw * 0.40)
-        hint_rect = pygame.Rect(cx, panel.bottom - self.ui(88), hint_w, self.ui(60))
-        if hint_rect.collidepoint(pos):
-            self.use_hint()
-            return
         if self.current["tipo_resposta"] == "choice":
             for idx, rect in enumerate(getattr(self, "mobile_option_rects", [])):
                 if rect.collidepoint(pos):
                     self.selected = idx
                     return
-            if y >= panel.bottom - 105:
+            if self.mobile_submit_rect.collidepoint(pos):
                 self.submit()
         else:
             keys = ["1","2","3","4","5","6","7","8","9",",","0","⌫"]
@@ -743,7 +786,7 @@ class EscapeRoom:
                     else:
                         self.answer_text += key
                     return
-            if y >= panel.bottom - 105:
+            if self.mobile_submit_rect.collidepoint(pos):
                 self.submit()
 
     @staticmethod
