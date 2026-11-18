@@ -133,6 +133,24 @@ class EscapeRoom:
         self.scroll_tap_pos = None
         self.scroll_viewport = pygame.Rect(0, 0, 0, 0)
         self._scrolling_content = False
+        self.saved_game_state = None
+        self.menu_entered_at = None
+
+    def return_to_menu(self):
+        if self.state not in ("playing", "phase_complete"):
+            return
+        self.saved_game_state = self.state
+        self.menu_entered_at = time.time()
+        self.state = "start"
+
+    def resume_game(self):
+        if self.saved_game_state not in ("playing", "phase_complete"):
+            return
+        if self.menu_entered_at is not None and self.started_at is not None:
+            self.started_at += time.time() - self.menu_entered_at
+        self.state = self.saved_game_state
+        self.saved_game_state = None
+        self.menu_entered_at = None
 
     def next_question(self):
         pool = self.questions[self.phase]
@@ -367,6 +385,13 @@ class EscapeRoom:
         width, height = (self.ui(124), self.ui(42)) if getattr(self, "is_mobile_layout", h > w) else (self.ui(154), self.ui(42))
         return pygame.Rect(w - margin - width, self.ui(12), width, height)
 
+    def menu_button_rect(self):
+        w, h = self.screen.get_size()
+        margin = max(16, int(w * 0.045)) if getattr(self, "is_mobile_layout", h > w) else max(20, int(w * 0.055))
+        music = self.music_button_rect()
+        width, height = (self.ui(116), self.ui(42)) if getattr(self, "is_mobile_layout", h > w) else (self.ui(120), self.ui(42))
+        return pygame.Rect(music.x - width - self.ui(8), music.y, width, height)
+
     def draw_music_button(self):
         status = "INDISP." if not self.music_available else ("ON" if self.music_enabled else "OFF")
         self.button(self.music_button_rect(), f"SOM: {status}", active=self.music_available)
@@ -396,8 +421,11 @@ class EscapeRoom:
         mobile = self.is_android or h > w or w < 760
         base_w, base_h = ((390, 844) if h > w else (844, 390)) if mobile else (1100, 700)
         fit = min(w / base_w, h / base_h)
-        self.responsive_scale = max(0.58, min(1.25, fit))
-        self.ui_scale = max(0.58, min(1.2, fit))
+        # Android reports physical pixels. Scaling up to 2.75 keeps controls and
+        # text usable on high-density displays such as the Galaxy S24.
+        upper_mobile_scale = 2.75 if mobile else 1.25
+        self.responsive_scale = max(0.58, min(upper_mobile_scale, fit))
+        self.ui_scale = max(0.58, min(upper_mobile_scale, fit))
         self.is_mobile_layout = mobile
         self.font = self.font_for(23)
         self.small = self.font_for(17)
@@ -453,11 +481,12 @@ class EscapeRoom:
             self.draw_text("PROTOCOLO", margin, int(h*.28), COLORS["white"], self.big)
             self.draw_text("DE FUGA", margin, int(h*.39), COLORS["cyan"], self.big)
             self.wrap_text("O sistema central bloqueou as cinco áreas de saída. Resolva os desafios de Análise Combinatória e recupere o controle da instalação.", margin, int(h*.55), w-margin*2, COLORS["muted"], self.font)
-            self.button(pygame.Rect(margin, int(h*.76), 250, 55), "INICIAR MISSÃO")
+            self.button(pygame.Rect(margin, int(h*.76), 250, 55), "CONTINUAR MISSÃO" if self.saved_game_state else "INICIAR MISSÃO")
             self.draw_font_controls()
             self.draw_text("ENTER para iniciar  •  ESC para sair", margin, int(h*.975), COLORS["muted"], self.small)
         elif self.state in ("playing", "phase_complete"):
             self.draw_text("PROTOCOLO DE FUGA", margin, 22, COLORS["cyan"], self.small)
+            self.button(self.menu_button_rect(), "MENU")
             phase_label = f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}"
             self.wrap_text(phase_label, margin, 58, w - 2 * margin - self.ui(175), COLORS["white"], self.title, self.ui(2))
             stats = f"ACERTOS {self.total_hits}/12     ERROS {self.errors}/{MAX_ERRORS}"
@@ -571,11 +600,12 @@ class EscapeRoom:
                 "O sistema central bloqueou as cinco áreas de saída. Resolva os desafios de Análise Combinatória e recupere o controle da instalação.",
                 margin, int(h * .54), w - 2 * margin, COLORS["muted"], self.mobile_font, 10
             )
-            self.button(pygame.Rect(margin, int(h * .76), w - 2 * margin, self.ui(64)), "INICIAR MISSÃO")
+            self.button(pygame.Rect(margin, int(h * .76), w - 2 * margin, self.ui(64)), "CONTINUAR MISSÃO" if self.saved_game_state else "INICIAR MISSÃO")
             self.draw_font_controls()
 
         elif self.state in ("playing", "phase_complete"):
             self.draw_text("PROTOCOLO DE FUGA", margin, 15, COLORS["cyan"], self.mobile_small)
+            self.button(self.menu_button_rect(), "MENU")
             phase_label = f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}"
             phase_font = self.mobile_title if self.mobile_title.size(phase_label)[0] <= w - 2 * margin - self.ui(140) else self.font_for(16, bold=True)
             self.wrap_text(phase_label, margin, self.ui(45), w - 2 * margin - self.ui(140), COLORS["white"], phase_font, self.ui(1))
@@ -738,7 +768,10 @@ class EscapeRoom:
             elif plus_rect.collidepoint(pos):
                 self.change_font_scale(0.1)
             elif pygame.Rect(margin, int(h * .76), w - 2 * margin, 64).collidepoint(pos):
-                self.start_game()
+                if self.saved_game_state:
+                    self.resume_game()
+                else:
+                    self.start_game()
             return
         if self.state in ("victory", "defeat"):
             if y >= h * .62:
@@ -824,12 +857,18 @@ class EscapeRoom:
                     if surface is not None:
                         self.screen = surface
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
+                    if event.key in (pygame.K_ESCAPE, getattr(pygame, "K_AC_BACK", -1000)):
+                        if self.state in ("playing", "phase_complete"):
+                            self.return_to_menu()
+                            continue
                         running = False
                     elif event.key == pygame.K_m:
                         self.toggle_music()
                     elif self.state == "start" and event.key == pygame.K_RETURN:
-                        self.start_game()
+                        if self.saved_game_state:
+                            self.resume_game()
+                        else:
+                            self.start_game()
                     elif self.state in ("victory", "defeat") and event.key == pygame.K_RETURN:
                         self.start_game()
                     elif self.state == "playing" and self.current and not self.showing_error:
@@ -861,6 +900,9 @@ class EscapeRoom:
                         self.scroll_tap_pos = event.pos
                         self.scroll_drag_origin = self.scroll_offset
                         self.scroll_dragged = False
+                    if self.state in ("playing", "phase_complete") and self.menu_button_rect().collidepoint(event.pos):
+                        self.return_to_menu()
+                        continue
                     if self.music_button_rect().collidepoint(event.pos):
                         self.toggle_music()
                         continue
@@ -876,7 +918,10 @@ class EscapeRoom:
                         elif plus_rect.collidepoint(event.pos):
                             self.change_font_scale(0.1)
                         elif pygame.Rect(margin, int(h*.76), 250, 55).collidepoint(event.pos):
-                            self.start_game()
+                            if self.saved_game_state:
+                                self.resume_game()
+                            else:
+                                self.start_game()
                     elif self.state in ("victory", "defeat"):
                         if y > h*.62:
                             self.start_game()
