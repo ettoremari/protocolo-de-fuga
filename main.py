@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pygame
 
+from game_rules import EnergySystem
+
 ROOT = Path(__file__).resolve().parent
 WIDTH, HEIGHT = 1100, 700
 FPS = 60
@@ -100,6 +102,10 @@ class EscapeRoom:
 
     def reset(self):
         self.phase = 1
+        self.energy = EnergySystem()
+        self.hint_used = False
+        self.hint_text = ""
+        self.defeat_reason = ""
         self.phase_hits = 0
         self.total_hits = 0
         self.errors = 0
@@ -126,6 +132,8 @@ class EscapeRoom:
         self.answer_text = ""
         self.selected = None
         self.showing_error = False
+        self.hint_used = False
+        self.hint_text = ""
         self.feedback = ""
 
     def elapsed(self):
@@ -172,15 +180,47 @@ class EscapeRoom:
                 self.next_after_feedback = True
         else:
             self.errors += 1
+            self.energy.apply_penalty(8)
             self.showing_error = True
             self.feedback = "ACESSO NEGADO. ESTUDE A RESOLUÇÃO:"
             if self.errors >= MAX_ERRORS:
+                self.defeat_reason = "Limite de erros atingido"
                 self.state = "defeat"
             elif self.remaining() <= 0:
+                self.defeat_reason = "Tempo esgotado"
                 self.state = "defeat"
+            elif self.energy.value <= 0:
+                self.defeat_reason = "Energia esgotada"
+                self.state = "defeat"
+
+    def use_hint(self):
+        if not self.current or self.showing_error or self.hint_used or self.energy.value < 15:
+            return
+        self.energy.spend(15)
+        self.hint_used = True
+        self.hint_text = self.current.get("dica") or self.build_hint(self.current)
+        if self.energy.value <= 0:
+            self.defeat_reason = "Energia esgotada"
+            self.state = "defeat"
+
+    @staticmethod
+    def build_hint(question):
+        topic = (question.get("conteudo", "") + " " + question.get("enunciado", "")).lower()
+        hints = (
+            (("permut", "anagrama", "ordena", "fila", "senha"), "Observe se a ordem importa. Se todos os elementos são distintos, pense em permutação; se há repetição, ajuste a contagem."),
+            (("combina", "escolh", "grupo", "dupla", "equipe", "selecion"), "Separe o que está sendo escolhido do que está sendo ordenado. Quando a ordem não importa, use combinações."),
+            (("caminho", "trajeto", "rua", "desloc"), "Conte os movimentos necessários e organize-os em uma sequência. Considere caminhos proibidos separadamente."),
+            (("algarismo", "número", "numer", "zero", "dígito"), "Analise cada posição separadamente e verifique se o zero pode ocupar a primeira posição."),
+            (("senha", "caractere", "código"), "Conte as possibilidades posição por posição, respeitando as restrições e a proibição de repetir elementos."),
+        )
+        for keywords, hint in hints:
+            if any(word in topic for word in keywords):
+                return hint
+        return "Identifique se a situação envolve escolha, ordem ou distribuição. Depois, defina as possibilidades de cada etapa e combine-as sem contar casos repetidos."
 
     def advance(self):
         if self.state == "phase_complete":
+            self.energy.recharge(10)
             self.phase += 1
             self.phase_hits = 0
             self.state = "playing"
@@ -385,6 +425,11 @@ class EscapeRoom:
             self.draw_text(f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}", margin, 58, COLORS["white"], self.title)
             stats = f"ACERTOS {self.total_hits}/12     ERROS {self.errors}/{MAX_ERRORS}     TEMPO {self.remaining()//60:02}:{self.remaining()%60:02}"
             self.draw_text(stats, margin, 112, COLORS["muted"], self.small)
+            energy_color = self.energy.color
+            self.draw_text(f"ENERGIA {self.energy.value}% · {self.energy.status}", margin, 130, energy_color, self.small)
+            energy_bar = pygame.Rect(margin + 245, 133, max(80, w-2*margin-245), 7)
+            pygame.draw.rect(self.screen, COLORS["panel2"], energy_bar, border_radius=4)
+            pygame.draw.rect(self.screen, energy_color, (energy_bar.x, energy_bar.y, int(energy_bar.width*self.energy.value/100), energy_bar.height), border_radius=4)
             bar = pygame.Rect(margin, 145, w-2*margin, 9)
             pygame.draw.rect(self.screen, COLORS["panel2"], bar, border_radius=5)
             progress = int(bar.width * self.total_hits / 12)
@@ -419,6 +464,10 @@ class EscapeRoom:
                         self.draw_text(self.answer_text or "Digite um número...", input_rect.x+14, input_rect.y+13, COLORS["white"] if self.answer_text else COLORS["muted"], self.small)
                     submit_rect = pygame.Rect(panel.x+30, panel.bottom-78, 245, 48)
                     self.button(submit_rect, "VALIDAR RESPOSTA")
+                    hint_rect = pygame.Rect(panel.x+300, panel.bottom-78, 190, 48)
+                    self.button(hint_rect, "USAR DICA · 15%", active=not self.hint_used and self.energy.value >= 15)
+                    if self.hint_text:
+                        self.wrap_text("PISTA: " + self.hint_text, panel.x+30, panel.bottom-132, panel.width-60, COLORS["yellow"], self.small, 4)
                     if self.feedback and time.time() < self.feedback_until:
                         self.draw_text(self.feedback, panel.x+300, panel.bottom-63, COLORS["yellow"], self.small)
             self.draw_text(f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}", margin, h-35, COLORS["muted"], self.small)
@@ -426,7 +475,9 @@ class EscapeRoom:
             won = self.state == "victory"
             self.draw_text("MISSÃO CONCLUÍDA" if won else "MISSÃO INTERROMPIDA", w//2, int(h*.32), COLORS["green"] if won else COLORS["red"], self.big, True)
             self.draw_text("Você escapou da instalação!" if won else "O sistema de segurança bloqueou sua tentativa.", w//2, int(h*.45), COLORS["white"], self.font, True)
-            self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}  |  Tempo restante: {self.remaining()//60:02}:{self.remaining()%60:02}", w//2, int(h*.55), COLORS["muted"], self.small, True)
+            self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}  |  Energia: {self.energy.value}%", w//2, int(h*.55), COLORS["muted"], self.small, True)
+            if not won and self.defeat_reason:
+                self.draw_text(self.defeat_reason, w//2, int(h*.61), COLORS["red"], self.small, True)
             self.button(pygame.Rect(w//2-125, int(h*.68), 250, 55), "NOVA PARTIDA")
             self.draw_text("ENTER para reiniciar  •  ESC para sair", w//2, int(h*.82), COLORS["muted"], self.small, True)
         self.draw_music_button()
@@ -470,11 +521,16 @@ class EscapeRoom:
             self.draw_text(f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}", margin, 45, COLORS["white"], self.mobile_title)
             stats = f"ACERTOS {self.total_hits}/12   ERROS {self.errors}/{MAX_ERRORS}"
             self.draw_text(stats, margin, 88, COLORS["muted"], self.mobile_small)
+            energy_color = self.energy.color
+            self.draw_text(f"ENERGIA {self.energy.value}% · {self.energy.status}", margin, 105, energy_color, self.mobile_small)
             time_text = f"TEMPO {self.remaining()//60:02}:{self.remaining()%60:02}"
             self.draw_text(time_text, w - margin, 88, COLORS["yellow"], self.mobile_small, True)
-            bar = pygame.Rect(margin, 119, w - 2 * margin, 8)
+            bar = pygame.Rect(margin, 129, w - 2 * margin, 7)
             pygame.draw.rect(self.screen, COLORS["panel2"], bar, border_radius=4)
             pygame.draw.rect(self.screen, COLORS["cyan"], (bar.x, bar.y, int(bar.width * self.total_hits / 12), bar.height), border_radius=4)
+            energy_bar = pygame.Rect(margin, 139, w - 2 * margin, 5)
+            pygame.draw.rect(self.screen, COLORS["panel2"], energy_bar, border_radius=3)
+            pygame.draw.rect(self.screen, energy_color, (energy_bar.x, energy_bar.y, int(energy_bar.width*self.energy.value/100), energy_bar.height), border_radius=3)
             panel, cx, cw, question_y = self.mobile_question_layout()
             pygame.draw.rect(self.screen, COLORS["panel"], panel, border_radius=14)
             pygame.draw.rect(self.screen, COLORS["line"], panel, 2, border_radius=14)
@@ -506,8 +562,13 @@ class EscapeRoom:
                         # Vertically center the option label.
                         label = self.mobile_font.render(f"{chr(65+idx)})  {option}", True, COLORS["white"])
                         self.screen.blit(label, (rect.x + self.ui(16), rect.centery - label.get_height() // 2))
-                    self.mobile_submit_rect = pygame.Rect(cx, panel.bottom - 88, cw, 60)
-                    self.button(self.mobile_submit_rect, "VALIDAR RESPOSTA")
+                    hint_w = int(cw * 0.40)
+                    self.mobile_hint_rect = pygame.Rect(cx, panel.bottom - self.ui(88), hint_w, self.ui(60))
+                    self.mobile_submit_rect = pygame.Rect(cx + hint_w + self.ui(8), panel.bottom - self.ui(88), cw - hint_w - self.ui(8), self.ui(60))
+                    self.button(self.mobile_hint_rect, "DICA -15", active=not self.hint_used and self.energy.value >= 15)
+                    self.button(self.mobile_submit_rect, "VALIDAR")
+                    if self.hint_text:
+                        self.wrap_text("PISTA: " + self.hint_text, cx, panel.bottom - self.ui(132), cw, COLORS["yellow"], self.mobile_small, self.ui(3))
                 else:
                     input_rect = pygame.Rect(cx, yy + self.ui(12), cw, self.ui(54))
                     pygame.draw.rect(self.screen, COLORS["panel2"], input_rect, border_radius=8)
@@ -527,8 +588,13 @@ class EscapeRoom:
                         rect = pygame.Rect(cx + col * (key_w + key_gap), keypad_top + row * (key_h + key_gap), key_w, key_h)
                         self.mobile_key_rects.append((rect, key))
                         self.button(rect, key)
-                    self.mobile_submit_rect = pygame.Rect(cx, panel.bottom - 88, cw, 60)
-                    self.button(self.mobile_submit_rect, "VALIDAR RESPOSTA")
+                    hint_w = int(cw * 0.40)
+                    self.mobile_hint_rect = pygame.Rect(cx, panel.bottom - self.ui(88), hint_w, self.ui(60))
+                    self.mobile_submit_rect = pygame.Rect(cx + hint_w + self.ui(8), panel.bottom - self.ui(88), cw - hint_w - self.ui(8), self.ui(60))
+                    self.button(self.mobile_hint_rect, "DICA -15", active=not self.hint_used and self.energy.value >= 15)
+                    self.button(self.mobile_submit_rect, "VALIDAR")
+                    if self.hint_text:
+                        self.wrap_text("PISTA: " + self.hint_text, cx, panel.bottom - self.ui(132), cw, COLORS["yellow"], self.mobile_small, self.ui(3))
 
             self.draw_text(f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}", margin, h - 20, COLORS["muted"], self.mobile_small)
 
@@ -536,7 +602,9 @@ class EscapeRoom:
             won = self.state == "victory"
             self.draw_text("MISSÃO CONCLUÍDA" if won else "MISSÃO INTERROMPIDA", w // 2, int(h * .34), COLORS["green"] if won else COLORS["red"], self.mobile_title, True)
             self.draw_text("Você escapou da instalação!" if won else "O sistema de segurança bloqueou sua tentativa.", w // 2, int(h * .45), COLORS["white"], self.mobile_font, True)
-            self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}", w // 2, int(h * .54), COLORS["muted"], self.mobile_small, True)
+            self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}  |  Energia: {self.energy.value}%", w // 2, int(h * .54), COLORS["muted"], self.mobile_small, True)
+            if not won and self.defeat_reason:
+                self.draw_text(self.defeat_reason, w // 2, int(h * .60), COLORS["red"], self.mobile_small, True)
             self.button(pygame.Rect(margin, int(h * .67), w - 2 * margin, 64), "NOVA PARTIDA")
             self.draw_text("Toque no botão para reiniciar", w // 2, int(h * .79), COLORS["muted"], self.mobile_small, True)
 
@@ -586,6 +654,11 @@ class EscapeRoom:
         self.mobile_font = mobile_sysfont(21)
         yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, self.ui(9), question_y)
 
+        hint_w = int(cw * 0.40)
+        hint_rect = pygame.Rect(cx, panel.bottom - self.ui(88), hint_w, self.ui(60))
+        if hint_rect.collidepoint(pos):
+            self.use_hint()
+            return
         if self.current["tipo_resposta"] == "choice":
             option_h, option_gap = self.ui(54), self.ui(9)
             for idx in range(len(self.current["alternativas"])):
@@ -697,6 +770,10 @@ class EscapeRoom:
                             if y > panel.bottom-100:
                                 self.advance()
                         else:
+                            hint_rect = pygame.Rect(panel.x+300, panel.bottom-78, 190, 48)
+                            if hint_rect.collidepoint(x, y):
+                                self.use_hint()
+                                continue
                             yy = panel.y + 75
                             # Match the question wrapping calculation for choices.
                             words = self.current["enunciado"].split()
@@ -718,6 +795,10 @@ class EscapeRoom:
                             if submit_rect.collidepoint(x,y):
                                 self.submit()
             if self.state == "playing" and self.remaining() <= 0:
+                self.defeat_reason = "Tempo esgotado"
+                self.state = "defeat"
+            if self.state == "playing" and self.energy.value <= 0:
+                self.defeat_reason = "Energia esgotada"
                 self.state = "defeat"
             if self.state == "playing" and getattr(self, "next_after_feedback", False) and time.time() >= self.feedback_until:
                 self.next_after_feedback = False
