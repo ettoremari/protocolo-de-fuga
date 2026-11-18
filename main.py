@@ -147,6 +147,8 @@ class EscapeRoom:
         self.showing_error = False
         self.hint_used = False
         self.hint_text = ""
+        self.scroll_offset = 0
+        self.scroll_max = 0
         self.feedback = ""
 
     def elapsed(self):
@@ -769,14 +771,7 @@ class EscapeRoom:
             if self.mobile_submit_rect.collidepoint(pos):
                 self.submit()
         else:
-            keys = ["1","2","3","4","5","6","7","8","9",",","0","⌫"]
-            key_gap, key_h = self.ui(8), self.ui(45)
-            key_w = (cw - 2 * key_gap) // 3
-            keypad_bottom = panel.bottom - self.ui(104)
-            keypad_top = keypad_bottom - (4 * key_h + 3 * key_gap)
-            for idx, key in enumerate(keys):
-                row, col = divmod(idx, 3)
-                rect = pygame.Rect(cx + col * (key_w + key_gap), keypad_top + row * (key_h + key_gap), key_w, key_h)
+            for rect, key in getattr(self, "mobile_key_rects", []):
                 if rect.collidepoint(pos):
                     if key == "⌫":
                         self.answer_text = self.answer_text[:-1]
@@ -843,12 +838,29 @@ class EscapeRoom:
                                 self.answer_text += event.unicode
                             elif event.key == pygame.K_RETURN:
                                 self.submit()
+                elif event.type == pygame.MOUSEWHEEL:
+                    if self.is_mobile_layout and self.scroll_max and self.scroll_viewport.collidepoint(pygame.mouse.get_pos()):
+                        self.scroll_offset = max(0, min(self.scroll_max, self.scroll_offset - event.y * self.ui(42)))
+                elif event.type == pygame.MOUSEMOTION:
+                    if self.scroll_drag_start is not None and event.buttons[0] and self.is_mobile_layout:
+                        delta = self.scroll_drag_start[1] - event.pos[1]
+                        if abs(delta) > self.ui(5):
+                            self.scroll_dragged = True
+                            self.scroll_offset = max(0, min(self.scroll_max, self.scroll_drag_origin + delta))
+                elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                    self.scroll_drag_start = None
+                    self.scroll_dragged = False
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if self.is_mobile_layout and self.scroll_viewport.collidepoint(event.pos):
+                        self.scroll_drag_start = event.pos
+                        self.scroll_drag_origin = self.scroll_offset
+                        self.scroll_dragged = False
                     if self.music_button_rect().collidepoint(event.pos):
                         self.toggle_music()
                         continue
                     if self.is_mobile_layout:
-                        self.handle_mobile_click(event.pos)
+                        if not self.scroll_dragged:
+                            self.handle_mobile_click(event.pos)
                         continue
                     x,y = event.pos
                     if self.state == "start":
