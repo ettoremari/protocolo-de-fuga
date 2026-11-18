@@ -130,6 +130,7 @@ class EscapeRoom:
         self.scroll_drag_start = None
         self.scroll_drag_origin = 0
         self.scroll_dragged = False
+        self.scroll_tap_pos = None
         self.scroll_viewport = pygame.Rect(0, 0, 0, 0)
         self._scrolling_content = False
 
@@ -644,7 +645,7 @@ class EscapeRoom:
                         self.mobile_option_rects.append(rect)
                         pygame.draw.rect(self.screen, (24, 75, 91) if self.selected == idx else COLORS["panel2"], rect, border_radius=8)
                         pygame.draw.rect(self.screen, COLORS["cyan"] if self.selected == idx else COLORS["line"], rect, 2, border_radius=8)
-                        self.wrap_text(option_text, rect.x + self.ui(14), rect.y + max(self.ui(4), (rect.height-text_height)//2), cw-self.ui(28), COLORS["white"], self.mobile_font, self.ui(1))
+                        self.wrap_text(option_text, rect.x + self.ui(14), rect.y + self.scroll_offset + max(self.ui(4), (rect.height-text_height)//2), cw-self.ui(28), COLORS["white"], self.mobile_font, self.ui(1))
                         yy += actual_h + option_gap
                     if self.hint_text:
                         content_bottom = self.wrap_text("PISTA: " + self.hint_text, cx, yy + self.ui(8), cw, COLORS["yellow"], self.mobile_small, self.ui(3))
@@ -658,23 +659,24 @@ class EscapeRoom:
                     self.button(self.mobile_hint_rect, "DICA -15", active=not self.hint_used and self.energy.value >= 15)
                     self.button(self.mobile_submit_rect, "VALIDAR")
                 else:
-                    input_rect = pygame.Rect(cx, yy + self.ui(12) - self.scroll_offset, cw, self.ui(54))
+                    input_raw = pygame.Rect(cx, yy + self.ui(12), cw, self.ui(54))
+                    input_rect = input_raw.move(0, -self.scroll_offset)
                     pygame.draw.rect(self.screen, COLORS["panel2"], input_rect, border_radius=8)
                     pygame.draw.rect(self.screen, COLORS["cyan"], input_rect, 2, border_radius=8)
                     shown = self.answer_text if self.answer_text else "RESPOSTA: toque nos números abaixo"
-                    self.draw_text(shown, input_rect.x + self.ui(14), input_rect.y + self.ui(15), COLORS["white"] if self.answer_text else COLORS["muted"], self.mobile_small)
+                    self.draw_text(shown, input_raw.x + self.ui(14), input_raw.y + self.ui(15), COLORS["white"] if self.answer_text else COLORS["muted"], self.mobile_small)
 
                     keys = ["1","2","3","4","5","6","7","8","9",",","0","⌫"]
                     key_gap = self.ui(8)
                     key_h = self.ui(45)
                     key_w = (cw - 2 * key_gap) // 3
-                    keypad_bottom = yy + self.ui(12) + self.ui(54) + self.ui(12) - self.scroll_offset + 4 * key_h + 3 * key_gap
+                    keypad_bottom = yy + self.ui(12) + self.ui(54) + self.ui(12) + 4 * key_h + 3 * key_gap
                     keypad_top = keypad_bottom - (4 * key_h + 3 * key_gap)
                     self.mobile_key_rects = []
                     for idx, key in enumerate(keys):
                         row, col = divmod(idx, 3)
                         rect = pygame.Rect(cx + col * (key_w + key_gap), keypad_top + row * (key_h + key_gap), key_w, key_h)
-                        self.mobile_key_rects.append((rect, key))
+                        self.mobile_key_rects.append((rect.move(0, -self.scroll_offset), key))
                         self.button(rect, key)
                     hint_w = int(cw * 0.40)
                     content_bottom = keypad_bottom + self.ui(12)
@@ -848,18 +850,22 @@ class EscapeRoom:
                             self.scroll_dragged = True
                             self.scroll_offset = max(0, min(self.scroll_max, self.scroll_drag_origin + delta))
                 elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                    if self.scroll_tap_pos is not None and not self.scroll_dragged:
+                        self.handle_mobile_click(self.scroll_tap_pos)
+                    self.scroll_tap_pos = None
                     self.scroll_drag_start = None
                     self.scroll_dragged = False
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if self.is_mobile_layout and self.scroll_viewport.collidepoint(event.pos):
                         self.scroll_drag_start = event.pos
+                        self.scroll_tap_pos = event.pos
                         self.scroll_drag_origin = self.scroll_offset
                         self.scroll_dragged = False
                     if self.music_button_rect().collidepoint(event.pos):
                         self.toggle_music()
                         continue
                     if self.is_mobile_layout:
-                        if not self.scroll_dragged:
+                        if not self.scroll_viewport.collidepoint(event.pos):
                             self.handle_mobile_click(event.pos)
                         continue
                     x,y = event.pos
