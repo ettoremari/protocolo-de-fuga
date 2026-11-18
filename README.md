@@ -1,6 +1,6 @@
 # PROTOCOLO DE FUGA — Escape Room de Análise Combinatória
 
-Protótipo em Python + Pygame, com cinco fases, banco de questões, respostas mistas (alternativas e numéricas), limite de 20 minutos e 10 erros.
+Protótipo em Python + Pygame, com cinco fases, banco de questões, respostas mistas (alternativas e numéricas), limite de 20 minutos, 10 erros e sistema de energia.
 
 ## Baixar o jogo
 
@@ -54,7 +54,7 @@ Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` d
 - 5 fases com metas de 1, 2, 2, 3 e 4 acertos (12 no total).
 - Banco de questões ampliável, com sorteio sem repetição até esgotar o banco da fase.
 - Erros não removem acertos; cada erro apresenta a resolução.
-- Derrota ao atingir 10 erros ou 20 minutos.
+- Energia inicial de 100%; cada resposta errada consome 8 pontos e cada pista opcional consome 15 pontos.\n- Ao concluir um setor, a instalação recupera 10 pontos de energia (limite de 100%).\n- Derrota ao esgotar a energia, atingir 10 erros ou exceder 20 minutos.\n- Uma pista opcional por questão orienta o raciocínio sem revelar a resposta; a resolução completa continua aparecendo após erro.
 - Nova partida disponível após vitória ou derrota.
 - Janela redimensionável, com layout que acompanha o tamanho da janela.
 
