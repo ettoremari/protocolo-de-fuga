@@ -39,6 +39,7 @@ var menu_button: Button
 var music_player: AudioStreamPlayer
 var choice_container: VBoxContainer
 var main_layout: VBoxContainer
+var top_row: HBoxContainer
 var video_player: VideoStreamPlayer
 var video_skip_button: Button
 var video_on_finished: Callable
@@ -136,8 +137,8 @@ func _build_ui() -> void:
 	grid_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	grid_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	grid_overlay.draw.connect(_draw_grid_animation)
+	grid_overlay.z_index = -1
 	add_child(grid_overlay)
-	move_child(grid_overlay, get_child_count() - 1)
 
 	feedback_overlay = ColorRect.new()
 	feedback_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -185,7 +186,7 @@ func _build_ui() -> void:
 	menu_button.pressed.connect(_return_to_menu)
 	menu_button.visible = false
 
-	var top_row := HBoxContainer.new()
+	top_row = HBoxContainer.new()
 	top_row.alignment = BoxContainer.ALIGNMENT_END
 	top_row.add_child(menu_button)
 	var top_spacer := Control.new()
@@ -318,6 +319,8 @@ func _setup_videos() -> void:
 	video_player.expand = true
 	video_player.autoplay = false
 	video_player.finished.connect(_finish_video)
+	video_player.z_index = 100
+	video_player.move_to_front()
 	add_child(video_player)
 
 	video_skip_button = Button.new()
@@ -333,6 +336,7 @@ func _setup_videos() -> void:
 	video_skip_button.offset_bottom = -20
 	video_skip_button.pressed.connect(_finish_video)
 	video_skip_button.visible = false
+	video_skip_button.z_index = 101
 	add_child(video_skip_button)
 	video_player.visible = false
 
@@ -378,6 +382,8 @@ func _toggle_music() -> void:
 func _show_start() -> void:
 	state = "start"
 	menu_button.visible = false
+	progress.visible = false
+	top_row.visible = true
 	_clear_content()
 	status_label.text = "PROTOCOLO DE FUGA"
 	progress.value = 0
@@ -396,6 +402,8 @@ func _begin_game() -> void:
 	started_at_msec = Time.get_ticks_msec()
 	state = "playing"
 	menu_button.visible = true
+	progress.visible = true
+	top_row.visible = true
 	_next_question()
 
 
@@ -563,6 +571,7 @@ func _advance_phase() -> void:
 
 func _show_result(victory: bool) -> void:
 	menu_button.visible = false
+	progress.visible = false
 	_clear_content()
 	state = "victory" if victory else "defeat"
 	_make_title("MISSAO CUMPRIDA" if victory else "CONEXAO PERDIDA")

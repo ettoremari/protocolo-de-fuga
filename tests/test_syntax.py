@@ -47,6 +47,15 @@ def test_godot_has_menu_return_button():
     assert "func _return_to_menu()" in script
 
 
+def test_godot_has_separate_menu_and_video_layers():
+    project_root = Path(__file__).parents[1]
+    script = (project_root / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert "grid_overlay.z_index = -1" in script
+    assert "video_player.z_index = 100" in script
+    assert "video_skip_button.z_index = 101" in script
+    assert "progress.visible = false" in script
+
+
 def test_godot_animations_are_short_and_do_not_move_container_children():
     project_root = Path(__file__).parents[1]
     script = (project_root / "scripts" / "main.gd").read_text(encoding="utf-8")
