@@ -1,65 +1,43 @@
-# PROTOCOLO DE FUGA — Escape Room de Análise Combinatória
+# PROTOCOLO DE FUGA - Escape Room de Analise Combinatoria
 
-Protótipo em Python + Pygame, com cinco fases, banco de questões, respostas mistas (alternativas e numéricas), limite de 20 minutos e 10 erros.
+Jogo educacional convertido para **Godot 4**, com cinco fases, banco de questoes, respostas mistas (alternativas e numericas), limite de 20 minutos e 10 erros.
 
-## Baixar o jogo
+## Por que Godot
 
-- [Windows (.exe)](https://github.com/ettoremari/protocolo-de-fuga/releases/latest/download/ProtocoloDeFuga.exe)
-- [Android (.apk)](https://github.com/ettoremari/protocolo-de-fuga/releases/latest/download/ProtocoloDeFuga.apk)
-
-O APK é uma compilação de depuração para instalação manual.
+Godot e o motor escolhido para este projeto porque oferece animacao de interface, reproducao de video, audio, responsividade para celular e desktop e exportacao oficial para Android e Windows a partir do mesmo projeto.
 
 ## Requisitos
-- Python 3.10 ou superior
-- Pygame 2.5+
 
-## Instalação
-```bash
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# Linux/macOS:
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+- Godot 4.7 ou superior
 
-## Executar
-```bash
-python main.py
-```
+## Executar no computador
 
-## Executar no Android (Pydroid 3)
+1. Abra a pasta do projeto no Godot.
+2. Importe `project.godot`.
+3. Pressione **F6** ou clique em **Executar projeto**.
 
-1. Instale o **Pydroid 3** pela Google Play.
-2. Baixe o projeto pelo botão **Code > Download ZIP** no GitHub e extraia a pasta.
-3. No terminal do Pydroid 3, instale a dependência:
-   ```bash
-   pip install pygame
-   ```
-4. Abra o arquivo `main.py` dentro da pasta extraída e toque em **Run**.
-5. Ative a rotação automática para alternar entre retrato e paisagem. O jogo ocupa a tela inteira e reorganiza os controles ao girar o dispositivo.
+## Exportar
 
-Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. Fontes e áreas de toque acompanham a densidade de pixels do aparelho. Enunciados, alternativas e resoluções longos podem ser percorridos com um gesto de arrastar; também há suporte à roda do mouse.
+Os presets ja estao configurados em `export_presets.cfg`:
 
-Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` da pasta principal do projeto e se a pasta `data` está no mesmo nível.
+- Windows Desktop: `build/ProtocoloDeFuga.exe`
+- Android: `build/ProtocoloDeFuga.apk`
+
+No Godot, use **Projeto > Exportar** e instale os templates de exportacao correspondentes. Para Android, configure o SDK/JDK no Editor Settings.
 
 ## Controles
-- Enter: iniciar/reiniciar e enviar resposta numérica
-- Toque/clique: selecionar alternativa, validar resposta e avançar
-- Teclado integrado na tela vertical: inserir números, vírgula e apagar
-- Arrastar para cima ou para baixo: percorrer enunciados, alternativas e resoluções longos
-- Backspace: apagar caractere da resposta numérica com teclado físico
-- Esc: sair
 
-## Regras implementadas
+- Clique/toque: selecionar alternativa, validar resposta e avancar
+- Teclado fisico ou tela: digitar respostas numericas
+- Roda do mouse/arrasto: percorrer textos longos
+- Esc: fechar a janela
+
+## Regras
+
 - 5 fases com metas de 1, 2, 2, 3 e 4 acertos (12 no total).
-- 10 questões por fase.
-- Sorteio sem repetição até esgotar o banco da fase.
-- Erros não removem acertos; cada erro apresenta a resolução.
+- 10 questoes por fase.
+- Sorteio sem repeticao ate esgotar o banco da fase.
+- Erros nao removem acertos; cada erro apresenta a resolucao.
 - Derrota ao atingir 10 erros ou 20 minutos.
-- Nova partida disponível após vitória ou derrota.
-- Janela redimensionável, com layout que acompanha o tamanho da janela.
-
-## Observação sobre a versão Android
-
-A interface responsiva foi adicionada, mas a execução ainda precisa ser validada em diferentes tamanhos de tela e versões do Pydroid 3.
+- Nova partida disponivel apos vitoria ou derrota.
+- Interface responsiva em retrato e paisagem.
