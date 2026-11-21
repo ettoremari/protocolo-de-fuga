@@ -1,5 +1,6 @@
 import json
 import math
+import os
 import random
 import sys
 import time
@@ -31,7 +32,25 @@ COLORS = {
 def load_questions():
     with open(ROOT / "data" / "questoes.json", encoding="utf-8") as file:
         data = json.load(file)
+    # Keep the game focused on its own original escape-room questions.
+    data = [q for q in data if q.get("origem") != "enem" and not q.get("id", "").startswith("ENEM-")]
     return {phase: [q for q in data if q["fase"] == phase] for phase in range(1, 6)}
+
+
+def android_density():
+    """Return Android's physical-pixel scale, with a safe resolution fallback."""
+    if "ANDROID_ARGUMENT" not in os.environ and sys.platform != "android":
+        return 1.0
+    try:
+        from jnius import autoclass
+
+        activity = autoclass("org.libsdl.app.SDLActivity").mSingleton
+        return max(1.0, min(4.0, float(activity.getResources().getDisplayMetrics().density)))
+    except Exception:
+        # Pydroid builds can omit PyJNIus; estimate density from the portrait width.
+        info = pygame.display.Info()
+        width = info.current_w or pygame.display.get_surface().get_width()
+        return max(1.0, min(3.5, width / 420.0))
 
 class EscapeRoom:
     def __init__(self):
@@ -49,7 +68,13 @@ class EscapeRoom:
         except pygame.error:
             self.music_enabled = False
         pygame.display.set_caption("PROTOCOLO DE FUGA | Escape Room")
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+        self.android = "ANDROID_ARGUMENT" in os.environ or sys.platform == "android"
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if self.android else pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+        self.ui_scale = android_density()
+        self.mobile_scroll_y = 0
+        self.mobile_scroll_max = 0
+        self.mobile_touch_start = None
+        self.mobile_touch_last_y = None
         self.clock = pygame.time.Clock()
         try:
             self.logo_image = pygame.image.load(str(ROOT / "assets" / "icon.png")).convert_alpha()
@@ -75,6 +100,8 @@ class EscapeRoom:
         self.feedback_until = 0
         self.answer_text = ""
         self.selected = None
+        self.mobile_scroll_y = 0
+        self.mobile_scroll_max = 0
         self.showing_error = False
         self.effect_started = None
         self.effect_color = COLORS['cyan']
@@ -173,13 +200,8 @@ class EscapeRoom:
         if active:
             border = tuple(min(255, int(channel * (0.72 + pulse * 0.28))) for channel in border)
         pygame.draw.rect(self.screen, border, rect, 1 + int(pulse * 2) if active else 2, border_radius=9)
-        button_font = font or (getattr(self, "mobile_small", self.small) if self.screen.get_height() > self.screen.get_width() else self.small)
-        if button_font.size(label)[0] > rect.width - 18:
-            for size in range(button_font.get_height() - 1, 11, -1):
-                candidate = pygame.font.SysFont("consolas", size, bold=button_font.get_bold())
-                if candidate.size(label)[0] <= rect.width - 18:
-                    button_font = candidate
-                    break
+        is_mobile = self.screen.get_height() > self.screen.get_width() or self.android
+        button_font = getattr(self, "mobile_small", self.small) if is_mobile else self.small
         self.draw_text(label, rect.centerx, rect.centery, COLORS["white"], button_font, True)
         return rect
 
@@ -255,24 +277,17 @@ class EscapeRoom:
 
     def music_button_rect(self):
         w, h = self.screen.get_size()
-        if h > w:
-            return self.mobile_control_rects()[2]
-        margin = max(20, int(w * 0.055))
-        return pygame.Rect(w - margin - 154, 12, 154, 42)
-
-    def draw_mobile_controls(self):
-        minus, plus, music = self.mobile_control_rects()
-        control_font = pygame.font.SysFont("consolas", 16, bold=True)
-        self.button(minus, "A−", font=control_font)
-        self.button(plus, "A+", font=control_font)
-        status = "IND." if not self.music_available else ("ON" if self.music_enabled else "OFF")
-        self.button(music, f"SOM: {status}", active=self.music_available, font=control_font)
+        mobile = h > w or self.android
+        scale = self.ui_scale if mobile else 1
+        margin = max(int(16 * scale), int(w * 0.045)) if mobile else max(20, int(w * 0.055))
+        width, height = (int(124 * scale), int(42 * scale)) if mobile else (154, 42)
+        return pygame.Rect(w - margin - width, int(12 * scale), width, height)
 
     def draw_music_button(self):
-        if self.screen.get_height() > self.screen.get_width():
-            self.configure_mobile_fonts(self.screen.get_width())
-            self.draw_mobile_controls()
-            return
+        if self.screen.get_height() > self.screen.get_width() or self.android:
+            scale = self.ui_scale
+            logical_w = self.screen.get_width() / scale
+            self.mobile_small = pygame.font.SysFont("consolas", int(max(14, min(19, logical_w * .045)) * scale))
         status = "INDISP." if not self.music_available else ("ON" if self.music_enabled else "OFF")
         self.button(self.music_button_rect(), f"SOM: {status}", active=self.music_available)
 
@@ -383,26 +398,23 @@ class EscapeRoom:
 
     def mobile_question_layout(self):
         w, h = self.screen.get_size()
-        margin = max(16, int(w * 0.045))
-        safe_top = max(22, int(h * .035))
-        safe_bottom = max(28, int(h * .06))
-        panel_top = getattr(self, "mobile_panel_top", safe_top + max(132, int(h * .16)))
-        panel_bottom = h - safe_bottom - 40
-        panel = pygame.Rect(margin, panel_top, w - 2 * margin, panel_bottom - panel_top)
-        content_x = panel.x + 22
-        content_width = panel.width - 44
-        question_y = panel.y + 112
-        if self.state == "playing" and self.current:
-            content_bottom = self.wrap_height(self.current["conteudo"], content_width, self.mobile_small, 5, panel.y + 52)
-            question_y = max(question_y, content_bottom + 8)
+        scale = self.ui_scale
+        margin = max(int(16 * scale), int(w * 0.045))
+        panel = pygame.Rect(margin, int(150 * scale), w - 2 * margin, h - int(178 * scale))
+        content_x = panel.x + int(22 * scale)
+        content_width = panel.width - int(44 * scale)
+        question_y = panel.y + int(88 * scale)
         return panel, content_x, content_width, question_y
 
     def render_mobile(self):
         w, h = self.screen.get_size()
-        margin = max(16, int(w * 0.045))
-        safe_top = max(22, int(h * .035))
-        safe_bottom = max(28, int(h * .06))
-        self.configure_mobile_fonts(w)
+        scale = self.ui_scale
+        logical_w = w / scale
+        margin = max(int(16 * scale), int(w * .045))
+        self.mobile_small = pygame.font.SysFont("consolas", int(max(14, min(19, logical_w * .045)) * scale))
+        self.mobile_font = pygame.font.SysFont("consolas", int(max(18, min(24, logical_w * .055)) * scale))
+        self.mobile_title = pygame.font.SysFont("consolas", int(max(22, min(30, logical_w * .07)) * scale), bold=True)
+        self.mobile_big = pygame.font.SysFont("consolas", int(max(34, min(48, logical_w * .11)) * scale), bold=True)
         self.draw_background(w, h)
 
         if self.state == "start":
@@ -419,31 +431,17 @@ class EscapeRoom:
                 "O sistema central bloqueou as cinco áreas de saída. Resolva os desafios de Análise Combinatória e recupere o controle da instalação.",
                 margin, safe_top + int(h * .49), w - 2 * margin, COLORS["muted"], self.mobile_font, 10
             )
-            start_button = pygame.Rect(margin, h - safe_bottom - int(h * .12) - 58, w - 2 * margin, 58)
-            self.button(start_button, "INICIAR MISSÃO")
-            self.draw_text("Toque em INICIAR MISSÃO", margin, h - safe_bottom - 20, COLORS["muted"], self.mobile_small)
+            self.button(pygame.Rect(margin, int(h * .76), w - 2 * margin, int(64 * scale)), "INICIAR MISSÃO")
+            self.draw_text("Toque em INICIAR MISSÃO", margin, int(h * .86), COLORS["muted"], self.mobile_small)
 
         elif self.state in ("playing", "phase_complete"):
-            brand_icon = pygame.Rect(margin, safe_top + 8, 28, 28)
-            self.draw_logo(brand_icon)
-            self.draw_text("PROTO", brand_icon.right + 7, safe_top + 12, COLORS["cyan"], self.mobile_small)
-            phase_label = f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}"
-            phase_bottom = self.wrap_text(phase_label, margin, safe_top + 54, w - 2 * margin, COLORS["white"], self.mobile_title, 2)
-            stats_y = phase_bottom + 2
-            stats = f"ACERTOS {self.total_hits}/12  ERROS {self.errors}/{MAX_ERRORS}"
-            stats_font = self.mobile_small
-            while stats_font.size(stats)[0] > int((w - 2 * margin) * .62) and stats_font.get_height() > 13:
-                stats_font = pygame.font.SysFont("consolas", stats_font.get_height() - 1)
-            self.draw_text(stats, margin, stats_y, COLORS["muted"], stats_font)
+            self.draw_text("PROTOCOLO DE FUGA", margin, int(15 * scale), COLORS["cyan"], self.mobile_small)
+            self.draw_text(f"FASE {self.phase}/5  |  {PHASE_NAMES[self.phase-1]}", margin, int(45 * scale), COLORS["white"], self.mobile_title)
+            stats = f"ACERTOS {self.total_hits}/12   ERROS {self.errors}/{MAX_ERRORS}"
+            self.draw_text(stats, margin, int(88 * scale), COLORS["muted"], self.mobile_small)
             time_text = f"TEMPO {self.remaining()//60:02}:{self.remaining()%60:02}"
-            time_font = self.mobile_small
-            time_x = w - margin - int((w - 2 * margin) * .36)
-            while time_font.size(time_text)[0] > w - margin - time_x and time_font.get_height() > 13:
-                time_font = pygame.font.SysFont("consolas", time_font.get_height() - 1)
-            self.draw_text(time_text, w - margin - time_font.size(time_text)[0], stats_y, COLORS["yellow"], time_font)
-            bar_top = stats_y + max(stats_font.get_linesize(), time_font.get_linesize()) + 5
-            bar = pygame.Rect(margin, bar_top, w - 2 * margin, 8)
-            self.mobile_panel_top = max(safe_top + max(132, int(h * .16)), bar.bottom + 10)
+            self.draw_text(time_text, w - margin, int(88 * scale), COLORS["yellow"], self.mobile_small, True)
+            bar = pygame.Rect(margin, int(119 * scale), w - 2 * margin, int(8 * scale))
             pygame.draw.rect(self.screen, COLORS["panel2"], bar, border_radius=4)
             pygame.draw.rect(self.screen, COLORS["cyan"], (bar.x, bar.y, int(bar.width * self.total_hits / 12), bar.height), border_radius=4)
             panel, cx, cw, question_y = self.mobile_question_layout()
@@ -451,38 +449,37 @@ class EscapeRoom:
             pygame.draw.rect(self.screen, COLORS["line"], panel, 2, border_radius=14)
 
             if self.state == "phase_complete":
-                self.draw_text("SETOR DESBLOQUEADO", panel.centerx, panel.y + 115, COLORS["green"], self.mobile_title, True)
-                self.wrap_text("Acesso autorizado. O próximo setor está disponível.", cx, panel.y + 165, cw, COLORS["white"], self.mobile_font, 10)
-                self.button(pygame.Rect(cx, panel.bottom - 88, cw, 60), "AVANÇAR DE SETOR")
+                self.draw_text("SETOR DESBLOQUEADO", panel.centerx, panel.y + int(115 * scale), COLORS["green"], self.mobile_title, True)
+                self.wrap_text("Acesso autorizado. O próximo setor está disponível.", cx, panel.y + int(165 * scale), cw, COLORS["white"], self.mobile_font, int(10 * scale))
+                self.button(pygame.Rect(cx, panel.bottom - int(88 * scale), cw, int(60 * scale)), "AVANÇAR DE SETOR")
             elif self.current:
-                challenge_label = f"DESAFIO {self.current['id']}"
-                challenge_font = self.mobile_small
-                challenge_width = cw - self.mobile_small.size("↓")[0] - 14
-                while challenge_font.size(challenge_label)[0] > challenge_width and challenge_font.get_height() > 13:
-                    challenge_font = pygame.font.SysFont("consolas", challenge_font.get_height() - 1)
-                self.draw_text(challenge_label, cx, panel.y + 24, COLORS["cyan"], challenge_font)
-                hint = "↓"
-                self.draw_text(hint, cx + cw - self.mobile_small.size(hint)[0], panel.y + 24, COLORS["muted"], self.mobile_small)
-                self.wrap_text(self.current["conteudo"], cx, panel.y + 52, cw, COLORS["muted"], self.mobile_small, 5)
-                submit_rect = pygame.Rect(cx, panel.bottom - 76, cw, 48)
-                self.mobile_submit_rect = submit_rect
-                if self.current["tipo_resposta"] == "choice":
-                    question_view = pygame.Rect(cx - 4, question_y - 5, cw + 8, submit_rect.top - question_y - 12)
+                self.draw_text(f"DESAFIO {self.current['id']}", cx, panel.y + int(24 * scale), COLORS["cyan"], self.mobile_small)
+                self.wrap_text(self.current["conteudo"], cx, panel.y + int(52 * scale), cw, COLORS["muted"], self.mobile_small, int(5 * scale))
+                footer = 285 if self.current["tipo_resposta"] == "numeric" and not self.showing_error else 105
+                body = pygame.Rect(panel.x + int(8 * scale), question_y, panel.width - int(16 * scale), max(1, panel.bottom - int(footer * scale) - question_y))
+                raw_bottom = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, int(9 * scale), question_y)
+                if self.showing_error:
+                    content_bottom = self.wrap_height(self.current["resolucao"], cw, self.mobile_font, int(8 * scale), raw_bottom + int(44 * scale))
+                elif self.current["tipo_resposta"] == "choice":
+                    content_bottom = raw_bottom + len(self.current["alternativas"]) * int(63 * scale)
                 else:
-                    input_y = panel.bottom - 300
-                    question_view = pygame.Rect(cx - 4, question_y - 5, cw + 8, input_y - question_y - 12)
-                self.screen.set_clip(question_view)
-                yy = self.wrap_text(self.current["enunciado"], cx, question_y-self.question_scroll, cw, COLORS["white"], self.mobile_font, 9)
+                    content_bottom = raw_bottom
+                self.mobile_scroll_max = max(0, content_bottom - body.bottom)
+                self.mobile_scroll_y = min(self.mobile_scroll_y, self.mobile_scroll_max)
+                previous_clip = self.screen.get_clip()
+                self.screen.set_clip(body)
+                yy = self.wrap_text(self.current["enunciado"], cx, question_y - self.mobile_scroll_y, cw, COLORS["white"], self.mobile_font, int(9 * scale))
 
                 if self.showing_error:
-                    yy += 14
+                    yy += int(14 * scale)
                     self.draw_text(self.feedback, cx, yy, COLORS["red"], self.mobile_small)
-                    yy += 30
-                    self.wrap_text(self.current["resolucao"], cx, yy, cw, COLORS["yellow"], self.mobile_font, 8)
-                    self.screen.set_clip(None)
-                    self.button(submit_rect, "PRÓXIMA QUESTÃO")
+                    yy += int(30 * scale)
+                    self.wrap_text(self.current["resolucao"], cx, yy, cw, COLORS["yellow"], self.mobile_font, int(8 * scale))
+                    self.screen.set_clip(previous_clip)
+                    self.button(pygame.Rect(cx, panel.bottom - int(88 * scale), cw, int(60 * scale)), "PRÓXIMA QUESTÃO")
                 elif self.current["tipo_resposta"] == "choice":
-                    option_gap = 9
+                    option_h = int(54 * scale)
+                    option_gap = int(9 * scale)
                     self.mobile_option_rects = []
                     option_font = pygame.font.SysFont("consolas", max(20, min(25, self.mobile_font.get_height() - 4)))
                     option_y = yy
@@ -493,27 +490,25 @@ class EscapeRoom:
                         self.mobile_option_rects.append(rect)
                         pygame.draw.rect(self.screen, (24, 75, 91) if self.selected == idx else COLORS["panel2"], rect, border_radius=8)
                         pygame.draw.rect(self.screen, COLORS["cyan"] if self.selected == idx else COLORS["line"], rect, 2, border_radius=8)
-                        line_y = rect.centery - len(lines) * option_font.get_linesize() // 2
-                        for line in lines:
-                            label = option_font.render(line, True, COLORS["white"])
-                            self.screen.blit(label, (rect.x + 14, line_y))
-                            line_y += option_font.get_linesize()
-                        option_y += option_h + option_gap
-                    self.screen.set_clip(None)
-                    self.button(submit_rect, "VALIDAR RESPOSTA")
+                        # Vertically center the option label.
+                        label = self.mobile_small.render(f"{chr(65+idx)})  {option}", True, COLORS["white"])
+                        self.screen.blit(label, (rect.x + int(16 * scale), rect.centery - label.get_height() // 2))
+                    self.screen.set_clip(previous_clip)
+                    self.mobile_submit_rect = pygame.Rect(cx, panel.bottom - int(88 * scale), cw, int(60 * scale))
+                    self.button(self.mobile_submit_rect, "VALIDAR RESPOSTA")
                 else:
-                    self.screen.set_clip(None)
-                    input_rect = pygame.Rect(cx, input_y, cw, 46)
+                    self.screen.set_clip(previous_clip)
+                    input_rect = pygame.Rect(cx, yy + int(12 * scale), cw, int(54 * scale))
                     pygame.draw.rect(self.screen, COLORS["panel2"], input_rect, border_radius=8)
                     pygame.draw.rect(self.screen, COLORS["cyan"], input_rect, 2, border_radius=8)
                     shown = self.answer_text if self.answer_text else "RESPOSTA: toque nos números abaixo"
-                    self.draw_text(shown, input_rect.x + 14, input_rect.y + 15, COLORS["white"] if self.answer_text else COLORS["muted"], self.mobile_small)
+                    self.draw_text(shown, input_rect.x + int(14 * scale), input_rect.y + int(15 * scale), COLORS["white"] if self.answer_text else COLORS["muted"], self.mobile_small)
 
                     keys = ["1","2","3","4","5","6","7","8","9",",","0","⌫"]
-                    key_gap = 8
-                    key_h = 34
+                    key_gap = int(6 * scale)
+                    key_h = int(40 * scale)
                     key_w = (cw - 2 * key_gap) // 3
-                    keypad_bottom = submit_rect.top - 10
+                    keypad_bottom = panel.bottom - int(92 * scale)
                     keypad_top = keypad_bottom - (4 * key_h + 3 * key_gap)
                     self.mobile_key_rects = []
                     for idx, key in enumerate(keys):
@@ -521,22 +516,25 @@ class EscapeRoom:
                         rect = pygame.Rect(cx + col * (key_w + key_gap), keypad_top + row * (key_h + key_gap), key_w, key_h)
                         self.mobile_key_rects.append((rect, key))
                         self.button(rect, key)
-                    self.button(submit_rect, "VALIDAR RESPOSTA")
+                    self.mobile_submit_rect = pygame.Rect(cx, panel.bottom - int(80 * scale), cw, int(54 * scale))
+                    self.button(self.mobile_submit_rect, "VALIDAR RESPOSTA")
 
-            phase_stats = f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}"
-            footer_font = self.mobile_small
-            while footer_font.size(phase_stats)[0] > w - 2 * margin and footer_font.get_height() > 13:
-                footer_font = pygame.font.SysFont("consolas", footer_font.get_height() - 1)
-            self.draw_text(phase_stats, margin, h - safe_bottom - 18, COLORS["muted"], footer_font)
+                if self.mobile_scroll_max:
+                    track = pygame.Rect(panel.right - int(5 * scale), body.y, int(3 * scale), body.height)
+                    thumb_h = max(int(24 * scale), int(track.height * body.height / (body.height + self.mobile_scroll_max)))
+                    thumb_y = track.y + int((track.height - thumb_h) * self.mobile_scroll_y / self.mobile_scroll_max)
+                    pygame.draw.rect(self.screen, COLORS["line"], track, border_radius=int(2 * scale))
+                    pygame.draw.rect(self.screen, COLORS["cyan"], (track.x, thumb_y, track.width, thumb_h), border_radius=int(2 * scale))
+
+            self.draw_text(f"ACERTOS NESTA FASE: {self.phase_hits}/{PHASE_TARGETS[self.phase-1]}", margin, h - int(20 * scale), COLORS["muted"], self.mobile_small)
 
         elif self.state in ("victory", "defeat"):
             won = self.state == "victory"
             self.draw_text("MISSÃO CONCLUÍDA" if won else "MISSÃO INTERROMPIDA", w // 2, int(h * .34), COLORS["green"] if won else COLORS["red"], self.mobile_title, True)
             self.draw_text("Você escapou da instalação!" if won else "O sistema de segurança bloqueou sua tentativa.", w // 2, int(h * .45), COLORS["white"], self.mobile_font, True)
             self.draw_text(f"Acertos: {self.total_hits}  |  Erros: {self.errors}", w // 2, int(h * .54), COLORS["muted"], self.mobile_small, True)
-            restart_button = pygame.Rect(margin, h - safe_bottom - int(h * .22) - 58, w - 2 * margin, 58)
-            self.button(restart_button, "NOVA PARTIDA")
-            self.draw_text("Toque no botão para reiniciar", w // 2, h - safe_bottom - 20, COLORS["muted"], self.mobile_small, True)
+            self.button(pygame.Rect(margin, int(h * .67), w - 2 * margin, int(64 * scale)), "NOVA PARTIDA")
+            self.draw_text("Toque no botão para reiniciar", w // 2, int(h * .79), COLORS["muted"], self.mobile_small, True)
 
         self.draw_music_button()
         self.draw_feedback_effect()
@@ -544,7 +542,7 @@ class EscapeRoom:
 
     def render(self):
         w, h = self.screen.get_size()
-        if h > w:
+        if h > w or self.android:
             self.render_mobile()
         else:
             self.render_desktop()
@@ -552,7 +550,8 @@ class EscapeRoom:
     def handle_mobile_click(self, pos):
         x, y = pos
         w, h = self.screen.get_size()
-        margin = max(16, int(w * .045))
+        scale = self.ui_scale
+        margin = max(int(16 * scale), int(w * .045))
         panel, cx, cw, question_y = self.mobile_question_layout()
 
         if self.state == "start":
@@ -566,31 +565,37 @@ class EscapeRoom:
                 self.start_game()
             return
         if self.state == "phase_complete":
-            if y >= panel.bottom - 105:
+            if y >= panel.bottom - int(105 * scale):
                 self.advance()
             return
         if self.state != "playing" or not self.current:
             return
         if self.showing_error:
-            if self.mobile_submit_rect.collidepoint(pos):
+            if y >= panel.bottom - int(105 * scale):
                 self.advance()
             return
 
         # Recalculate the same wrapped question height used by render_mobile.
-        self.configure_mobile_fonts(w)
+        logical_w = w / scale
+        self.mobile_small = pygame.font.SysFont("consolas", int(max(14, min(19, logical_w * .045)) * scale))
+        self.mobile_font = pygame.font.SysFont("consolas", int(max(18, min(24, logical_w * .055)) * scale))
+        yy = self.wrap_height(self.current["enunciado"], cw, self.mobile_font, int(9 * scale), question_y) - self.mobile_scroll_y
 
         if self.current["tipo_resposta"] == "choice":
-            for idx, rect in enumerate(self.mobile_option_rects):
-                if rect.collidepoint(pos):
+            option_h, option_gap = int(54 * scale), int(9 * scale)
+            body = pygame.Rect(panel.x + int(8 * scale), question_y, panel.width - int(16 * scale), max(1, panel.bottom - int(105 * scale) - question_y))
+            for idx in range(len(self.current["alternativas"])):
+                rect = pygame.Rect(cx, yy + idx * (option_h + option_gap), cw, option_h)
+                if body.collidepoint(pos) and rect.collidepoint(pos):
                     self.selected = idx
                     return
-            if self.mobile_submit_rect.collidepoint(pos):
+            if y >= panel.bottom - int(105 * scale):
                 self.submit()
         else:
             keys = ["1","2","3","4","5","6","7","8","9",",","0","⌫"]
-            key_gap, key_h = 8, 34
+            key_gap, key_h = int(6 * scale), int(40 * scale)
             key_w = (cw - 2 * key_gap) // 3
-            keypad_bottom = self.mobile_submit_rect.top - 10
+            keypad_bottom = panel.bottom - int(92 * scale)
             keypad_top = keypad_bottom - (4 * key_h + 3 * key_gap)
             for idx, key in enumerate(keys):
                 row, col = divmod(idx, 3)
@@ -604,7 +609,7 @@ class EscapeRoom:
                     else:
                         self.answer_text += key
                     return
-            if self.mobile_submit_rect.collidepoint(pos):
+            if y >= panel.bottom - int(105 * scale):
                 self.submit()
 
     @staticmethod
@@ -634,11 +639,29 @@ class EscapeRoom:
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.VIDEORESIZE:
-                    self.screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
-                elif event.type == pygame.MOUSEWHEEL and self.state == "playing":
-                    self.question_scroll = max(0, self.question_scroll - event.y * 64)
-                elif event.type == pygame.FINGERMOTION and h > w and self.state == "playing":
-                    self.question_scroll = max(0, self.question_scroll - int(event.dy * h))
+                    if self.android:
+                        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+                        self.ui_scale = android_density()
+                    else:
+                        self.screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
+                    self.mobile_scroll_y = 0
+                elif event.type == pygame.MOUSEWHEEL and (h > w or self.android):
+                    self.mobile_scroll_y = max(0, min(self.mobile_scroll_max, self.mobile_scroll_y - event.y * int(58 * self.ui_scale)))
+                elif event.type == pygame.MOUSEMOTION and self.mobile_touch_start is not None:
+                    delta_y = event.pos[1] - self.mobile_touch_last_y
+                    if abs(event.pos[1] - self.mobile_touch_start[1]) > int(8 * self.ui_scale):
+                        self.mobile_touch_dragged = True
+                        self.mobile_scroll_y = max(0, min(self.mobile_scroll_max, self.mobile_scroll_y - delta_y))
+                    self.mobile_touch_last_y = event.pos[1]
+                elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self.mobile_touch_start is not None:
+                    if not getattr(self, "mobile_touch_dragged", False):
+                        if self.music_button_rect().collidepoint(event.pos):
+                            self.toggle_music()
+                        else:
+                            self.handle_mobile_click(event.pos)
+                    self.mobile_touch_start = None
+                    self.mobile_touch_last_y = None
+                    self.mobile_touch_dragged = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
@@ -657,24 +680,13 @@ class EscapeRoom:
                             elif event.key == pygame.K_RETURN:
                                 self.submit()
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    if h > w:
-                        minus_rect, plus_rect, music_rect = self.mobile_control_rects()
-                        if minus_rect.collidepoint(event.pos):
-                            self.mobile_font_scale = max(0.7, round(self.mobile_font_scale - 0.1, 1))
-                            self.configure_mobile_fonts(w)
-                            continue
-                        if plus_rect.collidepoint(event.pos):
-                            self.mobile_font_scale = min(1.4, round(self.mobile_font_scale + 0.1, 1))
-                            self.configure_mobile_fonts(w)
-                            continue
-                        if music_rect.collidepoint(event.pos):
-                            self.toggle_music()
-                            continue
-                    elif self.music_button_rect().collidepoint(event.pos):
-                        self.toggle_music()
+                    if h > w or self.android:
+                        self.mobile_touch_start = event.pos
+                        self.mobile_touch_last_y = event.pos[1]
+                        self.mobile_touch_dragged = False
                         continue
-                    if h > w:
-                        self.handle_mobile_click(event.pos)
+                    if self.music_button_rect().collidepoint(event.pos):
+                        self.toggle_music()
                         continue
                     x,y = event.pos
                     if self.state == "start":
