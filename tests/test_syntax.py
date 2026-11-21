@@ -37,3 +37,11 @@ def test_godot_has_previous_pygame_animations():
     assert "scan_y" in script
     assert "_animate_feedback" in script
     assert "_animate_enter" in script
+
+
+def test_godot_has_menu_return_button():
+    project_root = Path(__file__).parents[1]
+    script = (project_root / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert "var menu_button: Button" in script
+    assert 'menu_button.text = "MENU INICIAL"' in script
+    assert "func _return_to_menu()" in script

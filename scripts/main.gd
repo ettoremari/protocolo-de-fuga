@@ -35,6 +35,7 @@ var feedback_label: Label
 var action_button: Button
 var numeric_input: LineEdit
 var music_button: Button
+var menu_button: Button
 var music_player: AudioStreamPlayer
 var choice_container: VBoxContainer
 var main_layout: VBoxContainer
@@ -177,8 +178,19 @@ func _build_ui() -> void:
 	music_button.text = "MUSICA: ON"
 	music_button.custom_minimum_size = Vector2(140, 38)
 	music_button.pressed.connect(_toggle_music)
+
+	menu_button = Button.new()
+	menu_button.text = "MENU INICIAL"
+	menu_button.custom_minimum_size = Vector2(160, 38)
+	menu_button.pressed.connect(_return_to_menu)
+	menu_button.visible = false
+
 	var top_row := HBoxContainer.new()
 	top_row.alignment = BoxContainer.ALIGNMENT_END
+	top_row.add_child(menu_button)
+	var top_spacer := Control.new()
+	top_spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top_row.add_child(top_spacer)
 	top_row.add_child(music_button)
 	layout.add_child(top_row)
 
@@ -365,6 +377,7 @@ func _toggle_music() -> void:
 
 func _show_start() -> void:
 	state = "start"
+	menu_button.visible = false
 	_clear_content()
 	status_label.text = "PROTOCOLO DE FUGA"
 	progress.value = 0
@@ -382,7 +395,15 @@ func _begin_game() -> void:
 	_reset()
 	started_at_msec = Time.get_ticks_msec()
 	state = "playing"
+	menu_button.visible = true
 	_next_question()
+
+
+func _return_to_menu() -> void:
+	menu_button.visible = false
+	_reset()
+	scroll.scroll_vertical = 0
+	_show_start()
 
 
 func _next_question() -> void:
@@ -541,6 +562,7 @@ func _advance_phase() -> void:
 
 
 func _show_result(victory: bool) -> void:
+	menu_button.visible = false
 	_clear_content()
 	state = "victory" if victory else "defeat"
 	_make_title("MISSAO CUMPRIDA" if victory else "CONEXAO PERDIDA")
