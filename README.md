@@ -32,6 +32,12 @@ No Godot, use **Projeto > Exportar** e instale os templates de exportacao corres
 - Roda do mouse/arrasto: percorrer textos longos
 - Esc: fechar a janela
 
+## Videos
+
+- `abertura-final-2.ogv` reproduz na abertura do jogo.
+- `iniciar-missao.ogv` reproduz ao tocar em **INICIAR MISSAO**.
+- Os arquivos MP4 originais enviados tambem ficam em `assets/` como fonte dos videos.
+
 ## Regras
 
 - 5 fases com metas de 1, 2, 2, 3 e 4 acertos (12 no total).

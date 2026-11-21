@@ -37,6 +37,10 @@ var numeric_input: LineEdit
 var music_button: Button
 var music_player: AudioStreamPlayer
 var choice_container: VBoxContainer
+var main_layout: VBoxContainer
+var video_player: VideoStreamPlayer
+var video_skip_button: Button
+var video_on_finished: Callable
 
 
 func _ready() -> void:
@@ -44,8 +48,9 @@ func _ready() -> void:
 	_load_questions()
 	_reset()
 	_build_ui()
-	_show_start()
 	_setup_music()
+	_setup_videos()
+	_play_video("res://assets/abertura-final-2.ogv", _show_start)
 
 
 func _configure_desktop_window() -> void:
@@ -115,7 +120,7 @@ func _build_ui() -> void:
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(background)
 
-	var main_layout := VBoxContainer.new()
+	main_layout = VBoxContainer.new()
 	main_layout.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	main_layout.add_theme_constant_override("separation", 12)
 	add_child(main_layout)
@@ -240,6 +245,58 @@ func _setup_music() -> void:
 		music_player.play()
 
 
+func _setup_videos() -> void:
+	video_player = VideoStreamPlayer.new()
+	video_player.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	video_player.expand = true
+	video_player.autoplay = false
+	video_player.finished.connect(_finish_video)
+	add_child(video_player)
+
+	video_skip_button = Button.new()
+	video_skip_button.text = "PULAR"
+	video_skip_button.custom_minimum_size = Vector2(120, 48)
+	video_skip_button.anchor_left = 1.0
+	video_skip_button.anchor_top = 1.0
+	video_skip_button.anchor_right = 1.0
+	video_skip_button.anchor_bottom = 1.0
+	video_skip_button.offset_left = -140
+	video_skip_button.offset_top = -68
+	video_skip_button.offset_right = -20
+	video_skip_button.offset_bottom = -20
+	video_skip_button.pressed.connect(_finish_video)
+	video_skip_button.visible = false
+	add_child(video_skip_button)
+	video_player.visible = false
+
+
+func _play_video(path: String, on_finished: Callable) -> void:
+	var stream = load(path)
+	if stream == null:
+		push_error("Nao foi possivel carregar o video: " + path)
+		on_finished.call()
+		return
+	video_on_finished = on_finished
+	main_layout.visible = false
+	video_skip_button.visible = true
+	video_player.visible = true
+	video_player.stream = stream
+	video_player.play()
+
+
+func _finish_video() -> void:
+	if not video_player.visible:
+		return
+	video_player.stop()
+	video_player.visible = false
+	video_skip_button.visible = false
+	main_layout.visible = true
+	var callback := video_on_finished
+	video_on_finished = Callable()
+	if callback.is_valid():
+		callback.call()
+
+
 func _toggle_music() -> void:
 	music_enabled = !music_enabled
 	music_button.text = "MUSICA: ON" if music_enabled else "MUSICA: OFF"
@@ -259,6 +316,10 @@ func _show_start() -> void:
 
 
 func _start_game() -> void:
+	_play_video("res://assets/iniciar-missao.ogv", _begin_game)
+
+
+func _begin_game() -> void:
 	_reset()
 	started_at_msec = Time.get_ticks_msec()
 	state = "playing"

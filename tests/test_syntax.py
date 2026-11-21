@@ -19,3 +19,12 @@ def test_godot_layout_has_scroll_and_desktop_window_setup():
     assert "window/size/min_height=600" in project
     assert "scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO" in script
     assert "DisplayServer.window_set_min_size(Vector2i(800, 600))" in script
+
+
+def test_godot_has_opening_and_mission_videos():
+    project_root = Path(__file__).parents[1]
+    script = (project_root / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert "abertura-final-2.ogv" in script
+    assert "iniciar-missao.ogv" in script
+    assert (project_root / "assets" / "abertura-final-2.ogv").is_file()
+    assert (project_root / "assets" / "iniciar-missao.ogv").is_file()
