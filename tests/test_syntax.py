@@ -45,3 +45,12 @@ def test_godot_has_menu_return_button():
     assert "var menu_button: Button" in script
     assert 'menu_button.text = "MENU INICIAL"' in script
     assert "func _return_to_menu()" in script
+
+
+def test_godot_animations_are_short_and_do_not_move_container_children():
+    project_root = Path(__file__).parents[1]
+    script = (project_root / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert '"modulate", Color.WHITE, 0.12' in script
+    assert '"scale", Vector2.ONE, 0.14' in script
+    assert '"modulate", Color(1, 1, 1, 0), 0.18' in script
+    assert "control.position" not in script

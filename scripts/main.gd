@@ -76,7 +76,7 @@ func _configure_desktop_window() -> void:
 
 func _process(_delta: float) -> void:
 	if grid_overlay and grid_overlay.visible:
-		scan_y = fmod(scan_y + _delta * 70.0, max(grid_overlay.size.y, 1.0))
+		scan_y = fmod(scan_y + _delta * 35.0, max(grid_overlay.size.y, 1.0))
 		grid_overlay.queue_redraw()
 	if state == "playing" or state == "show_error":
 		_update_status()
@@ -273,12 +273,12 @@ func _make_button(text: String, callback: Callable) -> Button:
 
 func _animate_enter(control: Control, delay := 0.0) -> void:
 	control.modulate = Color(1, 1, 1, 0)
-	var target_position := control.position
-	control.position = target_position + Vector2(0, 14)
+	control.scale = Vector2(0.985, 0.985)
+	control.pivot_offset = control.size / 2.0
 	var tween := create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(control, "modulate", Color.WHITE, 0.28).set_delay(delay)
-	tween.tween_property(control, "position", target_position, 0.32).set_delay(delay).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(control, "modulate", Color.WHITE, 0.12).set_delay(delay)
+	tween.tween_property(control, "scale", Vector2.ONE, 0.14).set_delay(delay).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _draw_grid_animation() -> void:
@@ -300,7 +300,7 @@ func _animate_feedback(correct: bool) -> void:
 	feedback_overlay.color = Color("#4bdc9b") if correct else Color("#ff5b70")
 	feedback_overlay.modulate = Color(1, 1, 1, 0.22)
 	var tween := create_tween()
-	tween.tween_property(feedback_overlay, "modulate", Color(1, 1, 1, 0), 0.36).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(feedback_overlay, "modulate", Color(1, 1, 1, 0), 0.18).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _setup_music() -> void:
@@ -445,7 +445,7 @@ func _update_status() -> void:
 		remaining_seconds() % 60,
 	]
 	var progress_tween := create_tween()
-	progress_tween.tween_property(progress, "value", total_hits, 0.28).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	progress_tween.tween_property(progress, "value", total_hits, 0.14).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _show_question() -> void:
@@ -483,10 +483,10 @@ func _select_choice(index: int) -> void:
 	selected_choice = index
 	for child in choice_container.get_children():
 		var child_tween := create_tween()
-		child_tween.tween_property(child, "modulate", Color.WHITE, 0.18)
+		child_tween.tween_property(child, "modulate", Color.WHITE, 0.10)
 	var selected_child := choice_container.get_child(index)
 	var selected_tween := create_tween()
-	selected_tween.tween_property(selected_child, "modulate", Color("#34dcf0"), 0.18)
+	selected_tween.tween_property(selected_child, "modulate", Color("#34dcf0"), 0.10)
 
 
 func _submit_answer() -> void:
