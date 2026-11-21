@@ -2,7 +2,7 @@ name: Build Godot releases
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/godot-scroll-desktop]
   workflow_dispatch:
 
 permissions:
