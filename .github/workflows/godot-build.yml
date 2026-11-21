@@ -53,8 +53,6 @@ jobs:
           ./Godot_v4.7.2-stable_linux.x86_64 --headless --path . --export-release "Windows Desktop" build/ProtocoloDeFuga.exe
 
       - name: Export Android APK
-        env:
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
         run: |
           mkdir -p build
           ./Godot_v4.7.2-stable_linux.x86_64 --headless --path . --export-debug "Android" build/ProtocoloDeFuga.apk
