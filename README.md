@@ -37,9 +37,9 @@ python main.py
    pip install pygame
    ```
 4. Abra o arquivo `main.py` dentro da pasta extraída e toque em **Run**.
-5. Se o Android perguntar sobre rotação automática, permita a orientação que preferir. A interface detecta telas verticais e horizontais e ajusta os controles.
+5. Ative a rotação automática para alternar entre retrato e paisagem. O jogo ocupa a tela inteira e reorganiza os controles ao girar o dispositivo.
 
-Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. As alternativas e botões foram ampliados para toque.
+Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. Fontes e áreas de toque acompanham a densidade de pixels do aparelho. Enunciados, alternativas e resoluções longos podem ser percorridos com um gesto de arrastar; também há suporte à roda do mouse.
 
 Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` da pasta principal do projeto e se a pasta `data` está no mesmo nível.
 
@@ -47,6 +47,7 @@ Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` d
 - Enter: iniciar/reiniciar e enviar resposta numérica
 - Toque/clique: selecionar alternativa, validar resposta e avançar
 - Teclado integrado na tela vertical: inserir números, vírgula e apagar
+- Arrastar para cima ou para baixo: percorrer enunciados, alternativas e resoluções longos
 - Backspace: apagar caractere da resposta numérica com teclado físico
 - Esc: sair
 
