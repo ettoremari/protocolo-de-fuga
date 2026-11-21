@@ -120,7 +120,7 @@ class EscapeRoom:
         self.selected = None
         self.showing_error = False
         self.feedback = ""
-        self.question_scroll = 0
+        self.mobile_scroll_y = 0
 
     def elapsed(self):
         return 0 if self.started_at is None else int(time.time() - self.started_at)
@@ -734,6 +734,5 @@ class EscapeRoom:
 
 if __name__ == "__main__":
     EscapeRoom().run()
-
 
 

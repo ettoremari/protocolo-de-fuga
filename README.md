@@ -1,6 +1,13 @@
 # PROTOCOLO DE FUGA — Escape Room de Análise Combinatória
 
-Protótipo em Python + Pygame, com cinco fases, banco de 50 questões, respostas mistas (alternativas e numéricas), limite de 20 minutos e 10 erros.
+Protótipo em Python + Pygame, com cinco fases, banco de questões, respostas mistas (alternativas e numéricas), limite de 20 minutos e 10 erros.
+
+## Baixar o jogo
+
+- [Windows (.exe)](https://github.com/ettoremari/protocolo-de-fuga/releases/latest/download/ProtocoloDeFuga.exe)
+- [Android (.apk)](https://github.com/ettoremari/protocolo-de-fuga/releases/latest/download/ProtocoloDeFuga.apk)
+
+O APK é uma compilação de depuração para instalação manual.
 
 ## Requisitos
 - Python 3.10 ou superior
@@ -30,17 +37,17 @@ python main.py
    pip install pygame
    ```
 4. Abra o arquivo `main.py` dentro da pasta extraída e toque em **Run**.
-5. Se o Android perguntar sobre rotação automática, permita a orientação que preferir. A interface detecta telas verticais e horizontais e ajusta os controles.
+5. Ative a rotação automática para alternar entre retrato e paisagem. O jogo ocupa a tela inteira e reorganiza os controles ao girar o dispositivo.
 
-Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. As alternativas e botões foram ampliados para toque. Use `A−` e `A+` na barra superior para ajustar o tamanho dos textos; o ícone do aplicativo usa a marca futurista do jogo.
+Na orientação vertical, as respostas numéricas usam um teclado integrado ao jogo; não é necessário abrir o teclado virtual do Android. Fontes e áreas de toque acompanham a densidade de pixels do aparelho. Enunciados, alternativas e resoluções longos podem ser percorridos com um gesto de arrastar; também há suporte à roda do mouse.
 
 Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` da pasta principal do projeto e se a pasta `data` está no mesmo nível.
 
 ## Controles
 - Enter: iniciar/reiniciar e enviar resposta numérica
 - Toque/clique: selecionar alternativa, validar resposta e avançar
-- Android: `A−` e `A+` ajustam o tamanho da fonte durante o jogo; o botão `SOM` controla a trilha sonora
 - Teclado integrado na tela vertical: inserir números, vírgula e apagar
+- Arrastar para cima ou para baixo: percorrer enunciados, alternativas e resoluções longos
 - Backspace: apagar caractere da resposta numérica com teclado físico
 - Esc: sair
 
@@ -56,4 +63,3 @@ Se o Pydroid abrir apenas o editor, confira se o arquivo aberto é o `main.py` d
 ## Observação sobre a versão Android
 
 A interface responsiva foi adicionada, mas a execução ainda precisa ser validada em diferentes tamanhos de tela e versões do Pydroid 3.
-
