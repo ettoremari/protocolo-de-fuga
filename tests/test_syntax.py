@@ -63,3 +63,11 @@ def test_godot_animations_are_short_and_do_not_move_container_children():
     assert '"scale", Vector2.ONE, 0.14' in script
     assert '"modulate", Color(1, 1, 1, 0), 0.18' in script
     assert "control.position" not in script
+
+
+def test_godot_has_damage_health_bar_effect():
+    project_root = Path(__file__).parents[1]
+    script = (project_root / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert "var health_bar: ProgressBar" in script
+    assert "func _animate_damage()" in script
+    assert 'health_label.text = "INTEGRIDADE - DANO"' in script

@@ -28,6 +28,8 @@ var background: ColorRect
 var header: VBoxContainer
 var status_label: Label
 var progress: ProgressBar
+var health_bar: ProgressBar
+var health_label: Label
 var panel: PanelContainer
 var content: VBoxContainer
 var scroll: ScrollContainer
@@ -113,6 +115,8 @@ func _reset() -> void:
 	phase_hits = 0
 	total_hits = 0
 	errors = 0
+	if health_bar:
+		health_bar.value = MAX_ERRORS
 	started_at_msec = 0
 	current = {}
 	selected_choice = -1
@@ -174,6 +178,35 @@ func _build_ui() -> void:
 	progress.show_percentage = false
 	progress.custom_minimum_size = Vector2(0, 10)
 	header.add_child(progress)
+
+	health_label = Label.new()
+	health_label.text = "INTEGRIDADE"
+	health_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	health_label.add_theme_font_size_override("font_size", 14)
+	health_label.add_theme_color_override("font_color", Color("#ff5b70"))
+	header.add_child(health_label)
+
+	health_bar = ProgressBar.new()
+	health_bar.min_value = 0
+	health_bar.max_value = MAX_ERRORS
+	health_bar.value = MAX_ERRORS
+	health_bar.show_percentage = false
+	health_bar.custom_minimum_size = Vector2(0, 10)
+	var health_background := StyleBoxFlat.new()
+	health_background.bg_color = Color("#25151d")
+	health_background.corner_radius_top_left = 5
+	health_background.corner_radius_top_right = 5
+	health_background.corner_radius_bottom_left = 5
+	health_background.corner_radius_bottom_right = 5
+	var health_fill := StyleBoxFlat.new()
+	health_fill.bg_color = Color("#ff5b70")
+	health_fill.corner_radius_top_left = 5
+	health_fill.corner_radius_top_right = 5
+	health_fill.corner_radius_bottom_left = 5
+	health_fill.corner_radius_bottom_right = 5
+	health_bar.add_theme_stylebox_override("background", health_background)
+	health_bar.add_theme_stylebox_override("fill", health_fill)
+	header.add_child(health_bar)
 
 	music_button = Button.new()
 	music_button.text = "MUSICA: ON"
@@ -304,6 +337,43 @@ func _animate_feedback(correct: bool) -> void:
 	tween.tween_property(feedback_overlay, "modulate", Color(1, 1, 1, 0), 0.18).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
+func _animate_damage() -> void:
+	if health_bar == null:
+		return
+	health_label.text = "INTEGRIDADE - DANO"
+	var health_tween := create_tween()
+	health_tween.set_parallel(true)
+	health_tween.tween_property(
+		health_bar,
+		"value",
+		MAX_ERRORS - errors,
+		0.32,
+	).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	health_tween.tween_property(
+		health_bar,
+		"modulate",
+		Color("#ffb3bc"),
+		0.08,
+	)
+	health_tween.chain().tween_property(
+		health_bar,
+		"modulate",
+		Color.WHITE,
+		0.24,
+	)
+
+	var original_position := header.position
+	var shake_tween := create_tween()
+	shake_tween.tween_property(header, "position", original_position + Vector2(12, 0), 0.035)
+	shake_tween.tween_property(header, "position", original_position + Vector2(-10, 0), 0.035)
+	shake_tween.tween_property(header, "position", original_position + Vector2(7, 0), 0.035)
+	shake_tween.tween_property(header, "position", original_position, 0.06)
+
+	var label_tween := create_tween()
+	label_tween.tween_interval(0.5)
+	label_tween.tween_callback(func() -> void: health_label.text = "INTEGRIDADE")
+
+
 func _setup_music() -> void:
 	music_player = AudioStreamPlayer.new()
 	music_player.stream = load("res://assets/tensefutureloop.ogg")
@@ -383,6 +453,8 @@ func _show_start() -> void:
 	state = "start"
 	menu_button.visible = false
 	progress.visible = false
+	health_bar.visible = false
+	health_label.visible = false
 	top_row.visible = true
 	_clear_content()
 	status_label.text = "PROTOCOLO DE FUGA"
@@ -403,6 +475,8 @@ func _begin_game() -> void:
 	state = "playing"
 	menu_button.visible = true
 	progress.visible = true
+	health_bar.visible = true
+	health_label.visible = true
 	top_row.visible = true
 	_next_question()
 
@@ -537,6 +611,7 @@ func _submit_answer() -> void:
 		showing_error = true
 		state = "show_error"
 		_animate_feedback(false)
+		_animate_damage()
 		feedback_label.text = "ACESSO NEGADO.\n\nRESOLUCAO:\n" + str(current["resolucao"])
 		action_button.text = "PROXIMA QUESTAO"
 		action_button.pressed.disconnect(_submit_answer)
@@ -572,6 +647,8 @@ func _advance_phase() -> void:
 func _show_result(victory: bool) -> void:
 	menu_button.visible = false
 	progress.visible = false
+	health_bar.visible = false
+	health_label.visible = false
 	_clear_content()
 	state = "victory" if victory else "defeat"
 	_make_title("MISSAO CUMPRIDA" if victory else "CONEXAO PERDIDA")
