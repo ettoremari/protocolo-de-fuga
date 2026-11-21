@@ -41,6 +41,9 @@ var main_layout: VBoxContainer
 var video_player: VideoStreamPlayer
 var video_skip_button: Button
 var video_on_finished: Callable
+var grid_overlay: Control
+var feedback_overlay: ColorRect
+var scan_y := 0.0
 
 
 func _ready() -> void:
@@ -71,6 +74,9 @@ func _configure_desktop_window() -> void:
 
 
 func _process(_delta: float) -> void:
+	if grid_overlay and grid_overlay.visible:
+		scan_y = fmod(scan_y + _delta * 70.0, max(grid_overlay.size.y, 1.0))
+		grid_overlay.queue_redraw()
 	if state == "playing" or state == "show_error":
 		_update_status()
 		if started_at_msec > 0 and remaining_seconds() <= 0:
@@ -124,6 +130,20 @@ func _build_ui() -> void:
 	main_layout.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	main_layout.add_theme_constant_override("separation", 12)
 	add_child(main_layout)
+
+	grid_overlay = Control.new()
+	grid_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	grid_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	grid_overlay.draw.connect(_draw_grid_animation)
+	add_child(grid_overlay)
+	move_child(grid_overlay, get_child_count() - 1)
+
+	feedback_overlay = ColorRect.new()
+	feedback_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	feedback_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	feedback_overlay.modulate = Color(1, 1, 1, 0)
+	feedback_overlay.z_index = 20
+	add_child(feedback_overlay)
 
 	var margin := MarginContainer.new()
 	margin.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -213,6 +233,7 @@ func _make_title(text: String) -> Label:
 	label.add_theme_font_size_override("font_size", 34)
 	label.add_theme_color_override("font_color", Color("#e8f5ff"))
 	content.add_child(label)
+	_animate_enter(label)
 	return label
 
 
@@ -223,6 +244,7 @@ func _make_label(text: String, size := 22) -> Label:
 	label.add_theme_font_size_override("font_size", size)
 	label.add_theme_color_override("font_color", Color("#d8eafa"))
 	content.add_child(label)
+	_animate_enter(label)
 	return label
 
 
@@ -233,7 +255,40 @@ func _make_button(text: String, callback: Callable) -> Button:
 	button.add_theme_font_size_override("font_size", 20)
 	button.pressed.connect(callback)
 	content.add_child(button)
+	_animate_enter(button)
 	return button
+
+
+func _animate_enter(control: Control, delay := 0.0) -> void:
+	control.modulate = Color(1, 1, 1, 0)
+	var target_position := control.position
+	control.position = target_position + Vector2(0, 14)
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(control, "modulate", Color.WHITE, 0.28).set_delay(delay)
+	tween.tween_property(control, "position", target_position, 0.32).set_delay(delay).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+
+func _draw_grid_animation() -> void:
+	if grid_overlay == null:
+		return
+	var size := grid_overlay.size
+	var step := maxi(28, int(size.x / 35.0))
+	for x in range(0, int(size.x) + 1, step):
+		grid_overlay.draw_line(Vector2(x, 0), Vector2(x, size.y), Color("#0b1d30"), 1.0)
+	for y in range(0, int(size.y) + 1, step):
+		grid_overlay.draw_line(Vector2(0, y), Vector2(size.x, y), Color("#0b1d30"), 1.0)
+	grid_overlay.draw_line(Vector2(0, scan_y), Vector2(size.x, scan_y), Color("#12394c"), 2.0)
+	grid_overlay.draw_rect(Rect2(0, 0, size.x, 5), Color("#34dcf0"))
+
+
+func _animate_feedback(correct: bool) -> void:
+	if feedback_overlay == null:
+		return
+	feedback_overlay.color = Color("#4bdc9b") if correct else Color("#ff5b70")
+	feedback_overlay.modulate = Color(1, 1, 1, 0.22)
+	var tween := create_tween()
+	tween.tween_property(feedback_overlay, "modulate", Color(1, 1, 1, 0), 0.36).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _setup_music() -> void:
@@ -278,6 +333,8 @@ func _play_video(path: String, on_finished: Callable) -> void:
 		return
 	video_on_finished = on_finished
 	main_layout.visible = false
+	grid_overlay.visible = false
+	feedback_overlay.visible = false
 	video_skip_button.visible = true
 	video_player.visible = true
 	video_player.stream = stream
@@ -291,6 +348,8 @@ func _finish_video() -> void:
 	video_player.visible = false
 	video_skip_button.visible = false
 	main_layout.visible = true
+	grid_overlay.visible = true
+	feedback_overlay.visible = true
 	var callback := video_on_finished
 	video_on_finished = Callable()
 	if callback.is_valid():
@@ -364,7 +423,8 @@ func _update_status() -> void:
 		remaining_seconds() / 60,
 		remaining_seconds() % 60,
 	]
-	progress.value = total_hits
+	var progress_tween := create_tween()
+	progress_tween.tween_property(progress, "value", total_hits, 0.28).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _show_question() -> void:
@@ -386,6 +446,7 @@ func _show_question() -> void:
 			choice_button.add_theme_font_size_override("font_size", 20)
 			choice_button.pressed.connect(_select_choice.bind(index))
 			choice_container.add_child(choice_button)
+			_animate_enter(choice_button, index * 0.06)
 	else:
 		numeric_input = LineEdit.new()
 		numeric_input.placeholder_text = "Digite sua resposta"
@@ -400,8 +461,11 @@ func _show_question() -> void:
 func _select_choice(index: int) -> void:
 	selected_choice = index
 	for child in choice_container.get_children():
-		child.modulate = Color.WHITE
-	choice_container.get_child(index).modulate = Color("#34dcf0")
+		var child_tween := create_tween()
+		child_tween.tween_property(child, "modulate", Color.WHITE, 0.18)
+	var selected_child := choice_container.get_child(index)
+	var selected_tween := create_tween()
+	selected_tween.tween_property(selected_child, "modulate", Color("#34dcf0"), 0.18)
 
 
 func _submit_answer() -> void:
@@ -426,6 +490,7 @@ func _submit_answer() -> void:
 	if answer == correct_answer:
 		total_hits += 1
 		phase_hits += 1
+		_animate_feedback(true)
 		feedback_label.text = "ACESSO VALIDADO. RESPOSTA CORRETA."
 		if phase_hits >= PHASE_TARGETS[phase - 1]:
 			if phase == 5:
@@ -442,6 +507,7 @@ func _submit_answer() -> void:
 		errors += 1
 		showing_error = true
 		state = "show_error"
+		_animate_feedback(false)
 		feedback_label.text = "ACESSO NEGADO.\n\nRESOLUCAO:\n" + str(current["resolucao"])
 		action_button.text = "PROXIMA QUESTAO"
 		action_button.pressed.disconnect(_submit_answer)

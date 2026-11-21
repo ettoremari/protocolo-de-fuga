@@ -28,3 +28,12 @@ def test_godot_has_opening_and_mission_videos():
     assert "iniciar-missao.ogv" in script
     assert (project_root / "assets" / "abertura-final-2.ogv").is_file()
     assert (project_root / "assets" / "iniciar-missao.ogv").is_file()
+
+
+def test_godot_has_previous_pygame_animations():
+    project_root = Path(__file__).parents[1]
+    script = (project_root / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert "_draw_grid_animation" in script
+    assert "scan_y" in script
+    assert "_animate_feedback" in script
+    assert "_animate_enter" in script
