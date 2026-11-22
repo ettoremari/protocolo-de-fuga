@@ -61,3 +61,9 @@ def test_reused_opening_media_and_animated_layers():
     assert (root / "assets" / "abertura-final-2.ogv").is_file()
     assert (root / "assets" / "iniciar-missao.ogv").is_file()
     assert "BackdropScript" in script and "FxScript" in script
+
+
+def test_choice_alternatives_are_shuffled_on_a_copy():
+    script = (_root() / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert "current = available.pick_random().duplicate(true)" in script
+    assert "shuffled_options.shuffle()" in script

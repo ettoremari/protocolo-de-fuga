@@ -18,10 +18,10 @@
     "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 3 opções, a segunda 2 e a terceira 5. Quantas senhas diferentes podem ser formadas?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "30",
       "33",
       "60",
-      "29"
+      "29",
+      "30"
     ],
     "resposta": 30,
     "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 3 × 2 × 5 = 30."
@@ -99,10 +99,10 @@
     "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 4 opções, a segunda 2 e a terceira 6. Quantas senhas diferentes podem ser formadas?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "48",
       "52",
       "96",
-      "47"
+      "47",
+      "48"
     ],
     "resposta": 48,
     "resolucao": "Pelo Princípio Fundamental da Contagem, multiplicamos as opções: 4 × 2 × 6 = 48."
@@ -126,9 +126,9 @@
     "enunciado": "Um terminal exige uma senha com três posições independentes. A primeira tem 2 opções, a segunda 3 e a terceira 6. Quantas senhas diferentes podem ser formadas?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "36",
       "38",
       "108",
+      "36",
       "35"
     ],
     "resposta": 36,
@@ -142,9 +142,9 @@
     "enunciado": "O painel precisa exibir todas as letras de ABCD em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "24",
       "26",
       "48",
+      "24",
       "12"
     ],
     "resposta": 24,
@@ -169,8 +169,8 @@
     "enunciado": "O painel precisa exibir todas as letras de ABCDE em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "120",
       "122",
+      "120",
       "240",
       "60"
     ],
@@ -196,9 +196,9 @@
     "enunciado": "O painel precisa exibir todas as letras de ABC em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "6",
       "8",
       "12",
+      "6",
       "3"
     ],
     "resposta": 6,
@@ -223,8 +223,8 @@
     "enunciado": "O painel precisa exibir todas as letras de WXYZ em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "24",
       "26",
+      "24",
       "48",
       "12"
     ],
@@ -250,9 +250,9 @@
     "enunciado": "O painel precisa exibir todas as letras de PQRS em uma sequência, usando cada ocorrência uma vez. Quantas sequências distintas existem?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "24",
       "26",
       "48",
+      "24",
       "12"
     ],
     "resposta": 24,
@@ -315,10 +315,10 @@
     "enunciado": "Existem 7 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 2 códigos, sem repetição. Quantas sequências podem ser formadas?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "42",
       "49",
       "84",
-      "40"
+      "40",
+      "42"
     ],
     "resposta": 42,
     "resolucao": "Como a ordem importa e não há repetição, usamos A(7,2) = 7!/(7-2)! = 42."
@@ -369,10 +369,10 @@
     "enunciado": "Existem 5 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 4 códigos, sem repetição. Quantas sequências podem ser formadas?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "120",
       "125",
       "240",
-      "116"
+      "116",
+      "120"
     ],
     "resposta": 120,
     "resolucao": "Como a ordem importa e não há repetição, usamos A(5,4) = 5!/(5-4)! = 120."
@@ -396,9 +396,9 @@
     "enunciado": "Existem 9 códigos distintos disponíveis. O sistema selecionará uma sequência ordenada de 2 códigos, sem repetição. Quantas sequências podem ser formadas?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "72",
       "81",
       "144",
+      "72",
       "70"
     ],
     "resposta": 72,
@@ -439,8 +439,8 @@
     "enunciado": "O cofre possui 6 módulos de dados. Para liberar o acesso, é preciso escolher 3 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "20",
       "21",
+      "20",
       "40",
       "17"
     ],
@@ -466,8 +466,8 @@
     "enunciado": "O cofre possui 7 módulos de dados. Para liberar o acesso, é preciso escolher 3 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "35",
       "36",
+      "35",
       "70",
       "32"
     ],
@@ -493,8 +493,8 @@
     "enunciado": "O cofre possui 8 módulos de dados. Para liberar o acesso, é preciso escolher 3 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "56",
       "57",
+      "56",
       "112",
       "53"
     ],
@@ -520,9 +520,9 @@
     "enunciado": "O cofre possui 9 módulos de dados. Para liberar o acesso, é preciso escolher 3 módulos, sem importar a ordem. De quantas maneiras diferentes isso pode ser feito?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "84",
       "85",
       "168",
+      "84",
       "81"
     ],
     "resposta": 84,
@@ -612,10 +612,10 @@
     "enunciado": "De 8 módulos, serão selecionados 3, mas o módulo X deve estar entre eles. Quantas seleções existem?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "21",
       "25",
       "42",
-      "17"
+      "17",
+      "21"
     ],
     "resposta": 21,
     "resolucao": "X já está escolhido. Selecionamos os outros 2 entre os 7 restantes: C(7,2)=21."
@@ -639,10 +639,10 @@
     "enunciado": "Uma senha tem 3 algarismos distintos de 0 a 5 e não pode começar com zero. Quantas senhas existem?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "100",
       "104",
       "200",
-      "96"
+      "96",
+      "100"
     ],
     "resposta": 100,
     "resolucao": "A primeira posição tem 5 opções (1 a 5); a segunda, 5 opções restantes (incluindo zero); a terceira, 4: 5 × 5 × 4 = 100."
@@ -668,5 +668,680 @@
     "alternativas": [],
     "resposta": 156,
     "resolucao": "Separe em casos pelo último algarismo. Se terminar em 0: há 5 opções para o primeiro algarismo (1 a 5), depois 4 e 3 opções: 5 × 4 × 3 = 60. Se terminar em 2 ou 4: há 2 opções para o último; para o primeiro há 4 opções não nulas diferentes do último; depois 4 e 3 opções: 2 × 4 × 4 × 3 = 96. Total: 60 + 96 = 156."
+  },
+  {
+    "id": "F1-11",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um terminal exige escolher 1 símbolo entre 4, 1 setor entre 3 e 1 janela entre 2. Quantos códigos completos são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "12",
+      "24",
+      "9",
+      "36"
+    ],
+    "resposta": 24,
+    "resolucao": "Pelo Princípio Fundamental da Contagem: 4 × 3 × 2 = 24 códigos."
+  },
+  {
+    "id": "F1-12",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Para autenticar o retorno, escolhem-se 1 prefixo entre 3, 1 sequência numérica entre 5 e 1 canal entre 4. Quantas credenciais diferentes existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 60,
+    "resolucao": "As escolhas são independentes: 3 × 5 × 4 = 60 credenciais."
+  },
+  {
+    "id": "F1-13",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um bloqueio de quatro etapas oferece 3 opções em cada etapa, sem depender das anteriores. Quantas configurações podem ser testadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "81",
+      "27",
+      "64",
+      "12"
+    ],
+    "resposta": 81,
+    "resolucao": "Multiplicamos as opções das quatro etapas: 3 × 3 × 3 × 3 = 81."
+  },
+  {
+    "id": "F1-14",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um pedido de evacuação combina 5 rotas, 2 níveis de prioridade e 4 códigos de autorização. Quantas solicitações distintas podem ser montadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 40,
+    "resolucao": "Pelo princípio multiplicativo: 5 × 2 × 4 = 40 solicitações."
+  },
+  {
+    "id": "F1-15",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O elevador de serviço pode usar 3 acessos, 4 identificadores e 2 modos de operação. Quantas combinações de acesso existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "18",
+      "24",
+      "12",
+      "36"
+    ],
+    "resposta": 24,
+    "resolucao": "Multiplicamos as três escolhas independentes: 3 × 4 × 2 = 24."
+  },
+  {
+    "id": "F1-16",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Um sinal de confirmação tem 6 símbolos possíveis, 3 frequências e 2 canais. Quantos sinais diferentes podem ser enviados?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 36,
+    "resolucao": "Cada escolha pode ser combinada com todas as outras: 6 × 3 × 2 = 36."
+  },
+  {
+    "id": "F1-17",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Uma credencial tem uma letra entre 5, um número entre 10 e um sufixo entre 3 opções. Quantas credenciais são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "120",
+      "18",
+      "153",
+      "150"
+    ],
+    "resposta": 150,
+    "resolucao": "Aplicando o princípio fundamental: 5 × 10 × 3 = 150."
+  },
+  {
+    "id": "F1-18",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O painel de monitoramento permite selecionar 4 câmeras, 3 setores e 5 filtros de imagem. Quantas visualizações configuradas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 60,
+    "resolucao": "As escolhas são independentes: 4 × 3 × 5 = 60 visualizações."
+  },
+  {
+    "id": "F1-19",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Seis interruptores independentes podem ficar ligados ou desligados. Quantos estados diferentes o conjunto pode assumir?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "32",
+      "12",
+      "128",
+      "64"
+    ],
+    "resposta": 64,
+    "resolucao": "Cada interruptor tem 2 estados; logo, 2⁶ = 64 configurações."
+  },
+  {
+    "id": "F1-20",
+    "fase": 1,
+    "nivel": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "Para abrir uma rota, o operador seleciona 3 trajetos, 4 chaves e 2 modos de travessia. Quantas sequências de seleção são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "Multiplicamos as opções de cada etapa: 3 × 4 × 2 = 24."
+  },
+  {
+    "id": "F2-11",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "Seis registros distintos precisam ser exibidos em uma única fila no terminal. De quantas formas a ordem pode ser organizada?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "720",
+      "360",
+      "120",
+      "5040"
+    ],
+    "resposta": 720,
+    "resolucao": "São 6 registros distintos: 6! = 720 ordens."
+  },
+  {
+    "id": "F2-12",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "Cinco chaves diferentes serão alinhadas no painel de autenticação. Quantas sequências podem ser formadas usando todas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 120,
+    "resolucao": "Permutamos as cinco chaves distintas: 5! = 120."
+  },
+  {
+    "id": "F2-13",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "O ATLAS precisa reorganizar as letras de ATLAS em uma sequência. Quantos arranjos distintos existem, considerando que A aparece duas vezes?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "120",
+      "60",
+      "30",
+      "20"
+    ],
+    "resposta": 60,
+    "resolucao": "Como há duas letras A iguais, dividimos 5! por 2!: 120 ÷ 2 = 60."
+  },
+  {
+    "id": "F2-14",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "As cinco letras distintas de NEXUS serão usadas uma vez cada em uma senha. Quantas senhas podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 120,
+    "resolucao": "As cinco letras são distintas: 5! = 120 senhas."
+  },
+  {
+    "id": "F2-15",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "Seis etiquetas, sendo três idênticas com o símbolo X e outras três distintas, serão colocadas em fila. Quantas ordens distintas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "120",
+      "60",
+      "240",
+      "20"
+    ],
+    "resposta": 120,
+    "resolucao": "As três etiquetas X são indistinguíveis: 6! ÷ 3! = 720 ÷ 6 = 120."
+  },
+  {
+    "id": "F2-16",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "Seis cartões de acesso formam uma sequência; dois cartões têm o mesmo símbolo B e os outros quatro são distintos. Quantas sequências diferentes existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 360,
+    "resolucao": "Há 6! ordens, mas cada troca entre os dois B é igual: 6! ÷ 2! = 360."
+  },
+  {
+    "id": "F2-17",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "Cinco sinais N, N, E, E e X serão transmitidos em sequência. Quantas sequências distintas podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "60",
+      "15",
+      "120",
+      "30"
+    ],
+    "resposta": 30,
+    "resolucao": "Com N repetido duas vezes e E repetido duas vezes: 5! ÷ (2! × 2!) = 30."
+  },
+  {
+    "id": "F2-18",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "Sete arquivos distintos serão ordenados para reconstruir um registro. Quantas sequências completas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 5040,
+    "resolucao": "As sete posições podem ser permutadas de 7! = 5.040 formas."
+  },
+  {
+    "id": "F2-19",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "Seis arquivos distintos serão alinhados, mas dois registros específicos devem permanecer lado a lado. Quantas ordens são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "120",
+      "480",
+      "240",
+      "60"
+    ],
+    "resposta": 240,
+    "resolucao": "Tratamos o par como um bloco: 5! ordens dos blocos e 2 ordens internas, total 2 × 5! = 240."
+  },
+  {
+    "id": "F2-20",
+    "fase": 2,
+    "nivel": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "As letras de AABBCD serão usadas todas em uma sequência. Quantas sequências diferentes existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 180,
+    "resolucao": "Há seis letras, com A e B repetidos duas vezes cada: 6! ÷ (2! × 2!) = 180."
+  },
+  {
+    "id": "F3-11",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "O sistema escolherá 3 das 8 estações para ocupar as posições de prioridade 1, 2 e 3. Quantas listas ordenadas são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "168",
+      "512",
+      "336",
+      "56"
+    ],
+    "resposta": 336,
+    "resolucao": "A ordem importa e não há repetição: A(8,3) = 8 × 7 × 6 = 336."
+  },
+  {
+    "id": "F3-12",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Dez sensores disponíveis serão atribuídos, sem repetição, a quatro posições ordenadas de leitura. Quantas atribuições existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 5040,
+    "resolucao": "A ordem das quatro posições importa: A(10,4) = 10 × 9 × 8 × 7 = 5.040."
+  },
+  {
+    "id": "F3-13",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Nove operadores disputam os cargos diferentes de líder e suplente da evacuação. Quantas designações são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "36",
+      "81",
+      "63",
+      "72"
+    ],
+    "resposta": 72,
+    "resolucao": "Como os cargos são distintos: A(9,2) = 9 × 8 = 72."
+  },
+  {
+    "id": "F3-14",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Sete rotas distintas serão colocadas nas cinco primeiras posições do painel de prioridade. Quantas sequências ordenadas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 2520,
+    "resolucao": "A ordem importa: A(7,5) = 7 × 6 × 5 × 4 × 3 = 2.520."
+  },
+  {
+    "id": "F3-15",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Seis módulos disputam três posições diferentes de ativação. Quantas listas de três módulos podem ocupar essas posições?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "60",
+      "120",
+      "216",
+      "24"
+    ],
+    "resposta": 120,
+    "resolucao": "Escolhemos e ordenamos três entre seis: A(6,3) = 6 × 5 × 4 = 120."
+  },
+  {
+    "id": "F3-16",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Oito sistemas distintos serão organizados nas três primeiras posições de uma fila de prioridade. Quantas ordens são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 336,
+    "resolucao": "A ordem importa e não há repetição: 8 × 7 × 6 = 336."
+  },
+  {
+    "id": "F3-17",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Dez técnicos serão alocados a quatro funções diferentes, sem que alguém ocupe mais de uma função. Quantas alocações existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "5040",
+      "210",
+      "10000",
+      "504"
+    ],
+    "resposta": 5040,
+    "resolucao": "As funções são distintas: A(10,4) = 10 × 9 × 8 × 7 = 5.040."
+  },
+  {
+    "id": "F3-18",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Sete rotas serão classificadas como primeira, segunda, terceira e quarta opção. Quantas classificações ordenadas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 840,
+    "resolucao": "A(7,4) = 7 × 6 × 5 × 4 = 840."
+  },
+  {
+    "id": "F3-19",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Nove alertas distintos serão exibidos nos três primeiros lugares de uma lista, em ordem de prioridade. Quantas listas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "84",
+      "504",
+      "729",
+      "512"
+    ],
+    "resposta": 504,
+    "resolucao": "A ordem importa: 9 × 8 × 7 = 504 listas."
+  },
+  {
+    "id": "F3-20",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Onze setores podem ocupar as posições de prioridade máxima e secundária, sem repetição. Quantas duplas ordenadas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 110,
+    "resolucao": "A(11,2) = 11 × 10 = 110 duplas ordenadas."
+  },
+  {
+    "id": "F4-11",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "O cofre guarda 10 módulos distintos. Quantos grupos de 4 módulos podem ser selecionados, sem considerar a ordem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "2100",
+      "120",
+      "210",
+      "45"
+    ],
+    "resposta": 210,
+    "resolucao": "A ordem não importa: C(10,4) = 10! ÷ (4! × 6!) = 210."
+  },
+  {
+    "id": "F4-12",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "De 9 canais de comunicação, a equipe precisa selecionar 3 para permanecer ativos. Quantas seleções diferentes existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 84,
+    "resolucao": "Como a ordem não importa: C(9,3) = 84."
+  },
+  {
+    "id": "F4-13",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "A equipe escolherá 5 dos 12 arquivos de pesquisa para restaurar. Quantos grupos diferentes de arquivos podem ser escolhidos?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "7920",
+      "495",
+      "792",
+      "132"
+    ],
+    "resposta": 792,
+    "resolucao": "A escolha é um grupo sem ordem: C(12,5) = 792."
+  },
+  {
+    "id": "F4-14",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "O kit de emergência será formado por 4 itens distintos entre 8 disponíveis. Quantos kits diferentes podem ser montados?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 70,
+    "resolucao": "C(8,4) = 8! ÷ (4! × 4!) = 70 kits."
+  },
+  {
+    "id": "F4-15",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Entre 11 células de energia, serão escolhidas 2 reservas. Quantos pares diferentes existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "55",
+      "110",
+      "22",
+      "66"
+    ],
+    "resposta": 55,
+    "resolucao": "A ordem não importa: C(11,2) = 11 × 10 ÷ 2 = 55."
+  },
+  {
+    "id": "F4-16",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Uma equipe de 5 pesquisadores será selecionada entre 10 pessoas, sem atribuir cargos. Quantas equipes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 252,
+    "resolucao": "C(10,5) = 252 equipes."
+  },
+  {
+    "id": "F4-17",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "O painel exige selecionar 3 relés entre 12 relés disponíveis, sem importar a ordem. Quantas seleções existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "220",
+      "1320",
+      "2200",
+      "66"
+    ],
+    "resposta": 220,
+    "resolucao": "A ordem não importa: C(12,3) = 220."
+  },
+  {
+    "id": "F4-18",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Seis registros serão recuperados de um conjunto de 9, sem prioridade entre eles. Quantos grupos são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 84,
+    "resolucao": "C(9,6) = C(9,3) = 84 grupos."
+  },
+  {
+    "id": "F4-19",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Quatro cartões de acesso serão escolhidos entre 9 cartões distintos. Quantas seleções diferentes existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "36",
+      "504",
+      "1260",
+      "126"
+    ],
+    "resposta": 126,
+    "resolucao": "A ordem não importa: C(9,4) = 126."
+  },
+  {
+    "id": "F4-20",
+    "fase": 4,
+    "nivel": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Três pessoas serão escolhidas entre 10 voluntários para formar uma equipe sem cargos. Quantas equipes existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 120,
+    "resolucao": "C(10,3) = 120 equipes."
+  },
+  {
+    "id": "F5-11",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Um código ordenado terá 3 símbolos distintos escolhidos entre 7. Quantos códigos podem ser formados?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "35",
+      "210",
+      "2100",
+      "343"
+    ],
+    "resposta": 210,
+    "resolucao": "Escolhemos e ordenamos 3 símbolos: A(7,3) = 7 × 6 × 5 = 210."
+  },
+  {
+    "id": "F5-12",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Três relés distintos serão escolhidos e ordenados entre 8 para ocupar posições de ativação. Quantas sequências existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 336,
+    "resolucao": "A escolha seguida da ordenação equivale a A(8,3) = 8 × 7 × 6 = 336."
+  },
+  {
+    "id": "F5-13",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "De 9 pessoas, serão escolhidas 4 para evacuar. Duas pessoas específicas não podem integrar a mesma equipe. Quantas equipes são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "126",
+      "84",
+      "21",
+      "105"
+    ],
+    "resposta": 105,
+    "resolucao": "Há C(9,4) = 126 equipes; subtraímos C(7,2) = 21 que incluem as duas pessoas: 126 − 21 = 105."
+  },
+  {
+    "id": "F5-14",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Uma senha terá 4 algarismos distintos de 0 a 6. Ela não pode começar com zero e deve terminar em um algarismo par. Quantas senhas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 380,
+    "resolucao": "Se termina em 0: 6 × A(5,2) = 120. Se termina em 2, 4 ou 6: 3 × 5 × A(5,2) = 300. Total: 420."
+  },
+  {
+    "id": "F5-15",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Três dos 8 módulos serão escolhidos e conectados em uma ordem específica. Quantas configurações de conexão existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "56",
+      "336",
+      "3360",
+      "512"
+    ],
+    "resposta": 336,
+    "resolucao": "Escolher e ordenar três módulos equivale ao arranjo A(8,3) = 8 × 7 × 6 = 336."
+  },
+  {
+    "id": "F5-16",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Cinco relatórios distintos serão ordenados, mas dois relatórios específicos devem ficar juntos. Quantas sequências são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 48,
+    "resolucao": "Tratamos os dois relatórios como bloco: 4! ordens dos blocos × 2 ordens internas = 48."
+  },
+  {
+    "id": "F5-17",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Uma equipe de 5 será escolhida entre 10 pessoas; exatamente 2 dos 3 especialistas disponíveis devem participar. Quantas equipes existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "70",
+      "140",
+      "105",
+      "252"
+    ],
+    "resposta": 105,
+    "resolucao": "Escolhemos 2 dos 3 especialistas e 3 das outras 7 pessoas: C(3,2) × C(7,3) = 3 × 35 = 105."
+  },
+  {
+    "id": "F5-18",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Um código de 4 letras distintas usa A–H. A primeira letra deve ser A ou B e a última C ou D. Quantos códigos podem ser formados?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 120,
+    "resolucao": "Há 2 opções para a primeira e 2 para a última; as duas posições centrais recebem 2 das 6 restantes em ordem: 2 × 2 × A(6,2) = 120."
+  },
+  {
+    "id": "F5-19",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Quatro módulos serão escolhidos entre 10, dos quais 4 são de energia e 6 de comunicação. A equipe exige exatamente 2 de cada tipo. Quantas seleções existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "60",
+      "120",
+      "90",
+      "210"
+    ],
+    "resposta": 90,
+    "resolucao": "Escolhemos 2 dos 4 módulos de energia e 2 dos 6 de comunicação: C(4,2) × C(6,2) = 6 × 15 = 90."
+  },
+  {
+    "id": "F5-20",
+    "fase": 5,
+    "nivel": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Sete candidatos disputam três funções distintas: líder, operador e navegador. Cada candidato pode ocupar apenas uma função. Quantas designações existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 210,
+    "resolucao": "As funções são distintas, então a ordem importa: A(7,3) = 7 × 6 × 5 = 210."
   }
 ]

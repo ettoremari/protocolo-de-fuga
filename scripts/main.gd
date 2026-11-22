@@ -841,11 +841,15 @@ func _next_question() -> void:
 	if available.is_empty():
 		used[phase].clear()
 		available = pool.duplicate()
-	if available.is_empty():
-		state = "defeat"
-		_show_result(false)
-		return
-	current = available.pick_random()
+		if available.is_empty():
+			state = "defeat"
+			_show_result(false)
+			return
+	current = available.pick_random().duplicate(true)
+	if str(current["tipo_resposta"]) == "choice":
+		var shuffled_options: Array = current["alternativas"]
+		shuffled_options.shuffle()
+		current["alternativas"] = shuffled_options
 	used[phase].append(current["id"])
 	_show_question()
 
