@@ -1091,7 +1091,7 @@ func _show_question() -> void:
 		_style_input(numeric_input)
 		numeric_input.text_submitted.connect(func(_text: String) -> void: _submit_answer())
 		content.add_child(numeric_input)
-		if OS.has_feature("web"):
+		if OS.get_name() == "Web":
 			numeric_input.grab_focus()
 			var keyboard_button := _make_button("ABRIR TECLADO", _open_virtual_keyboard)
 			keyboard_button.tooltip_text = "Toque se o teclado virtual não aparecer."
