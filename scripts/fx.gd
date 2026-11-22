@@ -1,6 +1,6 @@
 extends Control
 ## Camada de efeitos desenhada por cima da interface.
-## Não intercepta toques (MOUSE_FILTER_IGNORE) e é alimentada pelo main.gd.
+## Nao intercepta toques (MOUSE_FILTER_IGNORE) e e alimentada pelo main.gd.
 
 const CYAN := Color(0.204, 0.863, 0.941)
 const GREEN := Color(0.29, 0.87, 0.5)

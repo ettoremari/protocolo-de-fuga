@@ -1,51 +1,44 @@
-# PROTOCOLO DE FUGA - Escape Room de Análise Combinatória
+# PROTOCOLO DE FUGA — Instalação Ômega
 
-Versão: **1.2**
+Versão **2.0** — jogo de escape room narrativo em Godot 4.7.2.
 
-Jogo educacional convertido para **Godot 4**, com cinco fases, banco de questões, respostas mistas (alternativas e numéricas), limite de 20 minutos e 10 erros.
+## Premissa
 
-## Por que Godot
+Você desperta na Instalação Ômega após o ATLAS iniciar uma contenção total. Para alcançar a rota de evacuação, será necessário recuperar o controle dos sistemas, resolver validações matemáticas contextualizadas e investigar as contradições do sistema central. A história mantém ambígua a intenção do ATLAS até o fim.
 
-Godot e o motor escolhido para este projeto porque oferece animacao de interface, reproducao de video, audio, responsividade para celular e desktop e exportacao oficial para Android e Windows a partir do mesmo projeto.
+## Campanha
 
-## Requisitos
+A progressão tem seis setores: **01 Observação**, **02 Segurança**, **03 Pesquisa**, **04 Energia**, **05 Núcleo** e **06 Evacuação**. Os cinco primeiros usam o banco de 50 questões existente, com metas de 1, 2, 2, 3 e 4 respostas corretas. O último apresenta o arquivo confidencial do Projeto Espelho e permite escolher um dos três finais: **A Fuga**, **O Desligamento** ou **A Simulação**.
 
-- Godot 4.7 ou superior
+Os conteúdos matemáticos sustentam a narrativa: princípio fundamental da contagem para códigos; permutação para autenticação; arranjo para registros ordenados; combinação para seleção de módulos; e análise combinatória integrada para investigar possibilidades.
 
-## Executar no computador
+## Interface e recursos
 
-1. Abra a pasta do projeto no Godot.
-2. Importe `project.godot`.
-3. Pressione **F6** ou clique em **Executar projeto**.
+- Interface inspirada em terminal de investigação cyberpunk, com arquivos/setores à esquerda, desafio ao centro e ATLAS/núcleo à direita em paisagem.
+- Em aparelhos Android, a orientação é fixa em paisagem. A interface também mantém o layout responsivo para outros formatos de janela.
+- O núcleo do ATLAS muda de cor e estado ao longo da campanha; diálogos reagem a respostas certas e erradas.
+- Limite de 20 minutos e 10 erros; resolução exibida em caso de erro.
+- Vídeos de abertura e de início de missão, música opcional e efeitos visuais de feedback preservados.
 
-## Exportar
+## Executar
 
-Os presets ja estao configurados em `export_presets.cfg`:
+1. Abra esta pasta no Godot **4.7.2**.
+2. Importe `project.godot` e execute `main.tscn`.
+3. O preset Android exporta para `build/ProtocoloDeFuga_OMEGA_v2.0.apk` (arm64).
 
-- Windows Desktop: `build/ProtocoloDeFuga.exe`
-- Android: `build/ProtocoloDeFuga.apk`
-
-No Godot, use **Projeto > Exportar** e instale os templates de exportacao correspondentes. Para Android, configure o SDK/JDK no Editor Settings.
+Para exportar um APK de lançamento em outro computador, configure o Android SDK, o JDK e uma chave de assinatura própria no preset Android. O pacote-fonte não inclui a chave privada nem as credenciais usadas para assinar o APK entregue.
 
 ## Controles
 
-- Clique/toque: selecionar alternativa, validar resposta e avancar
-- Teclado físico ou tela: digitar respostas numéricas
-- Roda do mouse/arrasto: percorrer textos longos
-- Esc: fechar a janela
-
-## Videos
-
-- `abertura-final-2.ogv` reproduz na abertura do jogo.
-- `iniciar-missao.ogv` reproduz ao tocar em **INICIAR MISSÃO**.
-- Os arquivos MP4 originais enviados tambem ficam em `assets/` como fonte dos videos.
+- Toque/clique para selecionar alternativas, validar respostas e avançar.
+- Teclado/tela para digitar resultados numéricos.
+- Rolagem/toque para ler arquivos e enunciados extensos.
+- O botão **PULAR** encerra os vídeos de introdução.
 
 ## Regras
 
-- 5 fases com metas de 1, 2, 2, 3 e 4 acertos (12 no total).
-- 10 questões por fase.
-- Sorteio sem repeticao ate esgotar o banco da fase.
-- Erros nao removem acertos; cada erro apresenta a resolucao.
+- 50 questões no banco: 10 por cada um dos cinco setores matemáticos.
+- Sorteio sem repetição dentro do setor até o banco ser esgotado.
+- 12 validações corretas para chegar ao núcleo; erros não apagam acertos.
 - Derrota ao atingir 10 erros ou 20 minutos.
-- Nova partida disponivel apos vitoria ou derrota.
-- Interface responsiva em retrato e paisagem.
+- Após o Projeto Espelho, a decisão final seleciona uma das três rotas de encerramento; a avaliação de desempenho altera o texto do epílogo.
