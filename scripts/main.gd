@@ -113,7 +113,7 @@ func _ready() -> void:
 	_play_video("res://assets/abertura-final-2.ogv", _show_start)
 
 func _configure_desktop_window() -> void:
-	if OS.has_feature("android") or OS.has_feature("ios"):
+	if OS.has_feature("android") or OS.has_feature("ios") or OS.has_feature("web"):
 		return
 	DisplayServer.window_set_min_size(Vector2i(800, 600))
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
@@ -438,7 +438,8 @@ func _update_responsive_layout() -> void:
 	if not root_margin or not playfield:
 		return
 	var viewport_size := Vector2(DisplayServer.window_get_size())
-	var wide_layout := viewport_size.x >= 850.0 and viewport_size.x > viewport_size.y * 1.18
+	var wide_width_threshold := 700.0 if OS.has_feature("web") else 850.0
+	var wide_layout := viewport_size.x >= wide_width_threshold and viewport_size.x > viewport_size.y * 1.18
 	var logical_size := Vector2i(1100, 700) if wide_layout else Vector2i(430, 900)
 	if get_window().content_scale_size != logical_size:
 		get_window().content_scale_size = logical_size
@@ -871,6 +872,9 @@ func _interact_with_atlas_core() -> void:
 		fx.ping(tint, 0.65)
 
 func _play_video(path: String, on_finished: Callable) -> void:
+	if OS.has_feature("web"):
+		on_finished.call()
+		return
 	var stream = load(path)
 	if stream == null:
 		push_warning("Não foi possível carregar o vídeo: " + path)
