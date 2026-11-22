@@ -57,6 +57,28 @@ jobs:
           mkdir -p build
           ./Godot_v4.7.2-stable_linux.x86_64 --headless --path . --export-debug "Android" build/ProtocoloDeFuga.apk
 
+      - name: Sign Android APK
+        run: |
+          keytool -genkeypair -v \
+            -keystore "$RUNNER_TEMP/android-debug.keystore" \
+            -storepass android \
+            -alias androiddebugkey \
+            -keypass android \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          "$BUILD_TOOLS/zipalign" -p -f 4 build/ProtocoloDeFuga.apk build/ProtocoloDeFuga-aligned.apk
+          mv build/ProtocoloDeFuga-aligned.apk build/ProtocoloDeFuga.apk
+          "$BUILD_TOOLS/apksigner" sign \
+            --ks "$RUNNER_TEMP/android-debug.keystore" \
+            --ks-key-alias androiddebugkey \
+            --ks-pass pass:android \
+            --key-pass pass:android \
+            build/ProtocoloDeFuga.apk
+          "$BUILD_TOOLS/apksigner" verify --verbose --print-certs build/ProtocoloDeFuga.apk
+
       - name: Upload builds
         uses: actions/upload-artifact@v4
         with:
