@@ -8,10 +8,10 @@ const MAX_ERRORS := 10
 const PHASE_TARGETS := [1, 2, 2, 3, 4]
 const PHASE_NAMES := [
 	"CONTROLE DE ACESSO",
-	"LABORATORIO BIOMETRICO",
-	"CENTRAL DE SEGURANCA",
+	"LABORATÓRIO BIOMÉTRICO",
+	"CENTRAL DE SEGURANÇA",
 	"COFRE DE DADOS",
-	"NUCLEO CENTRAL",
+	"NÚCLEO CENTRAL",
 ]
 
 var questions := {}
@@ -100,11 +100,11 @@ func _process(_delta: float) -> void:
 func _load_questions() -> void:
 	var file := FileAccess.open("res://data/questoes.json", FileAccess.READ)
 	if file == null:
-		push_error("Nao foi possivel carregar data/questoes.json")
+		push_error("Não foi possível carregar data/questoes.json")
 		return
 	var parsed = JSON.parse_string(file.get_as_text())
 	if typeof(parsed) != TYPE_ARRAY:
-		push_error("Banco de questoes invalido")
+		push_error("Banco de questões inválido")
 		return
 	for phase_number in range(1, 6):
 		questions[phase_number] = []
@@ -217,7 +217,7 @@ func _build_ui() -> void:
 	header.add_child(health_bar)
 
 	music_button = Button.new()
-	music_button.text = "MUSICA: ON"
+	music_button.text = "MÚSICA: ON"
 	music_button.custom_minimum_size = Vector2(140, 38)
 	music_button.pressed.connect(_toggle_music)
 	_hook_button(music_button)
@@ -576,7 +576,7 @@ func _setup_videos() -> void:
 func _play_video(path: String, on_finished: Callable) -> void:
 	var stream = load(path)
 	if stream == null:
-		push_error("Nao foi possivel carregar o video: " + path)
+		push_error("Não foi possível carregar o vídeo: " + path)
 		on_finished.call()
 		return
 	video_on_finished = on_finished
@@ -610,7 +610,7 @@ func _finish_video() -> void:
 
 func _toggle_music() -> void:
 	music_enabled = !music_enabled
-	music_button.text = "MUSICA: ON" if music_enabled else "MUSICA: OFF"
+	music_button.text = "MÚSICA: ON" if music_enabled else "MÚSICA: OFF"
 	if music_player:
 		music_player.stream_paused = not music_enabled
 
@@ -627,10 +627,10 @@ func _show_start() -> void:
 	_clear_content()
 	status_label.text = "PROTOCOLO DE FUGA  |  v1.2"
 	progress.value = 0
-	_make_title("ESCAPE ROOM DE ANALISE COMBINATORIA")
+	_make_title("ESCAPE ROOM DE ANÁLISE COMBINATÓRIA")
 	_make_label("Cinco setores. Doze acertos. Dez erros. Limite de vinte minutos.")
-	_make_label("Escolha alternativas ou digite respostas numericas para concluir cada fase.")
-	_make_button("INICIAR MISSAO", _start_game)
+	_make_label("Escolha alternativas ou digite respostas numéricas para concluir cada fase.")
+	_make_button("INICIAR MISSÃO", _start_game)
 
 
 func _start_game() -> void:
@@ -825,7 +825,7 @@ func _submit_answer() -> void:
 				state = "phase_complete"
 				_show_phase_complete()
 		else:
-			action_button.text = "PROXIMA QUESTAO"
+			action_button.text = "PRÓXIMA QUESTÃO"
 			action_button.pressed.disconnect(_submit_answer)
 			action_button.pressed.connect(_next_question)
 	else:
@@ -834,9 +834,9 @@ func _submit_answer() -> void:
 		state = "show_error"
 		_animate_feedback(false)
 		_animate_damage()
-		feedback_label.text = "ACESSO NEGADO.\n\nRESOLUCAO:\n" + str(current["resolucao"])
+		feedback_label.text = "ACESSO NEGADO.\n\nRESOLUÇÃO:\n" + str(current["resolucao"])
 		_pop_label(feedback_label, Color("#ff5b70"))
-		action_button.text = "PROXIMA QUESTAO"
+		action_button.text = "PRÓXIMA QUESTÃO"
 		action_button.pressed.disconnect(_submit_answer)
 		action_button.pressed.connect(_advance_from_error)
 		if errors >= MAX_ERRORS:
@@ -859,10 +859,10 @@ func _show_phase_complete() -> void:
 	if fx:
 		fx.sweep(Color("#8c8cff"))
 		fx.burst(size * 0.5, Color("#8c8cff"), 34, 1.15)
-	var title := _make_title("SETOR " + str(phase) + " CONCLUIDO")
+	var title := _make_title("SETOR " + str(phase) + " CONCLUÍDO")
 	title.add_theme_color_override("font_color", Color("#b9b9ff"))
-	_make_label("Acesso liberado para o proximo setor.")
-	_make_button("AVANCAR DE SETOR", _advance_phase)
+	_make_label("Acesso liberado para o próximo setor.")
+	_make_button("AVANÇAR DE SETOR", _advance_phase)
 
 
 func _advance_phase() -> void:
@@ -892,10 +892,10 @@ func _show_result(victory: bool) -> void:
 		else:
 			fx.flash(Color("#ff5b70"), 0.5, 1.4)
 			fx.ping(Color("#ff5b70"), 1.0)
-	var title := _make_title("MISSAO CUMPRIDA" if victory else "CONEXAO PERDIDA")
+	var title := _make_title("MISSÃO CUMPRIDA" if victory else "CONEXÃO PERDIDA")
 	title.add_theme_color_override("font_color", Color("#ffd980") if victory else Color("#ff8b96"))
 	if victory:
-		_make_label("Voce concluiu os cinco setores em %d minutos e %02d segundos." % [
+		_make_label("Você concluiu os cinco setores em %d minutos e %02d segundos." % [
 			elapsed_seconds() / 60,
 			elapsed_seconds() % 60,
 		])
