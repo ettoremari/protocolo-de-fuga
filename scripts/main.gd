@@ -1056,8 +1056,8 @@ func _update_status() -> void:
 		low_time_tween.tween_property(status_label, "modulate", Color.WHITE, 0.5)
 	else:
 		status_label.add_theme_color_override("font_color", Color("#34dcf0"))
-	_refresh_sector_rail()
-	_update_core_state()
+		_refresh_sector_rail()
+		_update_core_state()
 
 func _show_question() -> void:
 	_clear_content()
@@ -1085,10 +1085,14 @@ func _show_question() -> void:
 		numeric_input.placeholder_text = "Insira o resultado para recuperar o sistema"
 		numeric_input.custom_minimum_size = Vector2(0, 46)
 		numeric_input.add_theme_font_size_override("font_size", 20)
+		numeric_input.virtual_keyboard_enabled = true
+		numeric_input.virtual_keyboard_show_on_focus = true
 		numeric_input.virtual_keyboard_type = LineEdit.KEYBOARD_TYPE_NUMBER_DECIMAL
 		_style_input(numeric_input)
 		numeric_input.text_submitted.connect(func(_text: String) -> void: _submit_answer())
 		content.add_child(numeric_input)
+		if OS.has_feature("web"):
+			numeric_input.grab_focus()
 		_animate_enter(numeric_input, 0.2)
 	action_button = _make_button("VALIDAR RESPOSTA", _submit_answer)
 	feedback_label = _make_label("", 16)
