@@ -1093,9 +1093,17 @@ func _show_question() -> void:
 		content.add_child(numeric_input)
 		if OS.has_feature("web"):
 			numeric_input.grab_focus()
+			var keyboard_button := _make_button("ABRIR TECLADO", _open_virtual_keyboard)
+			keyboard_button.tooltip_text = "Toque se o teclado virtual não aparecer."
 		_animate_enter(numeric_input, 0.2)
 	action_button = _make_button("VALIDAR RESPOSTA", _submit_answer)
 	feedback_label = _make_label("", 16)
+
+func _open_virtual_keyboard() -> void:
+	if not is_instance_valid(numeric_input):
+		return
+	numeric_input.release_focus()
+	numeric_input.grab_focus()
 
 func _select_choice(index: int) -> void:
 	selected_choice = index
