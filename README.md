@@ -1,8 +1,8 @@
-# PROTOCOLO DE FUGA - Escape Room de Analise Combinatoria
+# PROTOCOLO DE FUGA - Escape Room de Análise Combinatória
 
-Versao: **1.1**
+Versão: **1.2**
 
-Jogo educacional convertido para **Godot 4**, com cinco fases, banco de questoes, respostas mistas (alternativas e numericas), limite de 20 minutos e 10 erros.
+Jogo educacional convertido para **Godot 4**, com cinco fases, banco de questões, respostas mistas (alternativas e numéricas), limite de 20 minutos e 10 erros.
 
 ## Por que Godot
 
@@ -30,20 +30,20 @@ No Godot, use **Projeto > Exportar** e instale os templates de exportacao corres
 ## Controles
 
 - Clique/toque: selecionar alternativa, validar resposta e avancar
-- Teclado fisico ou tela: digitar respostas numericas
+- Teclado físico ou tela: digitar respostas numéricas
 - Roda do mouse/arrasto: percorrer textos longos
 - Esc: fechar a janela
 
 ## Videos
 
 - `abertura-final-2.ogv` reproduz na abertura do jogo.
-- `iniciar-missao.ogv` reproduz ao tocar em **INICIAR MISSAO**.
+- `iniciar-missao.ogv` reproduz ao tocar em **INICIAR MISSÃO**.
 - Os arquivos MP4 originais enviados tambem ficam em `assets/` como fonte dos videos.
 
 ## Regras
 
 - 5 fases com metas de 1, 2, 2, 3 e 4 acertos (12 no total).
-- 10 questoes por fase.
+- 10 questões por fase.
 - Sorteio sem repeticao ate esgotar o banco da fase.
 - Erros nao removem acertos; cada erro apresenta a resolucao.
 - Derrota ao atingir 10 erros ou 20 minutos.
