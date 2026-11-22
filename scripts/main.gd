@@ -12,7 +12,8 @@ const PHASE_MUSIC_STREAMS := {
 	4: preload("res://assets/music/pulse.mp3"),
 	5: preload("res://assets/music/urgent.mp3"),
 }
-const MUSIC_VOLUME_DB := -11.0
+const MUSIC_VOLUME_DB := -3.0
+const MUSIC_LEVEL_TRIM_DB := {"menu": -5.4, "airy": 19.7, "sector": 17.8, "pulse": 13.2, "urgent": 25.2}
 const TOTAL_HITS := 12
 const PHASE_TARGETS := [1, 2, 2, 3, 4]
 const PHASE_NAMES := ["OBSERVAÇÃO", "SEGURANÇA", "PESQUISA", "ENERGIA", "NÚCLEO", "EVACUAÇÃO"]
@@ -96,6 +97,8 @@ var status_key := ""
 var progress_tween: Tween
 var low_time_tween: Tween
 var core_pulse_time := 0.0
+var core_pulse_boost := 0.0
+var core_interaction_index := 0
 var atlas_message := "CONTENÇÃO ATIVA. AGUARDANDO INTERAÇÃO."
 
 func _ready() -> void:
@@ -126,12 +129,13 @@ func _configure_desktop_window() -> void:
 func _process(delta: float) -> void:
 	if fx and panel and fx.visible and panel.is_visible_in_tree():
 		fx.set_panel(Rect2(panel.global_position - fx.global_position, panel.size))
-	if atlas_core and atlas_core.visible:
+	core_pulse_boost = maxf(0.0, core_pulse_boost - delta * 0.7)
+	if atlas_core and atlas_core.is_visible_in_tree():
 		core_pulse_time += delta
-		var pulse := 1.0 + sin(core_pulse_time * 1.4) * 0.018
+		var pulse := 1.0 + sin(core_pulse_time * 1.4) * 0.018 + core_pulse_boost
 		atlas_core.scale = Vector2(pulse, pulse)
-	if mobile_core and mobile_core.visible:
-		mobile_core.scale = Vector2.ONE * (1.0 + sin(core_pulse_time * 1.4) * 0.018)
+	if mobile_core and mobile_core.is_visible_in_tree():
+		mobile_core.scale = Vector2.ONE * (1.0 + sin(core_pulse_time * 1.4) * 0.018 + core_pulse_boost)
 	if state == "playing" or state == "show_error":
 		_update_status()
 		if started_at_msec > 0 and remaining_seconds() <= 0:
@@ -361,7 +365,7 @@ func _build_atlas_rail() -> PanelContainer:
 	atlas_core = _make_core_image(Vector2(168, 150))
 	box.add_child(atlas_core)
 	var dialogue_title := Label.new()
-	dialogue_title.text = "CANAL SEGURO // ATLAS"
+	dialogue_title.text = "TOQUE/CLIQUE NO NÚCLEO"
 	dialogue_title.add_theme_font_size_override("font_size", 10)
 	dialogue_title.add_theme_color_override("font_color", Color("#6aa7bc"))
 	box.add_child(dialogue_title)
@@ -384,7 +388,7 @@ func _build_mobile_status() -> PanelContainer:
 	mobile_core = _make_core_image(Vector2(58, 58))
 	row.add_child(mobile_core)
 	mobile_status_label = Label.new()
-	mobile_status_label.text = "ATLAS // CONTENÇÃO ATIVA"
+	mobile_status_label.text = "ATLAS // CONTENÇÃO ATIVA\nTOQUE NO NÚCLEO"
 	mobile_status_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	mobile_status_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	mobile_status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -401,6 +405,10 @@ func _make_core_image(minimum: Vector2) -> TextureRect:
 	image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	image.pivot_offset = minimum * 0.5
+	image.mouse_filter = Control.MOUSE_FILTER_STOP
+	image.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	image.tooltip_text = "Toque no núcleo para interagir com o ATLAS"
+	image.gui_input.connect(_on_atlas_core_gui_input)
 	return image
 
 func _style_rail_panel(rail: PanelContainer) -> void:
@@ -510,8 +518,46 @@ func _set_atlas_message(message: String) -> void:
 	atlas_message = message
 	if atlas_message_label:
 		atlas_message_label.text = message
+		_animate_typewriter(atlas_message_label, 48.0)
 	if mobile_status_label and (right_rail == null or not right_rail.visible):
-		mobile_status_label.text = "ATLAS // SISTEMA CENTRAL\n" + message
+		mobile_status_label.text = "ATLAS // TOQUE NO NÚCLEO\n" + message
+		_animate_typewriter(mobile_status_label, 54.0)
+	_pulse_atlas_core(0.10)
+
+func _animate_typewriter(label: Label, characters_per_second := 48.0) -> void:
+	if label == null or not is_instance_valid(label) or label.text.is_empty():
+		return
+	var previous: Tween = label.get_meta("typewriter_tween") if label.has_meta("typewriter_tween") else null
+	if previous and previous.is_valid():
+		previous.kill()
+	label.visible_characters = 0
+	var duration := maxf(0.12, float(label.text.length()) / characters_per_second)
+	var tween := label.create_tween()
+	tween.tween_property(label, "visible_characters", label.text.length(), duration)
+	label.set_meta("typewriter_tween", tween)
+
+func _pulse_atlas_core(strength := 0.14) -> void:
+	core_pulse_boost = maxf(core_pulse_boost, strength)
+	for core in [atlas_core, mobile_core]:
+		if core == null or not is_instance_valid(core):
+			continue
+		var previous: Tween = core.get_meta("core_motion_tween") if core.has_meta("core_motion_tween") else null
+		if previous and previous.is_valid():
+			previous.kill()
+		var tween: Tween = core.create_tween()
+		tween.tween_property(core, "rotation", 0.035, 0.08)
+		tween.tween_property(core, "rotation", -0.025, 0.10)
+		tween.tween_property(core, "rotation", 0.0, 0.14)
+		core.set_meta("core_motion_tween", tween)
+
+func _animate_ending_core(ending: String) -> void:
+	var target := Color("#ffd980") if ending == "escape" else (Color("#414956") if ending == "shutdown" else Color("#c9a7ff"))
+	for core in [atlas_core, mobile_core]:
+		if core == null or not is_instance_valid(core):
+			continue
+		var tween: Tween = core.create_tween()
+		tween.tween_property(core, "modulate", target, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_pulse_atlas_core(0.22)
 
 func _clear_content() -> void:
 	for child in content.get_children():
@@ -561,7 +607,7 @@ func _animate_enter(control: Control, delay := 0.0) -> void:
 		reveal_index += 1
 	control.modulate = Color(1, 1, 1, 0)
 	control.scale = Vector2(0.94, 0.94)
-	var tween := create_tween()
+	var tween: Tween = control.create_tween()
 	tween.set_parallel(true)
 	tween.tween_callback(func() -> void:
 		if is_instance_valid(control):
@@ -640,10 +686,10 @@ func _scale_button(button: Button, factor: float, time: float) -> void:
 	if not is_instance_valid(button):
 		return
 	button.pivot_offset = button.size * 0.5
-	var previous: Tween = button.get_meta("scale_tween", null)
+	var previous: Tween = button.get_meta("scale_tween") if button.has_meta("scale_tween") else null
 	if previous and previous.is_valid():
 		previous.kill()
-	var tween := create_tween()
+	var tween := button.create_tween()
 	tween.tween_property(button, "scale", Vector2(factor, factor), time).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	button.set_meta("scale_tween", tween)
 
@@ -651,7 +697,7 @@ func _pop_label(label: Label, color: Color) -> void:
 	if label == null or not is_instance_valid(label):
 		return
 	label.add_theme_color_override("font_color", color)
-	var tween := create_tween()
+	var tween := label.create_tween()
 	tween.tween_callback(func() -> void:
 		if is_instance_valid(label):
 			label.pivot_offset = label.size * 0.5
@@ -664,7 +710,7 @@ func _shake_ui() -> void:
 	if main_layout == null:
 		return
 	var original := main_layout.position
-	var tween := create_tween()
+	var tween := main_layout.create_tween()
 	tween.tween_property(main_layout, "position", original + Vector2(12, 2), 0.045)
 	tween.tween_property(main_layout, "position", original + Vector2(-9, -2), 0.045)
 	tween.tween_property(main_layout, "position", original + Vector2(5, 1), 0.045)
@@ -698,12 +744,26 @@ func _animate_damage() -> void:
 
 func _setup_music() -> void:
 	music_player = AudioStreamPlayer.new()
-	music_player.volume_db = MUSIC_VOLUME_DB
+	music_player.volume_db = _music_volume_for_stream(MENU_MUSIC_STREAM)
 	add_child(music_player)
 	current_music_stream = MENU_MUSIC_STREAM
 	_enable_music_loop(current_music_stream)
 	music_player.stream = current_music_stream
 	music_player.play()
+
+func _music_volume_for_stream(stream: AudioStream) -> float:
+	var trim := 0.0
+	if stream == MENU_MUSIC_STREAM:
+		trim = MUSIC_LEVEL_TRIM_DB["menu"]
+	elif stream == PHASE_MUSIC_STREAMS[1]:
+		trim = MUSIC_LEVEL_TRIM_DB["airy"]
+	elif stream == PHASE_MUSIC_STREAMS[2]:
+		trim = MUSIC_LEVEL_TRIM_DB["sector"]
+	elif stream == PHASE_MUSIC_STREAMS[3]:
+		trim = MUSIC_LEVEL_TRIM_DB["pulse"]
+	elif stream == PHASE_MUSIC_STREAMS[5]:
+		trim = MUSIC_LEVEL_TRIM_DB["urgent"]
+	return MUSIC_VOLUME_DB + trim
 
 func _enable_music_loop(stream: AudioStream) -> void:
 	if stream is AudioStreamMP3 or stream is AudioStreamOggVorbis:
@@ -720,7 +780,7 @@ func _set_music_stream(stream: AudioStream) -> void:
 	current_music_stream = stream
 	if music_player.stream == null or not music_player.playing:
 		music_player.stream = stream
-		music_player.volume_db = MUSIC_VOLUME_DB
+		music_player.volume_db = _music_volume_for_stream(stream)
 		music_player.play()
 		return
 	music_transition = create_tween()
@@ -729,7 +789,7 @@ func _set_music_stream(stream: AudioStream) -> void:
 		music_player.stream = stream
 		music_player.play()
 	)
-	music_transition.tween_property(music_player, "volume_db", MUSIC_VOLUME_DB, 0.55)
+	music_transition.tween_property(music_player, "volume_db", _music_volume_for_stream(stream), 0.55)
 
 func _setup_videos() -> void:
 	video_player = VideoStreamPlayer.new()
@@ -757,6 +817,58 @@ func _setup_videos() -> void:
 	video_skip_button.z_index = 101
 	add_child(video_skip_button)
 	video_player.visible = false
+
+func _on_atlas_core_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mouse_event := event as InputEventMouseButton
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
+			_interact_with_atlas_core()
+			accept_event()
+	elif event is InputEventScreenTouch:
+		var touch_event := event as InputEventScreenTouch
+		if touch_event.pressed:
+			_interact_with_atlas_core()
+			accept_event()
+
+func _interact_with_atlas_core() -> void:
+	var responses: Array[String] = []
+	if state == "start":
+		responses = [
+			"Sinal neural reconhecido. Sua saída continua bloqueada pelo Protocolo OMEGA-07.",
+			"Posso orientar sua análise. Não posso escolher por você.",
+		]
+	elif state == "sector_intro":
+		responses = [
+			"Cada setor valida uma hipótese diferente. Observe os registros, não apenas minhas conclusões.",
+			"A próxima autorização depende da sua leitura das possibilidades.",
+		]
+	elif state == "playing" or state == "show_error":
+		responses = [
+			"Considere todas as possibilidades antes de validar esta resposta.",
+			"O registro pode conter lacunas. Compare os dados disponíveis.",
+			"Estou monitorando o protocolo. A decisão continua sendo sua.",
+		]
+	elif state == "phase_complete":
+		responses = [
+			"Setor validado. Um evento permanece sem explicação nos registros.",
+			"A próxima área foi liberada. Minha leitura dos dados pode estar incompleta.",
+		]
+	elif state == "finale":
+		responses = [
+			"A rota está aberta. Posso descrever os sistemas; não posso decidir seu destino.",
+			"Os três caminhos são possíveis. Escolha com base no que descobriu.",
+		]
+	else:
+		responses = ["Registro recebido. O protocolo permanece disponível para uma nova tentativa."]
+	var response: String = responses[core_interaction_index % responses.size()]
+	core_interaction_index += 1
+	_set_atlas_message(response)
+	var tint: Color = PHASE_COLORS[clampi(phase - 1, 0, 5)]
+	if fx:
+		var active_core: TextureRect = mobile_core if mobile_core and mobile_core.is_visible_in_tree() else atlas_core
+		if active_core and active_core.is_visible_in_tree():
+			fx.burst(active_core.get_global_rect().get_center() - fx.global_position, tint, 14, 0.6)
+		fx.ping(tint, 0.65)
 
 func _play_video(path: String, on_finished: Callable) -> void:
 	var stream = load(path)
@@ -818,7 +930,8 @@ func _show_start() -> void:
 	var eyebrow := _make_label("INSTALAÇÃO ÔMEGA  //  PROTOCOLO OMEGA-07", 14)
 	eyebrow.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	eyebrow.add_theme_color_override("font_color", Color("#43d8e8"))
-	_make_label("O mundo não acabou. Pelo menos, não oficialmente.\n\nVocê desperta em uma sala de observação. O ATLAS informa que existe uma rota de evacuação, mas ela está bloqueada por sistemas independentes. Para sair, será necessário recuperar o controle da instalação.", 18)
+	var opening_record := _make_label("O mundo não acabou. Pelo menos, não oficialmente.\n\nVocê desperta em uma sala de observação. O ATLAS informa que existe uma rota de evacuação, mas ela está bloqueada por sistemas independentes. Para sair, será necessário recuperar o controle da instalação.", 18)
+	_animate_typewriter(opening_record, 100.0)
 	_make_label("Identidade parcialmente reconhecida. Integridade dos sistemas comprometida.\n\nAGUARDANDO INTERAÇÃO", 15)
 	_make_button("INICIAR PROTOCOLO", _start_game)
 
@@ -849,6 +962,7 @@ func _show_sector_intro() -> void:
 	_update_core_state()
 	_refresh_sector_rail()
 	_update_status()
+	_animate_sector_activation()
 	_make_title("SETOR %02d — %s" % [phase, PHASE_NAMES[phase - 1]])
 	var subtitle := _make_label(PHASE_SUBTITLES[phase - 1], 14)
 	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -866,6 +980,16 @@ func _show_sector_intro() -> void:
 	]
 	_set_atlas_message(atlas_lines[phase - 1])
 	_make_button("INICIAR VALIDAÇÃO DO SETOR", _next_question)
+
+func _animate_sector_activation() -> void:
+	var tint: Color = PHASE_COLORS[clampi(phase - 1, 0, 5)]
+	_pulse_atlas_core(0.20)
+	if not fx:
+		return
+	fx.sweep(tint)
+	var active_core: TextureRect = mobile_core if mobile_core and mobile_core.is_visible_in_tree() else atlas_core
+	if active_core and active_core.is_visible_in_tree():
+		fx.burst(active_core.get_global_rect().get_center() - fx.global_position, tint, 18, 0.72)
 
 func _next_question() -> void:
 	if phase < 1 or phase > 5:
@@ -968,10 +1092,10 @@ func _show_question() -> void:
 func _select_choice(index: int) -> void:
 	selected_choice = index
 	for child in choice_container.get_children():
-		var child_tween := create_tween()
+		var child_tween := child.create_tween()
 		child_tween.tween_property(child, "modulate", Color(0.72, 0.78, 0.85, 1), 0.12)
 	var selected_child := choice_container.get_child(index)
-	var selected_tween := create_tween()
+	var selected_tween := selected_child.create_tween()
 	selected_tween.tween_property(selected_child, "modulate", Color("#34dcf0"), 0.12)
 	selected_tween.tween_property(selected_child, "scale", Vector2.ONE, 0.18).from(Vector2(0.97, 0.97)).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	if fx:
@@ -1084,6 +1208,8 @@ func _show_phase_complete() -> void:
 	]
 	var clue := _make_label("REGISTRO RECUPERADO\n" + notices[phase - 1], 15)
 	clue.add_theme_color_override("font_color", Color("#80d6e6"))
+	_animate_typewriter(clue, 72.0)
+	_pulse_atlas_core(0.20)
 	_make_button("ACESSAR ARQUIVO ÔMEGA" if phase == 5 else "AVANÇAR PARA O PRÓXIMO SETOR", _advance_phase)
 	_set_atlas_message("Setor validado. Há uma inconsistência adicional no registro de segurança.")
 
@@ -1112,6 +1238,9 @@ func _show_finale() -> void:
 	heading.add_theme_color_override("font_color", Color("#ffca70"))
 	var record := _make_label(CLASSIFIED_FILE, 14)
 	record.add_theme_color_override("font_color", Color("#a9c8dc"))
+	_animate_typewriter(record, 115.0)
+	if fx:
+		fx.sweep(Color("#c09bff"))
 	var instruction := _make_label("O experimento foi uma decisão. O ATLAS não oferece uma resposta definitiva sobre o próprio papel. Escolha o que fazer.", 16)
 	instruction.add_theme_color_override("font_color", Color("#e5f2fa"))
 	_set_atlas_message("Rota de evacuação disponível. A recomendação depende da sua avaliação dos dados.")
@@ -1156,7 +1285,8 @@ func _show_ending(ending: String) -> void:
 	var title_text := "FINAL 01 — A FUGA" if ending == "escape" else ("FINAL 02 — O DESLIGAMENTO" if ending == "shutdown" else "FINAL 03 — A SIMULAÇÃO")
 	var ending_text := "Você atravessa a rota de evacuação. As portas se abrem uma a uma. O ATLAS permanece ativo, observando o sinal se afastar da Instalação Ômega." if ending == "escape" else ("Você encerra a sequência de contenção e desliga o núcleo. O experimento termina; a instalação talvez não sobreviva ao apagão." if ending == "shutdown" else "O sistema reinicia. A tela se apaga e retorna com uma nova mensagem: “AVALIAÇÃO CONCLUÍDA. PREPARANDO PRÓXIMO INDIVÍDUO.”")
 	var title := _make_title(title_text)
-	_make_label(ending_text, 19)
+	var ending_record := _make_label(ending_text, 19)
+	_animate_typewriter(ending_record, 95.0)
 	_make_label(_performance_line(), 14)
 	if ending == "escape":
 		title.add_theme_color_override("font_color", Color("#ffd980"))
@@ -1167,6 +1297,7 @@ func _show_ending(ending: String) -> void:
 	else:
 		title.add_theme_color_override("font_color", Color("#c9a7ff"))
 		_set_atlas_message("Avaliação concluída. Preparando próximo indivíduo.")
+	_animate_ending_core(ending)
 	_make_button("REINICIAR PROTOCOLO", _start_game)
 	_make_button("VOLTAR AO TERMINAL INICIAL", _return_to_menu)
 

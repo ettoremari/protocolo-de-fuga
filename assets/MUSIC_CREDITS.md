@@ -14,3 +14,5 @@ As faixas abaixo são do pacote [Dark Sci-Fi Audio Pack](https://opengameart.org
 - **Setor 05 — Núcleo:** Urgent (`assets/music/urgent.mp3`)
 
 O pacote também oferece [arquivos e informações de licença](https://opengameart.org/content/dark-sci-fi-audio-pack). As faixas dos setores foram configuradas para repetir em loop. As mudanças de trilha usam transições suaves.
+
+Para corrigir diferenças de volume, o player aplica compensação de ganho individual às cinco faixas, visando loudness de reprodução próximo a −21 LUFS e pico previsto abaixo de −2 dBTP. Os arquivos fornecidos pelos autores são preservados sem reencodificação.

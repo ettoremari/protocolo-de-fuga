@@ -86,3 +86,15 @@ def test_sector_music_mapping_and_credits():
     assert "_set_music_stream(PHASE_MUSIC_STREAMS[phase])" in script
     assert "SRG774" in (root / "README.md").read_text(encoding="utf-8")
     assert "CC0 1.0" in (root / "assets" / "MUSIC_CREDITS.md").read_text(encoding="utf-8")
+
+
+def test_atlas_interactions_story_animations_and_music_gain():
+    script = (_root() / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert "const MUSIC_VOLUME_DB := -3.0" in script
+    assert "func _music_volume_for_stream(" in script and "MUSIC_LEVEL_TRIM_DB" in script
+    assert "image.gui_input.connect(_on_atlas_core_gui_input)" in script
+    assert "InputEventScreenTouch" in script and "func _interact_with_atlas_core()" in script
+    assert "func _animate_typewriter(" in script
+    assert "_animate_typewriter(record, 115.0)" in script
+    assert "func _animate_sector_activation()" in script
+    assert "_animate_ending_core(ending)" in script
