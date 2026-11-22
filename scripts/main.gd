@@ -457,7 +457,7 @@ func _show_start() -> void:
 	health_label.visible = false
 	top_row.visible = true
 	_clear_content()
-	status_label.text = "PROTOCOLO DE FUGA"
+	status_label.text = "PROTOCOLO DE FUGA  |  v1.1"
 	progress.value = 0
 	_make_title("ESCAPE ROOM DE ANALISE COMBINATORIA")
 	_make_label("Cinco setores. Doze acertos. Dez erros. Limite de vinte minutos.")

@@ -71,3 +71,15 @@ def test_godot_has_damage_health_bar_effect():
     assert "var health_bar: ProgressBar" in script
     assert "func _animate_damage()" in script
     assert 'health_label.text = "INTEGRIDADE - DANO"' in script
+
+
+def test_godot_is_version_1_1():
+    project_root = Path(__file__).parents[1]
+    project = (project_root / "project.godot").read_text(encoding="utf-8")
+    export_presets = (project_root / "export_presets.cfg").read_text(encoding="utf-8")
+    script = (project_root / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert 'config/version="1.1"' in project
+    assert 'application/file_version="1.1.0"' in export_presets
+    assert 'application/product_version="1.1.0"' in export_presets
+    assert 'version/name="1.1"' in export_presets
+    assert "PROTOCOLO DE FUGA  |  v1.1" in script

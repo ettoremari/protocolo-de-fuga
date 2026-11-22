@@ -1,5 +1,7 @@
 # PROTOCOLO DE FUGA - Escape Room de Analise Combinatoria
 
+Versao: **1.1**
+
 Jogo educacional convertido para **Godot 4**, com cinco fases, banco de questoes, respostas mistas (alternativas e numericas), limite de 20 minutos e 10 erros.
 
 ## Por que Godot
