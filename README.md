@@ -1,6 +1,6 @@
 # PROTOCOLO DE FUGA — Instalação Ômega
 
-Versão **2.1** — jogo de escape room narrativo em Godot 4.7.2.
+Versão **2.2** — jogo de escape room narrativo em Godot 4.7.2.
 
 ## Premissa
 
@@ -21,11 +21,17 @@ Os conteúdos matemáticos sustentam a narrativa: princípio fundamental da cont
 - Limite de 20 minutos e 10 erros; resolução exibida em caso de erro.
 - Vídeos de abertura e de início de missão, música opcional e efeitos visuais de feedback preservados.
 
+## Trilha sonora
+
+A música atual **Tense Future Loop**, de gmason, permanece na tela inicial. Durante a campanha, a trilha muda com transições suaves: **Airy** no Setor 01, **Sector** no Setor 02, **Pulse** nos Setores 03 e 04, e **Urgent** no Setor 05.
+
+As quatro faixas dos setores são do pacote [Dark Sci-Fi Audio Pack](https://opengameart.org/content/dark-sci-fi-audio-pack), de **SRG774**, publicado sob **CC0 1.0**. O crédito é voluntário, mas registrado aqui em agradecimento. A licença permite copiar, adaptar, distribuir e usar comercialmente sem exigir atribuição.
+
 ## Executar
 
 1. Abra esta pasta no Godot **4.7.2**.
 2. Importe `project.godot` e execute `main.tscn`.
-3. O preset Android exporta para `build/ProtocoloDeFuga_OMEGA_v2.1.apk` (arm64).
+3. O preset Android exporta para `build/ProtocoloDeFuga_OMEGA_v2.2.apk` (arm64).
 
 Para exportar um APK de lançamento em outro computador, configure o Android SDK, o JDK e uma chave de assinatura própria no preset Android. O pacote-fonte não inclui a chave privada nem as credenciais usadas para assinar o APK entregue.
 

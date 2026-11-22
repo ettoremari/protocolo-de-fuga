@@ -4,6 +4,15 @@ const BackdropScript := preload("res://scripts/backdrop.gd")
 const FxScript := preload("res://scripts/fx.gd")
 const TOTAL_TIME := 20 * 60
 const MAX_ERRORS := 10
+const MENU_MUSIC_STREAM := preload("res://assets/tensefutureloop.ogg")
+const PHASE_MUSIC_STREAMS := {
+	1: preload("res://assets/music/airy.mp3"),
+	2: preload("res://assets/music/sector.mp3"),
+	3: preload("res://assets/music/pulse.mp3"),
+	4: preload("res://assets/music/pulse.mp3"),
+	5: preload("res://assets/music/urgent.mp3"),
+}
+const MUSIC_VOLUME_DB := -11.0
 const TOTAL_HITS := 12
 const PHASE_TARGETS := [1, 2, 2, 3, 4]
 const PHASE_NAMES := ["OBSERVAÇÃO", "SEGURANÇA", "PESQUISA", "ENERGIA", "NÚCLEO", "EVACUAÇÃO"]
@@ -60,6 +69,8 @@ var numeric_input: LineEdit
 var music_button: Button
 var menu_button: Button
 var music_player: AudioStreamPlayer
+var current_music_stream: AudioStream
+var music_transition: Tween
 var choice_container: VBoxContainer
 var main_layout: VBoxContainer
 var layout_box: VBoxContainer
@@ -687,11 +698,38 @@ func _animate_damage() -> void:
 
 func _setup_music() -> void:
 	music_player = AudioStreamPlayer.new()
-	music_player.stream = load("res://assets/tensefutureloop.ogg")
-	if music_player.stream:
-		music_player.volume_db = -11
-		add_child(music_player)
+	music_player.volume_db = MUSIC_VOLUME_DB
+	add_child(music_player)
+	current_music_stream = MENU_MUSIC_STREAM
+	_enable_music_loop(current_music_stream)
+	music_player.stream = current_music_stream
+	music_player.play()
+
+func _enable_music_loop(stream: AudioStream) -> void:
+	if stream is AudioStreamMP3 or stream is AudioStreamOggVorbis:
+		stream.set("loop", true)
+
+func _set_music_stream(stream: AudioStream) -> void:
+	if music_player == null or stream == null:
+		return
+	if stream == current_music_stream and music_player.stream != null:
+		return
+	_enable_music_loop(stream)
+	if music_transition and music_transition.is_valid():
+		music_transition.kill()
+	current_music_stream = stream
+	if music_player.stream == null or not music_player.playing:
+		music_player.stream = stream
+		music_player.volume_db = MUSIC_VOLUME_DB
 		music_player.play()
+		return
+	music_transition = create_tween()
+	music_transition.tween_property(music_player, "volume_db", -36.0, 0.35)
+	music_transition.tween_callback(func() -> void:
+		music_player.stream = stream
+		music_player.play()
+	)
+	music_transition.tween_property(music_player, "volume_db", MUSIC_VOLUME_DB, 0.55)
 
 func _setup_videos() -> void:
 	video_player = VideoStreamPlayer.new()
@@ -761,6 +799,7 @@ func _toggle_music() -> void:
 
 func _show_start() -> void:
 	state = "start"
+	_set_music_stream(MENU_MUSIC_STREAM)
 	if fx:
 		fx.clear_all()
 	menu_button.visible = false
@@ -804,6 +843,7 @@ func _return_to_menu() -> void:
 	_show_start()
 
 func _show_sector_intro() -> void:
+	_set_music_stream(PHASE_MUSIC_STREAMS[phase])
 	_clear_content()
 	state = "sector_intro"
 	_update_core_state()

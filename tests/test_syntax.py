@@ -67,3 +67,22 @@ def test_choice_alternatives_are_shuffled_on_a_copy():
     script = (_root() / "scripts" / "main.gd").read_text(encoding="utf-8")
     assert "current = available.pick_random().duplicate(true)" in script
     assert "shuffled_options.shuffle()" in script
+
+
+def test_sector_music_mapping_and_credits():
+    root = _root()
+    script = (root / "scripts" / "main.gd").read_text(encoding="utf-8")
+    expected = {
+        "1: preload(\"res://assets/music/airy.mp3\"),",
+        "2: preload(\"res://assets/music/sector.mp3\"),",
+        "3: preload(\"res://assets/music/pulse.mp3\"),",
+        "4: preload(\"res://assets/music/pulse.mp3\"),",
+        "5: preload(\"res://assets/music/urgent.mp3\"),",
+    }
+    assert expected.issubset({line.strip() for line in script.splitlines()})
+    for track in ("airy.mp3", "sector.mp3", "pulse.mp3", "urgent.mp3"):
+        assert (root / "assets" / "music" / track).is_file()
+    assert "MENU_MUSIC_STREAM" in script and "_set_music_stream(MENU_MUSIC_STREAM)" in script
+    assert "_set_music_stream(PHASE_MUSIC_STREAMS[phase])" in script
+    assert "SRG774" in (root / "README.md").read_text(encoding="utf-8")
+    assert "CC0 1.0" in (root / "assets" / "MUSIC_CREDITS.md").read_text(encoding="utf-8")
