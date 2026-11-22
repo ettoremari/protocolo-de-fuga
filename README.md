@@ -8,6 +8,17 @@ Versão **2.3** — jogo de escape room narrativo em Godot 4.7.2.
 - [Executável Windows x86_64 — v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.3/ProtocoloDeFuga_v2.3.exe)
 - [Notas e todos os arquivos da release v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/tag/v2.3)
 
+## Versão Web/PWA para iPhone
+
+[Jogue Protocolo de Fuga no Safari](https://ettoremari.github.io/protocolo-de-fuga/). Para instalar na Tela de Início do iPhone:
+
+1. Abra o link no Safari e toque em **Compartilhar**.
+2. Escolha **Adicionar à Tela de Início**.
+3. Se a opção **Abrir como App da Web** aparecer, deixe-a ativada e confirme em **Adicionar**.
+4. Abra o ícone criado na Tela de Início e use o aparelho em paisagem.
+
+O manifesto do PWA declara modo standalone e orientação paisagem. A primeira carga pode levar algum tempo (export de aproximadamente 51 MiB) e requer conexão. Para compatibilidade/performance nos navegadores, esta versão Web pula os dois vídeos Ogg de introdução. A página publicada e os arquivos principais foram verificados, mas ainda não houve teste em um iPhone físico.
+
 ## Premissa
 
 Você desperta na Instalação Ômega após o ATLAS iniciar uma contenção total. Para alcançar a rota de evacuação, será necessário recuperar o controle dos sistemas, resolver validações matemáticas contextualizadas e investigar as contradições do sistema central. A história mantém ambígua a intenção do ATLAS até o fim.
@@ -21,12 +32,12 @@ Os conteúdos matemáticos sustentam a narrativa: princípio fundamental da cont
 ## Interface e recursos
 
 - Interface inspirada em terminal de investigação cyberpunk, com arquivos/setores à esquerda, desafio ao centro e ATLAS/núcleo à direita em paisagem.
-- Em aparelhos Android, a orientação é fixa em paisagem. A interface também mantém o layout responsivo para outros formatos de janela.
+- Em aparelhos Android, a orientação é fixa em paisagem. O PWA declara orientação paisagem e modo standalone; o comportamento de rotação pode variar conforme o iOS/Safari. A interface também mantém o layout responsivo para outros formatos de janela.
 - A ordem das alternativas de múltipla escolha é embaralhada a cada exibição; as posições corretas ficam equilibradas no banco.
 - Toque/clique no núcleo do ATLAS para receber respostas contextuais; o núcleo pulsa e reage com partículas, e as falas aparecem em efeito de terminal.
 - Setores, pistas recuperadas, o arquivo classificado e os três finais têm revelações progressivas e efeitos visuais próprios.
 - Limite de 20 minutos e 10 erros; resolução exibida em caso de erro.
-- Vídeos de abertura e de início de missão, música opcional e efeitos de feedback preservados.
+- Vídeos de abertura e de início de missão permanecem nas versões desktop/Android; são omitidos no export Web. Música opcional e efeitos de feedback são preservados.
 
 ## Trilha sonora
 
