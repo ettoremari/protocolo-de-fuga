@@ -1,0 +1,65 @@
+name: Build Godot releases
+
+on:
+  push:
+    branches: [main, feat/godot-scroll-desktop]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK packages
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null 2>&1 || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
+            "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0"
+
+      - name: Download Godot and export templates
+        run: |
+          curl -L --fail --silent --show-error \
+            'https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip' \
+            -o godot.zip
+          unzip -q godot.zip
+          curl -L --fail --silent --show-error \
+            'https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz' \
+            -o templates.tpz
+          mkdir -p templates "$HOME/.local/share/godot/export_templates/4.7.2.stable"
+          unzip -q templates.tpz -d templates
+          cp -a templates/templates/. "$HOME/.local/share/godot/export_templates/4.7.2.stable/"
+          chmod +x Godot_v4.7.2-stable_linux.x86_64
+
+      - name: Import project
+        run: ./Godot_v4.7.2-stable_linux.x86_64 --headless --editor --quit --path .
+
+      - name: Export Windows executable
+        run: |
+          mkdir -p build
+          ./Godot_v4.7.2-stable_linux.x86_64 --headless --path . --export-release "Windows Desktop" build/ProtocoloDeFuga.exe
+
+      - name: Export Android APK
+        run: |
+          mkdir -p build
+          ./Godot_v4.7.2-stable_linux.x86_64 --headless --path . --export-debug "Android" build/ProtocoloDeFuga.apk
+
+      - name: Upload builds
+        uses: actions/upload-artifact@v4
+        with:
+          name: ProtocoloDeFuga-Godot
+          path: build/*
+          if-no-files-found: error

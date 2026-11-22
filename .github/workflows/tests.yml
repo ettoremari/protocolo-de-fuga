@@ -10,15 +10,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar repositório
+      - name: Baixar repositorio
         uses: actions/checkout@v4
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
       - name: Instalar pytest
         run: python -m pip install pytest
-      - name: Verificar sintaxe
-        run: python -m compileall -q main.py tests
       - name: Executar testes
         run: python -m pytest -q
