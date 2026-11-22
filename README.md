@@ -2,6 +2,12 @@
 
 Versão **2.3** — jogo de escape room narrativo em Godot 4.7.2.
 
+## Downloads
+
+- [APK Android arm64 — v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.3/ProtocoloDeFuga_v2.3.apk)
+- [Executável Windows x86_64 — v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.3/ProtocoloDeFuga_v2.3.exe)
+- [Notas e todos os arquivos da release v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/tag/v2.3)
+
 ## Premissa
 
 Você desperta na Instalação Ômega após o ATLAS iniciar uma contenção total. Para alcançar a rota de evacuação, será necessário recuperar o controle dos sistemas, resolver validações matemáticas contextualizadas e investigar as contradições do sistema central. A história mantém ambígua a intenção do ATLAS até o fim.
