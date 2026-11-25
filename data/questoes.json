@@ -1992,9 +1992,9 @@
     "tipo_resposta": "choice",
     "alternativas": [
       "8",
-      "5",
+      "6",
       "7",
-      "6"
+      "5"
     ],
     "resposta": 6,
     "resolucao": "Permutamos 3 elementos distintos: 3! = 6."
@@ -2020,8 +2020,8 @@
     "enunciado": "Os 5 módulos distintos do registro de turnos serão colocados em uma sequência, usando todos uma única vez. De quantas maneiras diferentes isso pode ser feito?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "120",
       "122",
+      "120",
       "121",
       "119"
     ],
@@ -2554,8 +2554,8 @@
     "enunciado": "No conjunto de funções, 3 posições ordenadas serão preenchidas por pessoas distintas escolhidas entre 4 candidatas. Quantas atribuições são possíveis?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "24",
       "25",
+      "24",
       "23",
       "26"
     ],
@@ -2659,9 +2659,9 @@
     "tipo_resposta": "choice",
     "alternativas": [
       "842",
-      "841",
+      "840",
       "839",
-      "840"
+      "841"
     ],
     "resposta": 840,
     "resolucao": "Como as funções são distintas, usamos A(7,4) = 7 × (7−1) × … por 4 fatores = 840."
@@ -3094,9 +3094,9 @@
     "tipo_resposta": "choice",
     "alternativas": [
       "9",
-      "12",
+      "10",
       "11",
-      "10"
+      "12"
     ],
     "resposta": 10,
     "resolucao": "A ordem não importa: C(5,2) = 5!/[2!(5−2)!] = 10."
@@ -3151,8 +3151,8 @@
     "enunciado": "Para o plano de evacuação, serão escolhidos 3 itens distintos entre 5, sem cargos ou posições diferentes. Quantos grupos podem ser formados?",
     "tipo_resposta": "choice",
     "alternativas": [
-      "10",
       "11",
+      "10",
       "9",
       "12"
     ],
@@ -3715,8 +3715,8 @@
     "tipo_resposta": "choice",
     "alternativas": [
       "62",
-      "59",
       "60",
+      "59",
       "61"
     ],
     "resposta": 60,

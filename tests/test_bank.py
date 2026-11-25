@@ -7,12 +7,12 @@ def _bank():
     return json.loads((Path(__file__).parents[1] / "data" / "questoes.json").read_text(encoding="utf-8"))
 
 
-def test_bank_has_20_questions_per_math_sector():
+def test_bank_has_60_questions_per_math_sector():
     data = _bank()
-    assert len(data) == 100
-    assert len({question["id"] for question in data}) == 100
+    assert len(data) == 300
+    assert len({question["id"] for question in data}) == 300
     for phase in range(1, 6):
-        assert sum(question["fase"] == phase for question in data) == 20
+        assert sum(question["fase"] == phase for question in data) == 60
 
 
 def test_each_question_has_required_fields_and_answer_type():
@@ -37,4 +37,4 @@ def test_choice_answer_positions_are_balanced():
             continue
         index = next(i for i, option in enumerate(question["alternativas"]) if str(option) == str(question["resposta"]))
         positions[index] += 1
-    assert sorted(positions.values()) == [12, 12, 12, 13]
+    assert sorted(positions.values()) == [37, 37, 37, 38]
