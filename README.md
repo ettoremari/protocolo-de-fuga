@@ -17,7 +17,7 @@ Versão **2.3** — jogo de escape room narrativo em Godot 4.7.2.
 3. Se a opção **Abrir como App da Web** aparecer, deixe-a ativada e confirme em **Adicionar**.
 4. Abra o ícone criado na Tela de Início e use o aparelho em paisagem.
 
-O manifesto do PWA declara modo standalone e orientação paisagem. A primeira carga pode levar algum tempo (export de aproximadamente 51 MiB) e requer conexão. Para compatibilidade/performance nos navegadores, esta versão Web pula os dois vídeos Ogg de introdução. A página publicada e os arquivos principais foram verificados, mas ainda não houve teste em um iPhone físico.
+O manifesto do PWA declara modo standalone e orientação paisagem. O export Web/PWA atualizado nesta branch ocupa aproximadamente 61 MiB e requer conexão na primeira carga. Para compatibilidade/performance nos navegadores, esta versão Web pula os dois vídeos Ogg de introdução. A página publicada e os arquivos principais foram verificados, mas ainda não houve teste em um iPhone físico.
 
 ## Premissa
 
@@ -35,6 +35,7 @@ Os conteúdos matemáticos sustentam a narrativa: princípio fundamental da cont
 - Em aparelhos Android, a orientação é fixa em paisagem. O PWA declara orientação paisagem e modo standalone; o comportamento de rotação pode variar conforme o iOS/Safari. A interface também mantém o layout responsivo para outros formatos de janela.
 - A ordem das alternativas de múltipla escolha é embaralhada a cada exibição; as posições corretas ficam equilibradas no banco.
 - Toque/clique no núcleo do ATLAS para receber respostas contextuais; o núcleo pulsa e reage com partículas, e as falas aparecem em efeito de terminal.
+- Os seis setores têm salas cenográficas próprias — observação, segurança biométrica, pesquisa NEXUS, energia, núcleo ATLAS e evacuação — com movimentos ambientais discretos ligados à narrativa.
 - Setores, pistas recuperadas, o arquivo classificado e os três finais têm revelações progressivas e efeitos visuais próprios.
 - Limite de 20 minutos e 10 erros; resolução exibida em caso de erro.
 - Vídeos de abertura e de início de missão permanecem nas versões desktop/Android; são omitidos no export Web. Música opcional e efeitos de feedback são preservados.

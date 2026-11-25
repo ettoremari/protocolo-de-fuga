@@ -9,12 +9,18 @@ var t := 0.0
 var scan_y := 0.0
 var dust: Array = []
 var _ready_dust := false
+var room_mode := false
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	z_index = -1
+
+
+func set_room_mode(enabled: bool) -> void:
+	room_mode = enabled
+	queue_redraw()
 
 
 func _process(delta: float) -> void:
@@ -39,35 +45,36 @@ func _draw() -> void:
 	var h: float = size.y
 	if w < 10.0 or h < 10.0:
 		return
+	var structural_scale := 0.0 if room_mode else 1.0
 
 	# Brilho frio vindo de baixo
 	for i in 26:
 		var r: float = w * (0.35 + float(i) * 0.045)
-		draw_circle(Vector2(w * 0.5, h * 1.12), r, Color(CYAN.r, CYAN.g, CYAN.b, 0.0075 * (1.0 - float(i) / 26.0)))
+		draw_circle(Vector2(w * 0.5, h * 1.12), r, Color(CYAN.r, CYAN.g, CYAN.b, 0.0075 * (1.0 - float(i) / 26.0) * structural_scale))
 
 	# Grade em perspectiva
 	var horizon: float = h * 0.66
 	var vp := Vector2(w * 0.5, horizon - h * 0.08)
-	draw_line(Vector2(0, horizon), Vector2(w, horizon), Color(CYAN.r, CYAN.g, CYAN.b, 0.22), 1.5)
+	draw_line(Vector2(0, horizon), Vector2(w, horizon), Color(CYAN.r, CYAN.g, CYAN.b, 0.22 * structural_scale), 1.5)
 	var cols := 12
 	for i in range(-cols, cols + 1):
 		var xb: float = w * 0.5 + (float(i) / float(cols)) * w * 1.4
-		draw_line(vp, Vector2(xb, h + 30.0), Color(CYAN.r, CYAN.g, CYAN.b, 0.13), 1.0)
+		draw_line(vp, Vector2(xb, h + 30.0), Color(CYAN.r, CYAN.g, CYAN.b, 0.13 * structural_scale), 1.0)
 	var rows := 14
 	for i in rows:
 		var p: float = fmod(float(i) / float(rows) + fmod(t * 0.03, 1.0 / float(rows)), 1.0)
 		var y: float = horizon + pow(p, 2.1) * (h - horizon + 40.0)
-		draw_line(Vector2(0, y), Vector2(w, y), Color(CYAN.r, CYAN.g, CYAN.b, 0.07 + 0.26 * p), 1.2)
+		draw_line(Vector2(0, y), Vector2(w, y), Color(CYAN.r, CYAN.g, CYAN.b, (0.07 + 0.26 * p) * structural_scale), 1.2)
 
 	# Grade fina de fundo (a antiga, agora mais discreta)
 	var step := maxi(34, int(w / 30.0))
 	var x := 0
 	while x <= int(w):
-		draw_line(Vector2(x, 0), Vector2(x, h), Color(0.071, 0.169, 0.267, 0.75), 1.0)
+		draw_line(Vector2(x, 0), Vector2(x, h), Color(0.071, 0.169, 0.267, 0.75 * structural_scale), 1.0)
 		x += step
 	var y2 := 0
 	while y2 <= int(h):
-		draw_line(Vector2(0, y2), Vector2(w, y2), Color(0.071, 0.169, 0.267, 0.75), 1.0)
+		draw_line(Vector2(0, y2), Vector2(w, y2), Color(0.071, 0.169, 0.267, 0.75 * structural_scale), 1.0)
 		y2 += step
 
 	# Poeira digital

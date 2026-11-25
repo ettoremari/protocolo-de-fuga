@@ -98,3 +98,25 @@ def test_atlas_interactions_story_animations_and_music_gain():
     assert "_animate_typewriter(record, 115.0)" in script
     assert "func _animate_sector_activation()" in script
     assert "_animate_ending_core(ending)" in script
+
+
+def test_scenographic_rooms_load_asynchronously_and_have_ambient_motion():
+    root = _root()
+    script = (root / "scripts" / "room_environment.gd").read_text(encoding="utf-8")
+    rooms = (
+        "sector01_observacao.jpg",
+        "sector02_seguranca.jpg",
+        "sector03_pesquisa.jpg",
+        "sector04_energia.jpg",
+        "sector05_nucleo.jpg",
+        "sector06_evacuacao.jpg",
+    )
+    for room in rooms:
+        assert (root / "assets" / "rooms" / room).is_file()
+        assert room in script
+    assert "ResourceLoader.load_threaded_request" in script
+    assert "room_texture_ready.emit()" in script
+    assert "func _draw_room_animation()" in script
+    main_script = (root / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert "func _request_start_room_after_frame()" in main_script
+    assert "await RenderingServer.frame_post_draw" in main_script

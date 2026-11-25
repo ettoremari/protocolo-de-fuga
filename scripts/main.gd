@@ -1,6 +1,7 @@
 extends Control
 
 const BackdropScript := preload("res://scripts/backdrop.gd")
+const RoomEnvironmentScript := preload("res://scripts/room_environment.gd")
 const FxScript := preload("res://scripts/fx.gd")
 const TOTAL_TIME := 20 * 60
 const MAX_ERRORS := 10
@@ -89,6 +90,7 @@ var mobile_core: TextureRect
 var mobile_status_label: Label
 var video_player: VideoStreamPlayer
 var video_skip_button: Button
+var room_environment: Control
 var video_on_finished: Callable
 var backdrop: Control
 var fx: Control
@@ -188,6 +190,10 @@ func _build_ui() -> void:
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	background.z_index = -2
 	add_child(background)
+	room_environment = RoomEnvironmentScript.new()
+	room_environment.z_index = -2
+	add_child(room_environment)
+	room_environment.connect("room_texture_ready", Callable(self, "_on_room_texture_ready"))
 	backdrop = BackdropScript.new()
 	backdrop.z_index = -1
 	add_child(backdrop)
@@ -311,7 +317,7 @@ func _set_style_corners(style: StyleBoxFlat, radius: int) -> void:
 
 func _style_main_panel(target: PanelContainer) -> void:
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#0b1424")
+	style.bg_color = Color("#0b1424e3")
 	style.border_width_left = 1
 	style.border_width_right = 1
 	style.border_width_top = 1
@@ -413,7 +419,7 @@ func _make_core_image(minimum: Vector2) -> TextureRect:
 
 func _style_rail_panel(rail: PanelContainer) -> void:
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#0a1220")
+	style.bg_color = Color("#0a1220e0")
 	style.border_width_left = 1
 	style.border_width_right = 1
 	style.border_width_top = 1
@@ -752,6 +758,10 @@ func _setup_music() -> void:
 	music_player.stream = current_music_stream
 	music_player.play()
 
+func _on_room_texture_ready() -> void:
+	if backdrop and backdrop.has_method("set_room_mode"):
+		backdrop.set_room_mode(true)
+
 func _music_volume_for_stream(stream: AudioStream) -> float:
 	var trim := 0.0
 	if stream == MENU_MUSIC_STREAM:
@@ -915,6 +925,7 @@ func _toggle_music() -> void:
 
 func _show_start() -> void:
 	state = "start"
+	call_deferred("_request_start_room_after_frame")
 	_set_music_stream(MENU_MUSIC_STREAM)
 	if fx:
 		fx.clear_all()
@@ -939,6 +950,11 @@ func _show_start() -> void:
 	_make_label("Identidade parcialmente reconhecida. Integridade dos sistemas comprometida.\n\nAGUARDANDO INTERAÇÃO", 15)
 	_make_button("INICIAR PROTOCOLO", _start_game)
 
+func _request_start_room_after_frame() -> void:
+	await RenderingServer.frame_post_draw
+	if state == "start" and room_environment:
+		room_environment.call("set_sector", 1)
+
 func _start_game() -> void:
 	_play_video("res://assets/iniciar-missao.ogv", _begin_game)
 
@@ -961,6 +977,8 @@ func _return_to_menu() -> void:
 
 func _show_sector_intro() -> void:
 	_set_music_stream(PHASE_MUSIC_STREAMS[phase])
+	if room_environment:
+		room_environment.call("set_sector", phase)
 	_clear_content()
 	state = "sector_intro"
 	_update_core_state()
@@ -1246,6 +1264,8 @@ func _advance_phase() -> void:
 
 func _show_finale() -> void:
 	phase = 6
+	if room_environment:
+		room_environment.call("set_sector", 6)
 	state = "finale"
 	_clear_content()
 	progress.value = TOTAL_HITS
