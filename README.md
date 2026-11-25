@@ -1,9 +1,10 @@
 # PROTOCOLO DE FUGA — Instalação Ômega
 
-Versão **2.3** — jogo de escape room narrativo em Godot 4.7.2.
+Versão **2.4-preview** — branch `feat/salas-cenograficas`, jogo de escape room narrativo em Godot 4.7.2.
 
 ## Downloads
 
+Os links abaixo continuam apontando para a release estável assinada **v2.3**. Os builds de prévia desta branch são entregues separadamente; o APK debug não substitui uma instalação assinada da v2.3.
 - [APK Android arm64 — v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.3/ProtocoloDeFuga_v2.3.apk)
 - [Executável Windows x86_64 — v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.3/ProtocoloDeFuga_v2.3.exe)
 - [Notas e todos os arquivos da release v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/tag/v2.3)
@@ -25,7 +26,7 @@ Você desperta na Instalação Ômega após o ATLAS iniciar uma contenção tota
 
 ## Campanha
 
-A progressão tem seis setores: **01 Observação**, **02 Segurança**, **03 Pesquisa**, **04 Energia**, **05 Núcleo** e **06 Evacuação**. Os cinco primeiros usam um banco de 100 questões, com 20 por setor e metas de 1, 2, 2, 3 e 4 respostas corretas. O último apresenta o arquivo confidencial do Projeto Espelho e permite escolher um dos três finais: **A Fuga**, **O Desligamento** ou **A Simulação**.
+A progressão tem seis setores: **01 Observação**, **02 Segurança**, **03 Pesquisa**, **04 Energia**, **05 Núcleo** e **06 Evacuação**. Os cinco primeiros usam um banco de **300 questões**, 60 por setor (20 anteriores e 40 novas por tema), mantendo metas de 1, 2, 2, 3 e 4 respostas corretas. Na tela inicial, é possível escolher uma entre cinco dificuldades ou usar todas; cada tema novo tem oito questões de cada dificuldade. O sexto setor apresenta o arquivo confidencial do Projeto Espelho e permite escolher um dos três finais: **A Fuga**, **O Desligamento** ou **A Simulação**.
 
 Os conteúdos matemáticos sustentam a narrativa: princípio fundamental da contagem para códigos; permutação para autenticação; arranjo para registros ordenados; combinação para seleção de módulos; e análise combinatória integrada para investigar possibilidades.
 
@@ -52,7 +53,7 @@ O player aplica compensação de ganho individual medida para cada faixa, aproxi
 
 1. Abra esta pasta no Godot **4.7.2**.
 2. Importe `project.godot` e execute `main.tscn`.
-3. O preset Android exporta para `build/ProtocoloDeFuga_OMEGA_v2.3.apk` (arm64).
+3. O preset Android exporta para `build/ProtocoloDeFuga_OMEGA_v2.4.apk` (arm64).
 
 Para exportar um APK de lançamento em outro computador, configure o Android SDK, o JDK e uma chave de assinatura própria no preset Android. O pacote-fonte não inclui a chave privada nem as credenciais usadas para assinar o APK entregue.
 
@@ -66,7 +67,9 @@ Para exportar um APK de lançamento em outro computador, configure o Android SDK
 
 ## Regras
 
-- 100 questões no banco: 20 por cada um dos cinco setores matemáticos.
+- 300 questões no banco: 60 por cada um dos cinco setores matemáticos; as 200 novas estão balanceadas por tema e dificuldade.
+- Seletor de dificuldade no terminal inicial: qualquer dificuldade, fácil, básico, intermediário, avançado ou difícil.
+- Uma única bolha informativa aparece no começo de cada um dos seis setores, mantendo o cenário cenográfico à vista.
 - Sorteio sem repetição dentro do setor até o banco ser esgotado.
 - 12 validações corretas para chegar ao núcleo; erros não apagam acertos.
 - Derrota ao atingir 10 erros ou 20 minutos.

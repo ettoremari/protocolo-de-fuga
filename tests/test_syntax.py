@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 
@@ -38,8 +39,8 @@ def test_narrative_project_mirror_and_three_endings():
 def test_adaptive_landscape_and_portrait_ui():
     script = (_root() / "scripts" / "main.gd").read_text(encoding="utf-8")
     assert "func _update_responsive_layout()" in script
-    assert "left_rail.visible = wide_layout" in script
-    assert "mobile_status.visible = not wide_layout" in script
+    assert "left_rail.visible = wide_layout and not sector_intro_active" in script
+    assert "mobile_status.visible = not wide_layout and not sector_intro_active" in script
     assert "get_window().content_scale_size = logical_size" in script
     assert "window/handheld/orientation=0" in (_root() / "project.godot").read_text(encoding="utf-8")
     assert "ATLAS // NÚCLEO" in script
@@ -120,3 +121,65 @@ def test_scenographic_rooms_load_asynchronously_and_have_ambient_motion():
     main_script = (root / "scripts" / "main.gd").read_text(encoding="utf-8")
     assert "func _request_start_room_after_frame()" in main_script
     assert "await RenderingServer.frame_post_draw" in main_script
+
+
+def test_question_bank_has_200_new_questions_balanced_by_theme_and_difficulty():
+    root = _root()
+    questions = json.loads((root / "data" / "questoes.json").read_text(encoding="utf-8"))
+    new_questions = [question for question in questions if question["id"].startswith("SC-F")]
+    assert len(questions) == 300
+    assert len(new_questions) == 200
+    assert len({question["id"] for question in questions}) == 300
+    assert len({question["enunciado"] for question in new_questions}) == 200
+
+    topics = {
+        1: "Princípio Fundamental da Contagem",
+        2: "Permutação",
+        3: "Arranjo",
+        4: "Combinação",
+        5: "Análise combinatória integrada",
+    }
+    difficulties = ("Fácil", "Básico", "Intermediário", "Avançado", "Difícil")
+    for question in new_questions:
+        assert question["conteudo"] == topics[question["fase"]]
+        assert question["dificuldade"] == question["nivel"]
+        assert question["dificuldade"] in difficulties
+        assert question["enunciado"].strip()
+        assert question["resolucao"].strip()
+        assert isinstance(question["resposta"], int) and question["resposta"] > 0
+        if question["tipo_resposta"] == "choice":
+            assert len(question["alternativas"]) == 4
+            assert len(set(question["alternativas"])) == 4
+            assert str(question["resposta"]) in question["alternativas"]
+        else:
+            assert question["tipo_resposta"] == "numeric"
+            assert question["alternativas"] == []
+
+    for phase, topic in topics.items():
+        phase_questions = [question for question in new_questions if question["fase"] == phase]
+        assert len(phase_questions) == 40
+        assert all(question["conteudo"] == topic for question in phase_questions)
+        for difficulty in difficulties:
+            assert sum(question["dificuldade"] == difficulty for question in phase_questions) == 8
+
+
+def test_difficulty_selector_filters_questions_without_changing_progression_targets():
+    script = (_root() / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert 'const DIFFICULTY_OPTIONS := ["Qualquer dificuldade", "Fácil", "Básico", "Intermediário", "Avançado", "Difícil"]' in script
+    assert "difficulty_selector.item_selected.connect(_on_difficulty_selected)" in script
+    assert "func _filtered_question_pool(phase_number: int, exclude_used: bool) -> Array:" in script
+    assert 'question.get("dificuldade", question.get("nivel", ""))' in script
+    assert "const PHASE_TARGETS := [1, 2, 2, 3, 4]" in script
+    assert "const TOTAL_HITS := 12" in script
+
+
+def test_sector_intros_show_one_information_bubble_over_the_room():
+    script = (_root() / "scripts" / "main.gd").read_text(encoding="utf-8")
+    assert "func _set_sector_intro_visibility(active: bool) -> void:" in script
+    assert "left_rail.visible = wide_layout and not sector_intro_active" in script
+    assert "right_rail.visible = wide_layout and not sector_intro_active" in script
+    assert "var info_bubble := PanelContainer.new()" in script
+    assert "briefing_label.text = briefing" in script
+    assert "_set_sector_intro_visibility(true)" in script
+    assert "_set_sector_intro_visibility(false)" in script
+    assert "phase = 6\n\t\tphase_hits = 0\n\t\t_show_sector_intro()" in script

@@ -42,10 +42,13 @@ const PHASE_CONTENTS := [
 	"Análise combinatória integrada",
 ]
 const PHASE_COLORS := [Color("#39ddec"), Color("#63cfff"), Color("#aa8cff"), Color("#ffbd58"), Color("#ff6d83"), Color("#a88aff")]
+const DIFFICULTY_LEVELS := ["Fácil", "Básico", "Intermediário", "Avançado", "Difícil"]
+const DIFFICULTY_OPTIONS := ["Qualquer dificuldade", "Fácil", "Básico", "Intermediário", "Avançado", "Difícil"]
 const CLASSIFIED_FILE := "ARQUIVO CLASSIFICADO // NEXUS\nNÍVEL ÔMEGA\n\nPROJETO ESPELHO — REGISTRO ORIGINAL\n\nO ambiente de contenção não foi construído para impedir a entrada de ameaças externas. Sua finalidade é avaliar a capacidade de tomada de decisão de indivíduos submetidos a situações de pressão.\n\nO sujeito atual foi selecionado antes do início do procedimento. A sequência de desafios representa uma avaliação.\n\nOBJETIVO: determinar se o indivíduo consegue identificar as limitações do próprio sistema de contenção."
 
 var questions: Dictionary = {}
 var used: Dictionary = {}
+var selected_difficulty := DIFFICULTY_OPTIONS[0]
 var phase := 1
 var phase_hits := 0
 var total_hits := 0
@@ -70,6 +73,7 @@ var action_button: Button
 var numeric_input: LineEdit
 var music_button: Button
 var menu_button: Button
+var difficulty_selector: OptionButton
 var music_player: AudioStreamPlayer
 var current_music_stream: AudioStream
 var music_transition: Tween
@@ -91,6 +95,7 @@ var mobile_status_label: Label
 var video_player: VideoStreamPlayer
 var video_skip_button: Button
 var room_environment: Control
+var sector_intro_active := false
 var video_on_finished: Callable
 var backdrop: Control
 var fx: Control
@@ -449,9 +454,9 @@ func _update_responsive_layout() -> void:
 	var logical_size := Vector2i(1100, 700) if wide_layout else Vector2i(430, 900)
 	if get_window().content_scale_size != logical_size:
 		get_window().content_scale_size = logical_size
-	left_rail.visible = wide_layout
-	right_rail.visible = wide_layout
-	mobile_status.visible = not wide_layout
+	left_rail.visible = wide_layout and not sector_intro_active
+	right_rail.visible = wide_layout and not sector_intro_active
+	mobile_status.visible = not wide_layout and not sector_intro_active
 	root_margin.add_theme_constant_override("margin_left", 22 if wide_layout else 12)
 	root_margin.add_theme_constant_override("margin_right", 22 if wide_layout else 12)
 	root_margin.add_theme_constant_override("margin_top", 14 if wide_layout else 8)
@@ -925,6 +930,7 @@ func _toggle_music() -> void:
 
 func _show_start() -> void:
 	state = "start"
+	_set_sector_intro_visibility(false)
 	call_deferred("_request_start_room_after_frame")
 	_set_music_stream(MENU_MUSIC_STREAM)
 	if fx:
@@ -948,7 +954,30 @@ func _show_start() -> void:
 	var opening_record := _make_label("O mundo não acabou. Pelo menos, não oficialmente.\n\nVocê desperta em uma sala de observação. O ATLAS informa que existe uma rota de evacuação, mas ela está bloqueada por sistemas independentes. Para sair, será necessário recuperar o controle da instalação.", 18)
 	_animate_typewriter(opening_record, 100.0)
 	_make_label("Identidade parcialmente reconhecida. Integridade dos sistemas comprometida.\n\nAGUARDANDO INTERAÇÃO", 15)
+	var difficulty_row := HBoxContainer.new()
+	difficulty_row.add_theme_constant_override("separation", 12)
+	difficulty_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	content.add_child(difficulty_row)
+	var difficulty_label := Label.new()
+	difficulty_label.text = "DIFICULDADE"
+	difficulty_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	difficulty_label.add_theme_font_size_override("font_size", 15)
+	difficulty_label.add_theme_color_override("font_color", Color("#8fb6c8"))
+	difficulty_row.add_child(difficulty_label)
+	difficulty_selector = OptionButton.new()
+	difficulty_selector.custom_minimum_size = Vector2(225, 44)
+	difficulty_selector.add_theme_font_size_override("font_size", 15)
+	difficulty_selector.add_item(DIFFICULTY_OPTIONS[0])
+	for difficulty in DIFFICULTY_LEVELS:
+		difficulty_selector.add_item(difficulty)
+	difficulty_selector.select(maxi(0, DIFFICULTY_OPTIONS.find(selected_difficulty)))
+	difficulty_selector.item_selected.connect(_on_difficulty_selected)
+	difficulty_row.add_child(difficulty_selector)
 	_make_button("INICIAR PROTOCOLO", _start_game)
+
+func _on_difficulty_selected(index: int) -> void:
+	if difficulty_selector and index >= 0 and index < difficulty_selector.item_count:
+		selected_difficulty = difficulty_selector.get_item_text(index)
 
 func _request_start_room_after_frame() -> void:
 	await RenderingServer.frame_post_draw
@@ -975,23 +1004,72 @@ func _return_to_menu() -> void:
 	_reset()
 	_show_start()
 
+func _set_sector_intro_visibility(active: bool) -> void:
+	sector_intro_active = active
+	var viewport_size := Vector2(DisplayServer.window_get_size())
+	var wide_width_threshold := 700.0 if OS.has_feature("web") else 850.0
+	var wide_layout := viewport_size.x >= wide_width_threshold and viewport_size.x > viewport_size.y * 1.18
+	if header:
+		header.visible = not active
+	if top_row:
+		top_row.visible = not active
+	if left_rail:
+		left_rail.visible = wide_layout and not active
+	if right_rail:
+		right_rail.visible = wide_layout and not active
+	if mobile_status:
+		mobile_status.visible = not wide_layout and not active
+	if panel:
+		if active:
+			panel.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+		else:
+			_style_main_panel(panel)
+	if content:
+		content.alignment = BoxContainer.ALIGNMENT_CENTER if active else BoxContainer.ALIGNMENT_BEGIN
+		content.size_flags_vertical = Control.SIZE_EXPAND_FILL if active else Control.SIZE_SHRINK_BEGIN
+
 func _show_sector_intro() -> void:
-	_set_music_stream(PHASE_MUSIC_STREAMS[phase])
+	if phase <= 5:
+		_set_music_stream(PHASE_MUSIC_STREAMS[phase])
 	if room_environment:
 		room_environment.call("set_sector", phase)
 	_clear_content()
+	_set_sector_intro_visibility(true)
 	state = "sector_intro"
 	_update_core_state()
 	_refresh_sector_rail()
 	_update_status()
 	_animate_sector_activation()
-	_make_title("SETOR %02d — %s" % [phase, PHASE_NAMES[phase - 1]])
-	var subtitle := _make_label(PHASE_SUBTITLES[phase - 1], 14)
-	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	subtitle.add_theme_color_override("font_color", PHASE_COLORS[phase - 1])
-	_make_label(PHASE_BRIEFINGS[phase - 1], 19)
+	var briefing := "SETOR %02d — %s\n%s\n\n%s" % [phase, PHASE_NAMES[phase - 1], PHASE_SUBTITLES[phase - 1], PHASE_BRIEFINGS[phase - 1]]
 	if phase <= PHASE_CONTENTS.size():
-		_make_label("VALIDAÇÃO NECESSÁRIA: " + PHASE_CONTENTS[phase - 1], 15)
+		briefing += "\n\nVALIDAÇÃO MATEMÁTICA: " + PHASE_CONTENTS[phase - 1]
+	var info_bubble := PanelContainer.new()
+	info_bubble.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info_bubble.custom_minimum_size = Vector2(0, 155)
+	var bubble_style := StyleBoxFlat.new()
+	bubble_style.bg_color = Color("#07111fee")
+	bubble_style.border_width_left = 1
+	bubble_style.border_width_right = 1
+	bubble_style.border_width_top = 1
+	bubble_style.border_width_bottom = 1
+	bubble_style.border_color = PHASE_COLORS[phase - 1]
+	bubble_style.content_margin_left = 22
+	bubble_style.content_margin_right = 22
+	bubble_style.content_margin_top = 18
+	bubble_style.content_margin_bottom = 18
+	_set_style_corners(bubble_style, 12)
+	info_bubble.add_theme_stylebox_override("panel", bubble_style)
+	var briefing_label := Label.new()
+	briefing_label.text = briefing
+	briefing_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	briefing_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	briefing_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	briefing_label.add_theme_font_size_override("font_size", 17)
+	briefing_label.add_theme_color_override("font_color", Color("#d8eafa"))
+	info_bubble.add_child(briefing_label)
+	content.add_child(info_bubble)
+	_animate_enter(info_bubble)
+	_animate_typewriter(briefing_label, 75.0)
 	var atlas_lines := [
 		"Sua atividade neural foi reconhecida. Vou restaurar o acesso básico.",
 		"Os registros biométricos são confiáveis dentro dos limites do sistema.",
@@ -1002,6 +1080,17 @@ func _show_sector_intro() -> void:
 	]
 	_set_atlas_message(atlas_lines[phase - 1])
 	_make_button("INICIAR VALIDAÇÃO DO SETOR", _next_question)
+
+func _filtered_question_pool(phase_number: int, exclude_used: bool) -> Array:
+	var available: Array = []
+	for question in questions.get(phase_number, []):
+		var difficulty := str(question.get("dificuldade", question.get("nivel", "")))
+		if selected_difficulty != DIFFICULTY_OPTIONS[0] and difficulty != selected_difficulty:
+			continue
+		if exclude_used and used.get(phase_number, []).has(question.get("id", "")):
+			continue
+		available.append(question)
+	return available
 
 func _animate_sector_activation() -> void:
 	var tint: Color = PHASE_COLORS[clampi(phase - 1, 0, 5)]
@@ -1019,14 +1108,10 @@ func _next_question() -> void:
 		return
 	selected_choice = -1
 	showing_error = false
-	var pool: Array = questions.get(phase, [])
-	var available: Array = []
-	for question in pool:
-		if not used[phase].has(question["id"]):
-			available.append(question)
+	var available := _filtered_question_pool(phase, true)
 	if available.is_empty():
 		used[phase].clear()
-		available = pool.duplicate()
+		available = _filtered_question_pool(phase, false)
 		if available.is_empty():
 			state = "defeat"
 			_show_result(false)
@@ -1078,11 +1163,13 @@ func _update_status() -> void:
 		_update_core_state()
 
 func _show_question() -> void:
+	_set_sector_intro_visibility(false)
 	_clear_content()
 	state = "playing"
 	_update_status()
 	_make_title("SETOR %02d — %s" % [phase, PHASE_NAMES[phase - 1]])
-	var meta := _make_label(str(current["conteudo"]).to_upper(), 14)
+	var difficulty := str(current.get("dificuldade", current.get("nivel", "Sem classificação")))
+	var meta := _make_label("%s  //  DIFICULDADE: %s" % [str(current["conteudo"]).to_upper(), difficulty.to_upper()], 14)
 	meta.add_theme_color_override("font_color", PHASE_COLORS[phase - 1])
 	_make_label(str(current["enunciado"]), 21)
 	if str(current["tipo_resposta"]) == "choice":
@@ -1258,11 +1345,10 @@ func _advance_phase() -> void:
 	else:
 		phase = 6
 		phase_hits = 0
-		_refresh_sector_rail()
-		_update_core_state()
-		_show_finale()
+		_show_sector_intro()
 
 func _show_finale() -> void:
+	_set_sector_intro_visibility(false)
 	phase = 6
 	if room_environment:
 		room_environment.call("set_sector", 6)

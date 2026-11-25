@@ -1343,5 +1343,2905 @@
     "alternativas": [],
     "resposta": 210,
     "resolucao": "As funções são distintas, então a ordem importa: A(7,3) = 7 × 6 × 5 = 210."
+  },
+  {
+    "id": "SC-F1-001",
+    "fase": 1,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No terminal de segurança, há 2 opções para a primeira etapa, 3 para a segunda e 2 para a terceira. As escolhas são independentes. Quantas configurações completas podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 12,
+    "resolucao": "Pelo Princípio Fundamental da Contagem: 2 × 3 × 2 = 12."
+  },
+  {
+    "id": "SC-F1-002",
+    "fase": 1,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No código biométrico, há 3 opções para a primeira etapa, 5 para a segunda e 5 para a terceira. As escolhas são independentes. Quantas configurações completas podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "77",
+      "74",
+      "76",
+      "75"
+    ],
+    "resposta": 75,
+    "resolucao": "Pelo Princípio Fundamental da Contagem: 3 × 5 × 5 = 75."
+  },
+  {
+    "id": "SC-F1-003",
+    "fase": 1,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No console da NEXUS, há 4 opções para a primeira etapa, 3 para a segunda e 3 para a terceira. As escolhas são independentes. Quantas configurações completas podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 36,
+    "resolucao": "Pelo Princípio Fundamental da Contagem: 4 × 3 × 3 = 36."
+  },
+  {
+    "id": "SC-F1-004",
+    "fase": 1,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No painel de contenção, há 5 opções para a primeira etapa, 5 para a segunda e 6 para a terceira. As escolhas são independentes. Quantas configurações completas podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "149",
+      "152",
+      "150",
+      "151"
+    ],
+    "resposta": 150,
+    "resolucao": "Pelo Princípio Fundamental da Contagem: 5 × 5 × 6 = 150."
+  },
+  {
+    "id": "SC-F1-005",
+    "fase": 1,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No módulo de energia, há 2 opções para a primeira etapa, 3 para a segunda e 4 para a terceira. As escolhas são independentes. Quantas configurações completas podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "Pelo Princípio Fundamental da Contagem: 2 × 3 × 4 = 24."
+  },
+  {
+    "id": "SC-F1-006",
+    "fase": 1,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No sistema de evacuação, há 3 opções para a primeira etapa, 5 para a segunda e 2 para a terceira. As escolhas são independentes. Quantas configurações completas podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "30",
+      "32",
+      "29",
+      "31"
+    ],
+    "resposta": 30,
+    "resolucao": "Pelo Princípio Fundamental da Contagem: 3 × 5 × 2 = 30."
+  },
+  {
+    "id": "SC-F1-007",
+    "fase": 1,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No arquivo do Projeto Espelho, há 4 opções para a primeira etapa, 3 para a segunda e 5 para a terceira. As escolhas são independentes. Quantas configurações completas podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 60,
+    "resolucao": "Pelo Princípio Fundamental da Contagem: 4 × 3 × 5 = 60."
+  },
+  {
+    "id": "SC-F1-008",
+    "fase": 1,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No canal de comunicação, há 5 opções para a primeira etapa, 5 para a segunda e 3 para a terceira. As escolhas são independentes. Quantas configurações completas podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "77",
+      "74",
+      "76",
+      "75"
+    ],
+    "resposta": 75,
+    "resolucao": "Pelo Princípio Fundamental da Contagem: 5 × 5 × 3 = 75."
+  },
+  {
+    "id": "SC-F1-009",
+    "fase": 1,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O terminal de segurança é configurado em quatro etapas independentes com 2, 3, 3 e 2 opções, respectivamente. Quantas configurações existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "38",
+      "37",
+      "35",
+      "36"
+    ],
+    "resposta": 36,
+    "resolucao": "Multiplicamos as possibilidades das quatro etapas: 2 × 3 × 3 × 2 = 36."
+  },
+  {
+    "id": "SC-F1-010",
+    "fase": 1,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O código biométrico é configurado em quatro etapas independentes com 3, 4, 5 e 3 opções, respectivamente. Quantas configurações existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 180,
+    "resolucao": "Multiplicamos as possibilidades das quatro etapas: 3 × 4 × 5 × 3 = 180."
+  },
+  {
+    "id": "SC-F1-011",
+    "fase": 1,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O console da NEXUS é configurado em quatro etapas independentes com 4, 5, 3 e 4 opções, respectivamente. Quantas configurações existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "239",
+      "241",
+      "242",
+      "240"
+    ],
+    "resposta": 240,
+    "resolucao": "Multiplicamos as possibilidades das quatro etapas: 4 × 5 × 3 × 4 = 240."
+  },
+  {
+    "id": "SC-F1-012",
+    "fase": 1,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O painel de contenção é configurado em quatro etapas independentes com 5, 2, 5 e 2 opções, respectivamente. Quantas configurações existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 100,
+    "resolucao": "Multiplicamos as possibilidades das quatro etapas: 5 × 2 × 5 × 2 = 100."
+  },
+  {
+    "id": "SC-F1-013",
+    "fase": 1,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O módulo de energia é configurado em quatro etapas independentes com 2, 3, 3 e 3 opções, respectivamente. Quantas configurações existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "56",
+      "54",
+      "53",
+      "55"
+    ],
+    "resposta": 54,
+    "resolucao": "Multiplicamos as possibilidades das quatro etapas: 2 × 3 × 3 × 3 = 54."
+  },
+  {
+    "id": "SC-F1-014",
+    "fase": 1,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O sistema de evacuação é configurado em quatro etapas independentes com 3, 4, 5 e 4 opções, respectivamente. Quantas configurações existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 240,
+    "resolucao": "Multiplicamos as possibilidades das quatro etapas: 3 × 4 × 5 × 4 = 240."
+  },
+  {
+    "id": "SC-F1-015",
+    "fase": 1,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O arquivo do Projeto Espelho é configurado em quatro etapas independentes com 4, 5, 3 e 2 opções, respectivamente. Quantas configurações existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "120",
+      "119",
+      "122",
+      "121"
+    ],
+    "resposta": 120,
+    "resolucao": "Multiplicamos as possibilidades das quatro etapas: 4 × 5 × 3 × 2 = 120."
+  },
+  {
+    "id": "SC-F1-016",
+    "fase": 1,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O canal de comunicação é configurado em quatro etapas independentes com 5, 2, 5 e 3 opções, respectivamente. Quantas configurações existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 150,
+    "resolucao": "Multiplicamos as possibilidades das quatro etapas: 5 × 2 × 5 × 3 = 150."
+  },
+  {
+    "id": "SC-F1-017",
+    "fase": 1,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O terminal de segurança pode seguir a rota alfa, com 2 opções seguidas por 2, ou a rota beta, com 3 opções seguidas por 3. As rotas são distintas. Quantas configurações podem ser concluídas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 13,
+    "resolucao": "Contamos cada rota e somamos os casos disjuntos: (2 × 2) + (3 × 3) = 4 + 9 = 13."
+  },
+  {
+    "id": "SC-F1-018",
+    "fase": 1,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O código biométrico pode seguir a rota alfa, com 3 opções seguidas por 4, ou a rota beta, com 4 opções seguidas por 6. As rotas são distintas. Quantas configurações podem ser concluídas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "38",
+      "37",
+      "36",
+      "35"
+    ],
+    "resposta": 36,
+    "resolucao": "Contamos cada rota e somamos os casos disjuntos: (3 × 4) + (4 × 6) = 12 + 24 = 36."
+  },
+  {
+    "id": "SC-F1-019",
+    "fase": 1,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O console da NEXUS pode seguir a rota alfa, com 4 opções seguidas por 2, ou a rota beta, com 5 opções seguidas por 4. As rotas são distintas. Quantas configurações podem ser concluídas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 28,
+    "resolucao": "Contamos cada rota e somamos os casos disjuntos: (4 × 2) + (5 × 4) = 8 + 20 = 28."
+  },
+  {
+    "id": "SC-F1-020",
+    "fase": 1,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O painel de contenção pode seguir a rota alfa, com 5 opções seguidas por 4, ou a rota beta, com 2 opções seguidas por 7. As rotas são distintas. Quantas configurações podem ser concluídas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "34",
+      "35",
+      "36",
+      "33"
+    ],
+    "resposta": 34,
+    "resolucao": "Contamos cada rota e somamos os casos disjuntos: (5 × 4) + (2 × 7) = 20 + 14 = 34."
+  },
+  {
+    "id": "SC-F1-021",
+    "fase": 1,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O módulo de energia pode seguir a rota alfa, com 6 opções seguidas por 2, ou a rota beta, com 3 opções seguidas por 5. As rotas são distintas. Quantas configurações podem ser concluídas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 27,
+    "resolucao": "Contamos cada rota e somamos os casos disjuntos: (6 × 2) + (3 × 5) = 12 + 15 = 27."
+  },
+  {
+    "id": "SC-F1-022",
+    "fase": 1,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O sistema de evacuação pode seguir a rota alfa, com 2 opções seguidas por 4, ou a rota beta, com 4 opções seguidas por 3. As rotas são distintas. Quantas configurações podem ser concluídas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "22",
+      "21",
+      "20",
+      "19"
+    ],
+    "resposta": 20,
+    "resolucao": "Contamos cada rota e somamos os casos disjuntos: (2 × 4) + (4 × 3) = 8 + 12 = 20."
+  },
+  {
+    "id": "SC-F1-023",
+    "fase": 1,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O arquivo do Projeto Espelho pode seguir a rota alfa, com 3 opções seguidas por 2, ou a rota beta, com 5 opções seguidas por 6. As rotas são distintas. Quantas configurações podem ser concluídas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 36,
+    "resolucao": "Contamos cada rota e somamos os casos disjuntos: (3 × 2) + (5 × 6) = 6 + 30 = 36."
+  },
+  {
+    "id": "SC-F1-024",
+    "fase": 1,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O canal de comunicação pode seguir a rota alfa, com 4 opções seguidas por 4, ou a rota beta, com 2 opções seguidas por 4. As rotas são distintas. Quantas configurações podem ser concluídas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "24",
+      "23",
+      "25",
+      "26"
+    ],
+    "resposta": 24,
+    "resolucao": "Contamos cada rota e somamos os casos disjuntos: (4 × 4) + (2 × 4) = 16 + 8 = 24."
+  },
+  {
+    "id": "SC-F1-025",
+    "fase": 1,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No terminal de segurança, uma configuração tem três etapas com 3, 2 e 2 opções. Uma verificação automática rejeita exatamente 1 combinações completas. Quantas configurações válidas restam?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "13",
+      "12",
+      "10",
+      "11"
+    ],
+    "resposta": 11,
+    "resolucao": "Primeiro contamos todas: 3 × 2 × 2 = 12. Depois retiramos as 1 rejeitadas: 12 − 1 = 11."
+  },
+  {
+    "id": "SC-F1-026",
+    "fase": 1,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No código biométrico, uma configuração tem três etapas com 4, 4 e 5 opções. Uma verificação automática rejeita exatamente 2 combinações completas. Quantas configurações válidas restam?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 78,
+    "resolucao": "Primeiro contamos todas: 4 × 4 × 5 = 80. Depois retiramos as 2 rejeitadas: 80 − 2 = 78."
+  },
+  {
+    "id": "SC-F1-027",
+    "fase": 1,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No console da NEXUS, uma configuração tem três etapas com 5, 6 e 4 opções. Uma verificação automática rejeita exatamente 3 combinações completas. Quantas configurações válidas restam?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "116",
+      "119",
+      "117",
+      "118"
+    ],
+    "resposta": 117,
+    "resolucao": "Primeiro contamos todas: 5 × 6 × 4 = 120. Depois retiramos as 3 rejeitadas: 120 − 3 = 117."
+  },
+  {
+    "id": "SC-F1-028",
+    "fase": 1,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No painel de contenção, uma configuração tem três etapas com 6, 3 e 3 opções. Uma verificação automática rejeita exatamente 1 combinações completas. Quantas configurações válidas restam?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 53,
+    "resolucao": "Primeiro contamos todas: 6 × 3 × 3 = 54. Depois retiramos as 1 rejeitadas: 54 − 1 = 53."
+  },
+  {
+    "id": "SC-F1-029",
+    "fase": 1,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No módulo de energia, uma configuração tem três etapas com 7, 5 e 2 opções. Uma verificação automática rejeita exatamente 2 combinações completas. Quantas configurações válidas restam?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "67",
+      "69",
+      "68",
+      "70"
+    ],
+    "resposta": 68,
+    "resolucao": "Primeiro contamos todas: 7 × 5 × 2 = 70. Depois retiramos as 2 rejeitadas: 70 − 2 = 68."
+  },
+  {
+    "id": "SC-F1-030",
+    "fase": 1,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No sistema de evacuação, uma configuração tem três etapas com 3, 2 e 5 opções. Uma verificação automática rejeita exatamente 3 combinações completas. Quantas configurações válidas restam?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 27,
+    "resolucao": "Primeiro contamos todas: 3 × 2 × 5 = 30. Depois retiramos as 3 rejeitadas: 30 − 3 = 27."
+  },
+  {
+    "id": "SC-F1-031",
+    "fase": 1,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No arquivo do Projeto Espelho, uma configuração tem três etapas com 4, 4 e 4 opções. Uma verificação automática rejeita exatamente 1 combinações completas. Quantas configurações válidas restam?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "64",
+      "65",
+      "62",
+      "63"
+    ],
+    "resposta": 63,
+    "resolucao": "Primeiro contamos todas: 4 × 4 × 4 = 64. Depois retiramos as 1 rejeitadas: 64 − 1 = 63."
+  },
+  {
+    "id": "SC-F1-032",
+    "fase": 1,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "No canal de comunicação, uma configuração tem três etapas com 5, 6 e 3 opções. Uma verificação automática rejeita exatamente 2 combinações completas. Quantas configurações válidas restam?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 88,
+    "resolucao": "Primeiro contamos todas: 5 × 6 × 3 = 90. Depois retiramos as 2 rejeitadas: 90 − 2 = 88."
+  },
+  {
+    "id": "SC-F1-033",
+    "fase": 1,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O terminal de segurança usa uma sequência de 3 posições. Cada posição aceita qualquer um de 4 símbolos. Para ser válido, o código deve conter ao menos um símbolo de uma classe reservada com 1 símbolos. Quantos códigos válidos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 37,
+    "resolucao": "Contamos todos os códigos e subtraímos os que não usam nenhum símbolo reservado: 4^3 − (4 − 1)^3 = 64 − 27 = 37."
+  },
+  {
+    "id": "SC-F1-034",
+    "fase": 1,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O código biométrico usa uma sequência de 4 posições. Cada posição aceita qualquer um de 5 símbolos. Para ser válido, o código deve conter ao menos um símbolo de uma classe reservada com 2 símbolos. Quantos códigos válidos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "546",
+      "544",
+      "545",
+      "543"
+    ],
+    "resposta": 544,
+    "resolucao": "Contamos todos os códigos e subtraímos os que não usam nenhum símbolo reservado: 5^4 − (5 − 2)^4 = 625 − 81 = 544."
+  },
+  {
+    "id": "SC-F1-035",
+    "fase": 1,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O console da NEXUS usa uma sequência de 5 posições. Cada posição aceita qualquer um de 6 símbolos. Para ser válido, o código deve conter ao menos um símbolo de uma classe reservada com 1 símbolos. Quantos códigos válidos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 4651,
+    "resolucao": "Contamos todos os códigos e subtraímos os que não usam nenhum símbolo reservado: 6^5 − (6 − 1)^5 = 7776 − 3125 = 4651."
+  },
+  {
+    "id": "SC-F1-036",
+    "fase": 1,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O painel de contenção usa uma sequência de 3 posições. Cada posição aceita qualquer um de 7 símbolos. Para ser válido, o código deve conter ao menos um símbolo de uma classe reservada com 2 símbolos. Quantos códigos válidos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "217",
+      "219",
+      "220",
+      "218"
+    ],
+    "resposta": 218,
+    "resolucao": "Contamos todos os códigos e subtraímos os que não usam nenhum símbolo reservado: 7^3 − (7 − 2)^3 = 343 − 125 = 218."
+  },
+  {
+    "id": "SC-F1-037",
+    "fase": 1,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O módulo de energia usa uma sequência de 4 posições. Cada posição aceita qualquer um de 4 símbolos. Para ser válido, o código deve conter ao menos um símbolo de uma classe reservada com 1 símbolos. Quantos códigos válidos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 175,
+    "resolucao": "Contamos todos os códigos e subtraímos os que não usam nenhum símbolo reservado: 4^4 − (4 − 1)^4 = 256 − 81 = 175."
+  },
+  {
+    "id": "SC-F1-038",
+    "fase": 1,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O sistema de evacuação usa uma sequência de 5 posições. Cada posição aceita qualquer um de 5 símbolos. Para ser válido, o código deve conter ao menos um símbolo de uma classe reservada com 2 símbolos. Quantos códigos válidos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "2882",
+      "2884",
+      "2881",
+      "2883"
+    ],
+    "resposta": 2882,
+    "resolucao": "Contamos todos os códigos e subtraímos os que não usam nenhum símbolo reservado: 5^5 − (5 − 2)^5 = 3125 − 243 = 2882."
+  },
+  {
+    "id": "SC-F1-039",
+    "fase": 1,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O arquivo do Projeto Espelho usa uma sequência de 3 posições. Cada posição aceita qualquer um de 6 símbolos. Para ser válido, o código deve conter ao menos um símbolo de uma classe reservada com 1 símbolos. Quantos códigos válidos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 91,
+    "resolucao": "Contamos todos os códigos e subtraímos os que não usam nenhum símbolo reservado: 6^3 − (6 − 1)^3 = 216 − 125 = 91."
+  },
+  {
+    "id": "SC-F1-040",
+    "fase": 1,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Princípio Fundamental da Contagem",
+    "enunciado": "O canal de comunicação usa uma sequência de 4 posições. Cada posição aceita qualquer um de 7 símbolos. Para ser válido, o código deve conter ao menos um símbolo de uma classe reservada com 2 símbolos. Quantos códigos válidos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "1775",
+      "1777",
+      "1776",
+      "1778"
+    ],
+    "resposta": 1776,
+    "resolucao": "Contamos todos os códigos e subtraímos os que não usam nenhum símbolo reservado: 7^4 − (7 − 2)^4 = 2401 − 625 = 1776."
+  },
+  {
+    "id": "SC-F2-001",
+    "fase": 2,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Permutação",
+    "enunciado": "Os 3 módulos distintos do registro de autenticação serão colocados em uma sequência, usando todos uma única vez. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "7",
+      "8",
+      "6",
+      "5"
+    ],
+    "resposta": 6,
+    "resolucao": "Permutamos 3 elementos distintos: 3! = 6."
+  },
+  {
+    "id": "SC-F2-002",
+    "fase": 2,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Permutação",
+    "enunciado": "Os 4 módulos distintos do grupo de técnicos serão colocados em uma sequência, usando todos uma única vez. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "Permutamos 4 elementos distintos: 4! = 24."
+  },
+  {
+    "id": "SC-F2-003",
+    "fase": 2,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Permutação",
+    "enunciado": "Os 5 módulos distintos do conjunto de módulos serão colocados em uma sequência, usando todos uma única vez. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "119",
+      "122",
+      "120",
+      "121"
+    ],
+    "resposta": 120,
+    "resolucao": "Permutamos 5 elementos distintos: 5! = 120."
+  },
+  {
+    "id": "SC-F2-004",
+    "fase": 2,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Permutação",
+    "enunciado": "Os 6 módulos distintos do painel de comandos serão colocados em uma sequência, usando todos uma única vez. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 720,
+    "resolucao": "Permutamos 6 elementos distintos: 6! = 720."
+  },
+  {
+    "id": "SC-F2-005",
+    "fase": 2,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Permutação",
+    "enunciado": "Os 3 módulos distintos do código de acesso serão colocados em uma sequência, usando todos uma única vez. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "8",
+      "5",
+      "7",
+      "6"
+    ],
+    "resposta": 6,
+    "resolucao": "Permutamos 3 elementos distintos: 3! = 6."
+  },
+  {
+    "id": "SC-F2-006",
+    "fase": 2,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Permutação",
+    "enunciado": "Os 4 módulos distintos do lote de amostras serão colocados em uma sequência, usando todos uma única vez. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 24,
+    "resolucao": "Permutamos 4 elementos distintos: 4! = 24."
+  },
+  {
+    "id": "SC-F2-007",
+    "fase": 2,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Permutação",
+    "enunciado": "Os 5 módulos distintos do registro de turnos serão colocados em uma sequência, usando todos uma única vez. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "120",
+      "122",
+      "121",
+      "119"
+    ],
+    "resposta": 120,
+    "resolucao": "Permutamos 5 elementos distintos: 5! = 120."
+  },
+  {
+    "id": "SC-F2-008",
+    "fase": 2,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Permutação",
+    "enunciado": "Os 6 módulos distintos do painel do núcleo serão colocados em uma sequência, usando todos uma única vez. De quantas maneiras diferentes isso pode ser feito?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 720,
+    "resolucao": "Permutamos 6 elementos distintos: 6! = 720."
+  },
+  {
+    "id": "SC-F2-009",
+    "fase": 2,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "O registro de autenticação registra 5 símbolos, dos quais 2 são cópias idênticas de um mesmo símbolo; os demais são distintos. Quantas sequências diferentes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 60,
+    "resolucao": "Sem repetições seriam 5! ordens; dividimos por 2! pelas cópias indistinguíveis: 5!/2! = 60."
+  },
+  {
+    "id": "SC-F2-010",
+    "fase": 2,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "O grupo de técnicos registra 6 símbolos, dos quais 3 são cópias idênticas de um mesmo símbolo; os demais são distintos. Quantas sequências diferentes podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "121",
+      "119",
+      "122",
+      "120"
+    ],
+    "resposta": 120,
+    "resolucao": "Sem repetições seriam 6! ordens; dividimos por 3! pelas cópias indistinguíveis: 6!/3! = 120."
+  },
+  {
+    "id": "SC-F2-011",
+    "fase": 2,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "O conjunto de módulos registra 7 símbolos, dos quais 2 são cópias idênticas de um mesmo símbolo; os demais são distintos. Quantas sequências diferentes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 2520,
+    "resolucao": "Sem repetições seriam 7! ordens; dividimos por 2! pelas cópias indistinguíveis: 7!/2! = 2520."
+  },
+  {
+    "id": "SC-F2-012",
+    "fase": 2,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "O painel de comandos registra 8 símbolos, dos quais 3 são cópias idênticas de um mesmo símbolo; os demais são distintos. Quantas sequências diferentes podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "6720",
+      "6722",
+      "6721",
+      "6719"
+    ],
+    "resposta": 6720,
+    "resolucao": "Sem repetições seriam 8! ordens; dividimos por 3! pelas cópias indistinguíveis: 8!/3! = 6720."
+  },
+  {
+    "id": "SC-F2-013",
+    "fase": 2,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "O código de acesso registra 5 símbolos, dos quais 2 são cópias idênticas de um mesmo símbolo; os demais são distintos. Quantas sequências diferentes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 60,
+    "resolucao": "Sem repetições seriam 5! ordens; dividimos por 2! pelas cópias indistinguíveis: 5!/2! = 60."
+  },
+  {
+    "id": "SC-F2-014",
+    "fase": 2,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "O lote de amostras registra 6 símbolos, dos quais 3 são cópias idênticas de um mesmo símbolo; os demais são distintos. Quantas sequências diferentes podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "121",
+      "120",
+      "119",
+      "122"
+    ],
+    "resposta": 120,
+    "resolucao": "Sem repetições seriam 6! ordens; dividimos por 3! pelas cópias indistinguíveis: 6!/3! = 120."
+  },
+  {
+    "id": "SC-F2-015",
+    "fase": 2,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "O registro de turnos registra 7 símbolos, dos quais 2 são cópias idênticas de um mesmo símbolo; os demais são distintos. Quantas sequências diferentes podem ser formadas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 2520,
+    "resolucao": "Sem repetições seriam 7! ordens; dividimos por 2! pelas cópias indistinguíveis: 7!/2! = 2520."
+  },
+  {
+    "id": "SC-F2-016",
+    "fase": 2,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Permutação",
+    "enunciado": "O painel do núcleo registra 8 símbolos, dos quais 3 são cópias idênticas de um mesmo símbolo; os demais são distintos. Quantas sequências diferentes podem ser formadas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "6721",
+      "6722",
+      "6719",
+      "6720"
+    ],
+    "resposta": 6720,
+    "resolucao": "Sem repetições seriam 8! ordens; dividimos por 3! pelas cópias indistinguíveis: 8!/3! = 6720."
+  },
+  {
+    "id": "SC-F2-017",
+    "fase": 2,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Permutação",
+    "enunciado": "Os 4 componentes distintos do registro de autenticação devem ser ordenados, mas dois componentes específicos precisam ficar lado a lado. Quantas sequências atendem à regra?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "14",
+      "12",
+      "11",
+      "13"
+    ],
+    "resposta": 12,
+    "resolucao": "Tratamos o par como um bloco: há 3! ordens dos blocos e 2 ordens internas do par. Assim, 2 × 3! = 12."
+  },
+  {
+    "id": "SC-F2-018",
+    "fase": 2,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Permutação",
+    "enunciado": "Os 5 componentes distintos do grupo de técnicos devem ser ordenados, mas dois componentes específicos precisam ficar lado a lado. Quantas sequências atendem à regra?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 48,
+    "resolucao": "Tratamos o par como um bloco: há 4! ordens dos blocos e 2 ordens internas do par. Assim, 2 × 4! = 48."
+  },
+  {
+    "id": "SC-F2-019",
+    "fase": 2,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Permutação",
+    "enunciado": "Os 6 componentes distintos do conjunto de módulos devem ser ordenados, mas dois componentes específicos precisam ficar lado a lado. Quantas sequências atendem à regra?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "240",
+      "239",
+      "241",
+      "242"
+    ],
+    "resposta": 240,
+    "resolucao": "Tratamos o par como um bloco: há 5! ordens dos blocos e 2 ordens internas do par. Assim, 2 × 5! = 240."
+  },
+  {
+    "id": "SC-F2-020",
+    "fase": 2,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Permutação",
+    "enunciado": "Os 7 componentes distintos do painel de comandos devem ser ordenados, mas dois componentes específicos precisam ficar lado a lado. Quantas sequências atendem à regra?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 1440,
+    "resolucao": "Tratamos o par como um bloco: há 6! ordens dos blocos e 2 ordens internas do par. Assim, 2 × 6! = 1440."
+  },
+  {
+    "id": "SC-F2-021",
+    "fase": 2,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Permutação",
+    "enunciado": "Os 4 componentes distintos do código de acesso devem ser ordenados, mas dois componentes específicos precisam ficar lado a lado. Quantas sequências atendem à regra?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "11",
+      "13",
+      "14",
+      "12"
+    ],
+    "resposta": 12,
+    "resolucao": "Tratamos o par como um bloco: há 3! ordens dos blocos e 2 ordens internas do par. Assim, 2 × 3! = 12."
+  },
+  {
+    "id": "SC-F2-022",
+    "fase": 2,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Permutação",
+    "enunciado": "Os 5 componentes distintos do lote de amostras devem ser ordenados, mas dois componentes específicos precisam ficar lado a lado. Quantas sequências atendem à regra?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 48,
+    "resolucao": "Tratamos o par como um bloco: há 4! ordens dos blocos e 2 ordens internas do par. Assim, 2 × 4! = 48."
+  },
+  {
+    "id": "SC-F2-023",
+    "fase": 2,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Permutação",
+    "enunciado": "Os 6 componentes distintos do registro de turnos devem ser ordenados, mas dois componentes específicos precisam ficar lado a lado. Quantas sequências atendem à regra?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "242",
+      "239",
+      "240",
+      "241"
+    ],
+    "resposta": 240,
+    "resolucao": "Tratamos o par como um bloco: há 5! ordens dos blocos e 2 ordens internas do par. Assim, 2 × 5! = 240."
+  },
+  {
+    "id": "SC-F2-024",
+    "fase": 2,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Permutação",
+    "enunciado": "Os 7 componentes distintos do painel do núcleo devem ser ordenados, mas dois componentes específicos precisam ficar lado a lado. Quantas sequências atendem à regra?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 1440,
+    "resolucao": "Tratamos o par como um bloco: há 6! ordens dos blocos e 2 ordens internas do par. Assim, 2 × 6! = 1440."
+  },
+  {
+    "id": "SC-F2-025",
+    "fase": 2,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Permutação",
+    "enunciado": "Os 4 registros distintos do registro de autenticação serão ordenados. Um registro determinado precisa ocupar a primeira posição. Quantas ordens são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 6,
+    "resolucao": "Fixado o primeiro registro, permutamos os outros 3: 3! = 6."
+  },
+  {
+    "id": "SC-F2-026",
+    "fase": 2,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Permutação",
+    "enunciado": "Os 5 registros distintos do grupo de técnicos serão ordenados. Um registro determinado precisa ocupar a primeira posição. Quantas ordens são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "23",
+      "26",
+      "25",
+      "24"
+    ],
+    "resposta": 24,
+    "resolucao": "Fixado o primeiro registro, permutamos os outros 4: 4! = 24."
+  },
+  {
+    "id": "SC-F2-027",
+    "fase": 2,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Permutação",
+    "enunciado": "Os 6 registros distintos do conjunto de módulos serão ordenados. Um registro determinado precisa ocupar a primeira posição. Quantas ordens são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 120,
+    "resolucao": "Fixado o primeiro registro, permutamos os outros 5: 5! = 120."
+  },
+  {
+    "id": "SC-F2-028",
+    "fase": 2,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Permutação",
+    "enunciado": "Os 7 registros distintos do painel de comandos serão ordenados. Um registro determinado precisa ocupar a primeira posição. Quantas ordens são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "721",
+      "719",
+      "722",
+      "720"
+    ],
+    "resposta": 720,
+    "resolucao": "Fixado o primeiro registro, permutamos os outros 6: 6! = 720."
+  },
+  {
+    "id": "SC-F2-029",
+    "fase": 2,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Permutação",
+    "enunciado": "Os 4 registros distintos do código de acesso serão ordenados. Um registro determinado precisa ocupar a primeira posição. Quantas ordens são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 6,
+    "resolucao": "Fixado o primeiro registro, permutamos os outros 3: 3! = 6."
+  },
+  {
+    "id": "SC-F2-030",
+    "fase": 2,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Permutação",
+    "enunciado": "Os 5 registros distintos do lote de amostras serão ordenados. Um registro determinado precisa ocupar a primeira posição. Quantas ordens são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "23",
+      "24",
+      "25",
+      "26"
+    ],
+    "resposta": 24,
+    "resolucao": "Fixado o primeiro registro, permutamos os outros 4: 4! = 24."
+  },
+  {
+    "id": "SC-F2-031",
+    "fase": 2,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Permutação",
+    "enunciado": "Os 6 registros distintos do registro de turnos serão ordenados. Um registro determinado precisa ocupar a primeira posição. Quantas ordens são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 120,
+    "resolucao": "Fixado o primeiro registro, permutamos os outros 5: 5! = 120."
+  },
+  {
+    "id": "SC-F2-032",
+    "fase": 2,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Permutação",
+    "enunciado": "Os 7 registros distintos do painel do núcleo serão ordenados. Um registro determinado precisa ocupar a primeira posição. Quantas ordens são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "721",
+      "722",
+      "719",
+      "720"
+    ],
+    "resposta": 720,
+    "resolucao": "Fixado o primeiro registro, permutamos os outros 6: 6! = 720."
+  },
+  {
+    "id": "SC-F2-033",
+    "fase": 2,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Permutação",
+    "enunciado": "O registro de autenticação contém 5 símbolos: dois são idênticos e os outros são distintos. Quantas sequências diferentes podem ser feitas sem que os símbolos idênticos fiquem lado a lado?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "38",
+      "37",
+      "36",
+      "35"
+    ],
+    "resposta": 36,
+    "resolucao": "Todas as permutações distintas são 5!/2! = 60. Com o par junto, ele vira um bloco, produzindo 4! = 24. Subtraindo: 60 − 24 = 36."
+  },
+  {
+    "id": "SC-F2-034",
+    "fase": 2,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Permutação",
+    "enunciado": "O grupo de técnicos contém 6 símbolos: dois são idênticos e os outros são distintos. Quantas sequências diferentes podem ser feitas sem que os símbolos idênticos fiquem lado a lado?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 240,
+    "resolucao": "Todas as permutações distintas são 6!/2! = 360. Com o par junto, ele vira um bloco, produzindo 5! = 120. Subtraindo: 360 − 120 = 240."
+  },
+  {
+    "id": "SC-F2-035",
+    "fase": 2,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Permutação",
+    "enunciado": "O conjunto de módulos contém 7 símbolos: dois são idênticos e os outros são distintos. Quantas sequências diferentes podem ser feitas sem que os símbolos idênticos fiquem lado a lado?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "1800",
+      "1801",
+      "1802",
+      "1799"
+    ],
+    "resposta": 1800,
+    "resolucao": "Todas as permutações distintas são 7!/2! = 2520. Com o par junto, ele vira um bloco, produzindo 6! = 720. Subtraindo: 2520 − 720 = 1800."
+  },
+  {
+    "id": "SC-F2-036",
+    "fase": 2,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Permutação",
+    "enunciado": "O painel de comandos contém 5 símbolos: dois são idênticos e os outros são distintos. Quantas sequências diferentes podem ser feitas sem que os símbolos idênticos fiquem lado a lado?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 36,
+    "resolucao": "Todas as permutações distintas são 5!/2! = 60. Com o par junto, ele vira um bloco, produzindo 4! = 24. Subtraindo: 60 − 24 = 36."
+  },
+  {
+    "id": "SC-F2-037",
+    "fase": 2,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Permutação",
+    "enunciado": "O código de acesso contém 6 símbolos: dois são idênticos e os outros são distintos. Quantas sequências diferentes podem ser feitas sem que os símbolos idênticos fiquem lado a lado?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "241",
+      "242",
+      "240",
+      "239"
+    ],
+    "resposta": 240,
+    "resolucao": "Todas as permutações distintas são 6!/2! = 360. Com o par junto, ele vira um bloco, produzindo 5! = 120. Subtraindo: 360 − 120 = 240."
+  },
+  {
+    "id": "SC-F2-038",
+    "fase": 2,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Permutação",
+    "enunciado": "O lote de amostras contém 7 símbolos: dois são idênticos e os outros são distintos. Quantas sequências diferentes podem ser feitas sem que os símbolos idênticos fiquem lado a lado?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 1800,
+    "resolucao": "Todas as permutações distintas são 7!/2! = 2520. Com o par junto, ele vira um bloco, produzindo 6! = 720. Subtraindo: 2520 − 720 = 1800."
+  },
+  {
+    "id": "SC-F2-039",
+    "fase": 2,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Permutação",
+    "enunciado": "O registro de turnos contém 5 símbolos: dois são idênticos e os outros são distintos. Quantas sequências diferentes podem ser feitas sem que os símbolos idênticos fiquem lado a lado?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "36",
+      "35",
+      "38",
+      "37"
+    ],
+    "resposta": 36,
+    "resolucao": "Todas as permutações distintas são 5!/2! = 60. Com o par junto, ele vira um bloco, produzindo 4! = 24. Subtraindo: 60 − 24 = 36."
+  },
+  {
+    "id": "SC-F2-040",
+    "fase": 2,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Permutação",
+    "enunciado": "O painel do núcleo contém 6 símbolos: dois são idênticos e os outros são distintos. Quantas sequências diferentes podem ser feitas sem que os símbolos idênticos fiquem lado a lado?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 240,
+    "resolucao": "Todas as permutações distintas são 6!/2! = 360. Com o par junto, ele vira um bloco, produzindo 5! = 120. Subtraindo: 360 − 120 = 240."
+  },
+  {
+    "id": "SC-F3-001",
+    "fase": 3,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Arranjo",
+    "enunciado": "No painel de comando, 2 posições ordenadas serão preenchidas por pessoas distintas escolhidas entre 4 candidatas. Quantas atribuições são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 12,
+    "resolucao": "A ordem importa, então usamos arranjo: A(4,2) = 4!/(4−2)! = 12."
+  },
+  {
+    "id": "SC-F3-002",
+    "fase": 3,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Arranjo",
+    "enunciado": "No terminal de controle, 3 posições ordenadas serão preenchidas por pessoas distintas escolhidas entre 5 candidatas. Quantas atribuições são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "59",
+      "62",
+      "60",
+      "61"
+    ],
+    "resposta": 60,
+    "resolucao": "A ordem importa, então usamos arranjo: A(5,3) = 5!/(5−3)! = 60."
+  },
+  {
+    "id": "SC-F3-003",
+    "fase": 3,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Arranjo",
+    "enunciado": "No protocolo de reparo, 2 posições ordenadas serão preenchidas por pessoas distintas escolhidas entre 6 candidatas. Quantas atribuições são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 30,
+    "resolucao": "A ordem importa, então usamos arranjo: A(6,2) = 6!/(6−2)! = 30."
+  },
+  {
+    "id": "SC-F3-004",
+    "fase": 3,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Arranjo",
+    "enunciado": "No conjunto de funções, 3 posições ordenadas serão preenchidas por pessoas distintas escolhidas entre 4 candidatas. Quantas atribuições são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "24",
+      "25",
+      "23",
+      "26"
+    ],
+    "resposta": 24,
+    "resolucao": "A ordem importa, então usamos arranjo: A(4,3) = 4!/(4−3)! = 24."
+  },
+  {
+    "id": "SC-F3-005",
+    "fase": 3,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Arranjo",
+    "enunciado": "No sistema de autorização, 2 posições ordenadas serão preenchidas por pessoas distintas escolhidas entre 5 candidatas. Quantas atribuições são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 20,
+    "resolucao": "A ordem importa, então usamos arranjo: A(5,2) = 5!/(5−2)! = 20."
+  },
+  {
+    "id": "SC-F3-006",
+    "fase": 3,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Arranjo",
+    "enunciado": "No registro de inspeção, 3 posições ordenadas serão preenchidas por pessoas distintas escolhidas entre 6 candidatas. Quantas atribuições são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "120",
+      "119",
+      "121",
+      "122"
+    ],
+    "resposta": 120,
+    "resolucao": "A ordem importa, então usamos arranjo: A(6,3) = 6!/(6−3)! = 120."
+  },
+  {
+    "id": "SC-F3-007",
+    "fase": 3,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Arranjo",
+    "enunciado": "No painel de operadores, 2 posições ordenadas serão preenchidas por pessoas distintas escolhidas entre 4 candidatas. Quantas atribuições são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 12,
+    "resolucao": "A ordem importa, então usamos arranjo: A(4,2) = 4!/(4−2)! = 12."
+  },
+  {
+    "id": "SC-F3-008",
+    "fase": 3,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Arranjo",
+    "enunciado": "No plano de manutenção, 3 posições ordenadas serão preenchidas por pessoas distintas escolhidas entre 5 candidatas. Quantas atribuições são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "60",
+      "61",
+      "59",
+      "62"
+    ],
+    "resposta": 60,
+    "resolucao": "A ordem importa, então usamos arranjo: A(5,3) = 5!/(5−3)! = 60."
+  },
+  {
+    "id": "SC-F3-009",
+    "fase": 3,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Arranjo",
+    "enunciado": "O painel de comando tem 2 funções diferentes a distribuir entre 5 operadores; ninguém pode ocupar mais de uma função. Quantas designações ordenadas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "21",
+      "20",
+      "22",
+      "19"
+    ],
+    "resposta": 20,
+    "resolucao": "Como as funções são distintas, usamos A(5,2) = 5 × (5−1) × … por 2 fatores = 20."
+  },
+  {
+    "id": "SC-F3-010",
+    "fase": 3,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Arranjo",
+    "enunciado": "O terminal de controle tem 3 funções diferentes a distribuir entre 6 operadores; ninguém pode ocupar mais de uma função. Quantas designações ordenadas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 120,
+    "resolucao": "Como as funções são distintas, usamos A(6,3) = 6 × (6−1) × … por 3 fatores = 120."
+  },
+  {
+    "id": "SC-F3-011",
+    "fase": 3,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Arranjo",
+    "enunciado": "O protocolo de reparo tem 4 funções diferentes a distribuir entre 7 operadores; ninguém pode ocupar mais de uma função. Quantas designações ordenadas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "842",
+      "841",
+      "839",
+      "840"
+    ],
+    "resposta": 840,
+    "resolucao": "Como as funções são distintas, usamos A(7,4) = 7 × (7−1) × … por 4 fatores = 840."
+  },
+  {
+    "id": "SC-F3-012",
+    "fase": 3,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Arranjo",
+    "enunciado": "O conjunto de funções tem 2 funções diferentes a distribuir entre 8 operadores; ninguém pode ocupar mais de uma função. Quantas designações ordenadas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 56,
+    "resolucao": "Como as funções são distintas, usamos A(8,2) = 8 × (8−1) × … por 2 fatores = 56."
+  },
+  {
+    "id": "SC-F3-013",
+    "fase": 3,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Arranjo",
+    "enunciado": "O sistema de autorização tem 3 funções diferentes a distribuir entre 5 operadores; ninguém pode ocupar mais de uma função. Quantas designações ordenadas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "59",
+      "61",
+      "62",
+      "60"
+    ],
+    "resposta": 60,
+    "resolucao": "Como as funções são distintas, usamos A(5,3) = 5 × (5−1) × … por 3 fatores = 60."
+  },
+  {
+    "id": "SC-F3-014",
+    "fase": 3,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Arranjo",
+    "enunciado": "O registro de inspeção tem 4 funções diferentes a distribuir entre 6 operadores; ninguém pode ocupar mais de uma função. Quantas designações ordenadas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 360,
+    "resolucao": "Como as funções são distintas, usamos A(6,4) = 6 × (6−1) × … por 4 fatores = 360."
+  },
+  {
+    "id": "SC-F3-015",
+    "fase": 3,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Arranjo",
+    "enunciado": "O painel de operadores tem 2 funções diferentes a distribuir entre 7 operadores; ninguém pode ocupar mais de uma função. Quantas designações ordenadas existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "44",
+      "41",
+      "43",
+      "42"
+    ],
+    "resposta": 42,
+    "resolucao": "Como as funções são distintas, usamos A(7,2) = 7 × (7−1) × … por 2 fatores = 42."
+  },
+  {
+    "id": "SC-F3-016",
+    "fase": 3,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Arranjo",
+    "enunciado": "O plano de manutenção tem 3 funções diferentes a distribuir entre 8 operadores; ninguém pode ocupar mais de uma função. Quantas designações ordenadas existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 336,
+    "resolucao": "Como as funções são distintas, usamos A(8,3) = 8 × (8−1) × … por 3 fatores = 336."
+  },
+  {
+    "id": "SC-F3-017",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Entre 5 especialistas, serão preenchidas 2 funções diferentes no painel de comando. Uma especialista específica deve receber uma das funções. Quantas designações são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 8,
+    "resolucao": "Escolhemos qual das 2 funções fica com a especialista fixa e arranjamos 1 das outras 4: 2 × A(4,1) = 8."
+  },
+  {
+    "id": "SC-F3-018",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Entre 6 especialistas, serão preenchidas 3 funções diferentes no terminal de controle. Uma especialista específica deve receber uma das funções. Quantas designações são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "59",
+      "60",
+      "62",
+      "61"
+    ],
+    "resposta": 60,
+    "resolucao": "Escolhemos qual das 3 funções fica com a especialista fixa e arranjamos 2 das outras 5: 3 × A(5,2) = 60."
+  },
+  {
+    "id": "SC-F3-019",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Entre 7 especialistas, serão preenchidas 4 funções diferentes no protocolo de reparo. Uma especialista específica deve receber uma das funções. Quantas designações são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 480,
+    "resolucao": "Escolhemos qual das 4 funções fica com a especialista fixa e arranjamos 3 das outras 6: 4 × A(6,3) = 480."
+  },
+  {
+    "id": "SC-F3-020",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Entre 8 especialistas, serão preenchidas 2 funções diferentes no conjunto de funções. Uma especialista específica deve receber uma das funções. Quantas designações são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "14",
+      "15",
+      "13",
+      "16"
+    ],
+    "resposta": 14,
+    "resolucao": "Escolhemos qual das 2 funções fica com a especialista fixa e arranjamos 1 das outras 7: 2 × A(7,1) = 14."
+  },
+  {
+    "id": "SC-F3-021",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Entre 5 especialistas, serão preenchidas 3 funções diferentes no sistema de autorização. Uma especialista específica deve receber uma das funções. Quantas designações são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 36,
+    "resolucao": "Escolhemos qual das 3 funções fica com a especialista fixa e arranjamos 2 das outras 4: 3 × A(4,2) = 36."
+  },
+  {
+    "id": "SC-F3-022",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Entre 6 especialistas, serão preenchidas 4 funções diferentes no registro de inspeção. Uma especialista específica deve receber uma das funções. Quantas designações são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "241",
+      "240",
+      "242",
+      "239"
+    ],
+    "resposta": 240,
+    "resolucao": "Escolhemos qual das 4 funções fica com a especialista fixa e arranjamos 3 das outras 5: 4 × A(5,3) = 240."
+  },
+  {
+    "id": "SC-F3-023",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Entre 7 especialistas, serão preenchidas 2 funções diferentes no painel de operadores. Uma especialista específica deve receber uma das funções. Quantas designações são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 12,
+    "resolucao": "Escolhemos qual das 2 funções fica com a especialista fixa e arranjamos 1 das outras 6: 2 × A(6,1) = 12."
+  },
+  {
+    "id": "SC-F3-024",
+    "fase": 3,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Arranjo",
+    "enunciado": "Entre 8 especialistas, serão preenchidas 3 funções diferentes no plano de manutenção. Uma especialista específica deve receber uma das funções. Quantas designações são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "128",
+      "126",
+      "125",
+      "127"
+    ],
+    "resposta": 126,
+    "resolucao": "Escolhemos qual das 3 funções fica com a especialista fixa e arranjamos 2 das outras 7: 3 × A(7,2) = 126."
+  },
+  {
+    "id": "SC-F3-025",
+    "fase": 3,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Arranjo",
+    "enunciado": "No painel de comando, 3 postos ordenados são preenchidos por 6 candidatos sem repetição. Para o primeiro posto, só 2 candidatos têm autorização. Quantas designações são válidas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "40",
+      "39",
+      "41",
+      "42"
+    ],
+    "resposta": 40,
+    "resolucao": "Para o primeiro posto há 2 escolhas; para os outros dois, A(5,2) = 20. Total: 2 × 20 = 40."
+  },
+  {
+    "id": "SC-F3-026",
+    "fase": 3,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Arranjo",
+    "enunciado": "No terminal de controle, 3 postos ordenados são preenchidos por 7 candidatos sem repetição. Para o primeiro posto, só 3 candidatos têm autorização. Quantas designações são válidas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 90,
+    "resolucao": "Para o primeiro posto há 3 escolhas; para os outros dois, A(6,2) = 30. Total: 3 × 30 = 90."
+  },
+  {
+    "id": "SC-F3-027",
+    "fase": 3,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Arranjo",
+    "enunciado": "No protocolo de reparo, 3 postos ordenados são preenchidos por 8 candidatos sem repetição. Para o primeiro posto, só 4 candidatos têm autorização. Quantas designações são válidas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "170",
+      "169",
+      "167",
+      "168"
+    ],
+    "resposta": 168,
+    "resolucao": "Para o primeiro posto há 4 escolhas; para os outros dois, A(7,2) = 42. Total: 4 × 42 = 168."
+  },
+  {
+    "id": "SC-F3-028",
+    "fase": 3,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Arranjo",
+    "enunciado": "No conjunto de funções, 3 postos ordenados são preenchidos por 9 candidatos sem repetição. Para o primeiro posto, só 2 candidatos têm autorização. Quantas designações são válidas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 112,
+    "resolucao": "Para o primeiro posto há 2 escolhas; para os outros dois, A(8,2) = 56. Total: 2 × 56 = 112."
+  },
+  {
+    "id": "SC-F3-029",
+    "fase": 3,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Arranjo",
+    "enunciado": "No sistema de autorização, 3 postos ordenados são preenchidos por 6 candidatos sem repetição. Para o primeiro posto, só 3 candidatos têm autorização. Quantas designações são válidas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "60",
+      "59",
+      "62",
+      "61"
+    ],
+    "resposta": 60,
+    "resolucao": "Para o primeiro posto há 3 escolhas; para os outros dois, A(5,2) = 20. Total: 3 × 20 = 60."
+  },
+  {
+    "id": "SC-F3-030",
+    "fase": 3,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Arranjo",
+    "enunciado": "No registro de inspeção, 3 postos ordenados são preenchidos por 7 candidatos sem repetição. Para o primeiro posto, só 4 candidatos têm autorização. Quantas designações são válidas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 120,
+    "resolucao": "Para o primeiro posto há 4 escolhas; para os outros dois, A(6,2) = 30. Total: 4 × 30 = 120."
+  },
+  {
+    "id": "SC-F3-031",
+    "fase": 3,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Arranjo",
+    "enunciado": "No painel de operadores, 3 postos ordenados são preenchidos por 8 candidatos sem repetição. Para o primeiro posto, só 2 candidatos têm autorização. Quantas designações são válidas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "84",
+      "83",
+      "85",
+      "86"
+    ],
+    "resposta": 84,
+    "resolucao": "Para o primeiro posto há 2 escolhas; para os outros dois, A(7,2) = 42. Total: 2 × 42 = 84."
+  },
+  {
+    "id": "SC-F3-032",
+    "fase": 3,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Arranjo",
+    "enunciado": "No plano de manutenção, 3 postos ordenados são preenchidos por 9 candidatos sem repetição. Para o primeiro posto, só 3 candidatos têm autorização. Quantas designações são válidas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 168,
+    "resolucao": "Para o primeiro posto há 3 escolhas; para os outros dois, A(8,2) = 56. Total: 3 × 56 = 168."
+  },
+  {
+    "id": "SC-F3-033",
+    "fase": 3,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Arranjo",
+    "enunciado": "O painel de comando preenche 3 posições ordenadas com 6 módulos distintos, sem repetição. Um módulo específico não pode ficar na última posição. Quantas sequências são permitidas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 100,
+    "resolucao": "Todas as sequências são A(6,3) = 120. Com o módulo proibido no fim seriam A(5,2) = 20. Logo, 120 − 20 = 100."
+  },
+  {
+    "id": "SC-F3-034",
+    "fase": 3,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Arranjo",
+    "enunciado": "O terminal de controle preenche 4 posições ordenadas com 7 módulos distintos, sem repetição. Um módulo específico não pode ficar na última posição. Quantas sequências são permitidas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "719",
+      "720",
+      "722",
+      "721"
+    ],
+    "resposta": 720,
+    "resolucao": "Todas as sequências são A(7,4) = 840. Com o módulo proibido no fim seriam A(6,3) = 120. Logo, 840 − 120 = 720."
+  },
+  {
+    "id": "SC-F3-035",
+    "fase": 3,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Arranjo",
+    "enunciado": "O protocolo de reparo preenche 3 posições ordenadas com 8 módulos distintos, sem repetição. Um módulo específico não pode ficar na última posição. Quantas sequências são permitidas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 294,
+    "resolucao": "Todas as sequências são A(8,3) = 336. Com o módulo proibido no fim seriam A(7,2) = 42. Logo, 336 − 42 = 294."
+  },
+  {
+    "id": "SC-F3-036",
+    "fase": 3,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Arranjo",
+    "enunciado": "O conjunto de funções preenche 4 posições ordenadas com 9 módulos distintos, sem repetição. Um módulo específico não pode ficar na última posição. Quantas sequências são permitidas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "2690",
+      "2688",
+      "2689",
+      "2687"
+    ],
+    "resposta": 2688,
+    "resolucao": "Todas as sequências são A(9,4) = 3024. Com o módulo proibido no fim seriam A(8,3) = 336. Logo, 3024 − 336 = 2688."
+  },
+  {
+    "id": "SC-F3-037",
+    "fase": 3,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Arranjo",
+    "enunciado": "O sistema de autorização preenche 3 posições ordenadas com 6 módulos distintos, sem repetição. Um módulo específico não pode ficar na última posição. Quantas sequências são permitidas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 100,
+    "resolucao": "Todas as sequências são A(6,3) = 120. Com o módulo proibido no fim seriam A(5,2) = 20. Logo, 120 − 20 = 100."
+  },
+  {
+    "id": "SC-F3-038",
+    "fase": 3,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Arranjo",
+    "enunciado": "O registro de inspeção preenche 4 posições ordenadas com 7 módulos distintos, sem repetição. Um módulo específico não pode ficar na última posição. Quantas sequências são permitidas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "721",
+      "722",
+      "719",
+      "720"
+    ],
+    "resposta": 720,
+    "resolucao": "Todas as sequências são A(7,4) = 840. Com o módulo proibido no fim seriam A(6,3) = 120. Logo, 840 − 120 = 720."
+  },
+  {
+    "id": "SC-F3-039",
+    "fase": 3,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Arranjo",
+    "enunciado": "O painel de operadores preenche 3 posições ordenadas com 8 módulos distintos, sem repetição. Um módulo específico não pode ficar na última posição. Quantas sequências são permitidas?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 294,
+    "resolucao": "Todas as sequências são A(8,3) = 336. Com o módulo proibido no fim seriam A(7,2) = 42. Logo, 336 − 42 = 294."
+  },
+  {
+    "id": "SC-F3-040",
+    "fase": 3,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Arranjo",
+    "enunciado": "O plano de manutenção preenche 4 posições ordenadas com 9 módulos distintos, sem repetição. Um módulo específico não pode ficar na última posição. Quantas sequências são permitidas?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "2688",
+      "2690",
+      "2689",
+      "2687"
+    ],
+    "resposta": 2688,
+    "resolucao": "Todas as sequências são A(9,4) = 3024. Com o módulo proibido no fim seriam A(8,3) = 336. Logo, 3024 − 336 = 2688."
+  },
+  {
+    "id": "SC-F4-001",
+    "fase": 4,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Combinação",
+    "enunciado": "Para o sistema de manutenção, serão escolhidos 2 itens distintos entre 5, sem cargos ou posições diferentes. Quantos grupos podem ser formados?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "9",
+      "12",
+      "11",
+      "10"
+    ],
+    "resposta": 10,
+    "resolucao": "A ordem não importa: C(5,2) = 5!/[2!(5−2)!] = 10."
+  },
+  {
+    "id": "SC-F4-002",
+    "fase": 4,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Combinação",
+    "enunciado": "Para o grupo de pesquisa, serão escolhidos 3 itens distintos entre 6, sem cargos ou posições diferentes. Quantos grupos podem ser formados?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 20,
+    "resolucao": "A ordem não importa: C(6,3) = 6!/[3!(6−3)!] = 20."
+  },
+  {
+    "id": "SC-F4-003",
+    "fase": 4,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Combinação",
+    "enunciado": "Para o módulo de reserva, serão escolhidos 4 itens distintos entre 7, sem cargos ou posições diferentes. Quantos grupos podem ser formados?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "34",
+      "37",
+      "35",
+      "36"
+    ],
+    "resposta": 35,
+    "resolucao": "A ordem não importa: C(7,4) = 7!/[4!(7−4)!] = 35."
+  },
+  {
+    "id": "SC-F4-004",
+    "fase": 4,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Combinação",
+    "enunciado": "Para o lote de amostras, serão escolhidos 2 itens distintos entre 8, sem cargos ou posições diferentes. Quantos grupos podem ser formados?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 28,
+    "resolucao": "A ordem não importa: C(8,2) = 8!/[2!(8−2)!] = 28."
+  },
+  {
+    "id": "SC-F4-005",
+    "fase": 4,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Combinação",
+    "enunciado": "Para o plano de evacuação, serão escolhidos 3 itens distintos entre 5, sem cargos ou posições diferentes. Quantos grupos podem ser formados?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "10",
+      "11",
+      "9",
+      "12"
+    ],
+    "resposta": 10,
+    "resolucao": "A ordem não importa: C(5,3) = 5!/[3!(5−3)!] = 10."
+  },
+  {
+    "id": "SC-F4-006",
+    "fase": 4,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Combinação",
+    "enunciado": "Para o protocolo de segurança, serão escolhidos 4 itens distintos entre 6, sem cargos ou posições diferentes. Quantos grupos podem ser formados?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 15,
+    "resolucao": "A ordem não importa: C(6,4) = 6!/[4!(6−4)!] = 15."
+  },
+  {
+    "id": "SC-F4-007",
+    "fase": 4,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Combinação",
+    "enunciado": "Para o pacote de sensores, serão escolhidos 2 itens distintos entre 7, sem cargos ou posições diferentes. Quantos grupos podem ser formados?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "22",
+      "21",
+      "23",
+      "20"
+    ],
+    "resposta": 21,
+    "resolucao": "A ordem não importa: C(7,2) = 7!/[2!(7−2)!] = 21."
+  },
+  {
+    "id": "SC-F4-008",
+    "fase": 4,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Combinação",
+    "enunciado": "Para o comitê do Projeto Espelho, serão escolhidos 3 itens distintos entre 8, sem cargos ou posições diferentes. Quantos grupos podem ser formados?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 56,
+    "resolucao": "A ordem não importa: C(8,3) = 8!/[3!(8−3)!] = 56."
+  },
+  {
+    "id": "SC-F4-009",
+    "fase": 4,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Combinação",
+    "enunciado": "Uma equipe de 3 pessoas será escolhida entre 6 candidatas para o sistema de manutenção. Uma pessoa específica deve participar. Quantas equipes diferentes existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 10,
+    "resolucao": "Com a pessoa obrigatória já escolhida, selecionamos 2 entre as outras 5: C(5,2) = 10."
+  },
+  {
+    "id": "SC-F4-010",
+    "fase": 4,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Combinação",
+    "enunciado": "Uma equipe de 4 pessoas será escolhida entre 7 candidatas para o grupo de pesquisa. Uma pessoa específica deve participar. Quantas equipes diferentes existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "22",
+      "19",
+      "21",
+      "20"
+    ],
+    "resposta": 20,
+    "resolucao": "Com a pessoa obrigatória já escolhida, selecionamos 3 entre as outras 6: C(6,3) = 20."
+  },
+  {
+    "id": "SC-F4-011",
+    "fase": 4,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Combinação",
+    "enunciado": "Uma equipe de 5 pessoas será escolhida entre 8 candidatas para o módulo de reserva. Uma pessoa específica deve participar. Quantas equipes diferentes existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 35,
+    "resolucao": "Com a pessoa obrigatória já escolhida, selecionamos 4 entre as outras 7: C(7,4) = 35."
+  },
+  {
+    "id": "SC-F4-012",
+    "fase": 4,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Combinação",
+    "enunciado": "Uma equipe de 3 pessoas será escolhida entre 9 candidatas para o lote de amostras. Uma pessoa específica deve participar. Quantas equipes diferentes existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "28",
+      "27",
+      "30",
+      "29"
+    ],
+    "resposta": 28,
+    "resolucao": "Com a pessoa obrigatória já escolhida, selecionamos 2 entre as outras 8: C(8,2) = 28."
+  },
+  {
+    "id": "SC-F4-013",
+    "fase": 4,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Combinação",
+    "enunciado": "Uma equipe de 4 pessoas será escolhida entre 6 candidatas para o plano de evacuação. Uma pessoa específica deve participar. Quantas equipes diferentes existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 10,
+    "resolucao": "Com a pessoa obrigatória já escolhida, selecionamos 3 entre as outras 5: C(5,3) = 10."
+  },
+  {
+    "id": "SC-F4-014",
+    "fase": 4,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Combinação",
+    "enunciado": "Uma equipe de 5 pessoas será escolhida entre 7 candidatas para o protocolo de segurança. Uma pessoa específica deve participar. Quantas equipes diferentes existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "17",
+      "15",
+      "14",
+      "16"
+    ],
+    "resposta": 15,
+    "resolucao": "Com a pessoa obrigatória já escolhida, selecionamos 4 entre as outras 6: C(6,4) = 15."
+  },
+  {
+    "id": "SC-F4-015",
+    "fase": 4,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Combinação",
+    "enunciado": "Uma equipe de 3 pessoas será escolhida entre 8 candidatas para o pacote de sensores. Uma pessoa específica deve participar. Quantas equipes diferentes existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 21,
+    "resolucao": "Com a pessoa obrigatória já escolhida, selecionamos 2 entre as outras 7: C(7,2) = 21."
+  },
+  {
+    "id": "SC-F4-016",
+    "fase": 4,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Combinação",
+    "enunciado": "Uma equipe de 4 pessoas será escolhida entre 9 candidatas para o comitê do Projeto Espelho. Uma pessoa específica deve participar. Quantas equipes diferentes existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "55",
+      "57",
+      "56",
+      "58"
+    ],
+    "resposta": 56,
+    "resolucao": "Com a pessoa obrigatória já escolhida, selecionamos 3 entre as outras 8: C(8,3) = 56."
+  },
+  {
+    "id": "SC-F4-017",
+    "fase": 4,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Combinação",
+    "enunciado": "O sistema de manutenção precisa reunir 5 itens: exatamente 2 do primeiro grupo, que tem 4, e os demais de um segundo grupo, que tem 5. Quantas seleções atendem à condição?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "59",
+      "62",
+      "60",
+      "61"
+    ],
+    "resposta": 60,
+    "resolucao": "Escolhemos C(4,2) itens do primeiro grupo e C(5,3) do segundo: 6 × 10 = 60."
+  },
+  {
+    "id": "SC-F4-018",
+    "fase": 4,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Combinação",
+    "enunciado": "O grupo de pesquisa precisa reunir 6 itens: exatamente 3 do primeiro grupo, que tem 5, e os demais de um segundo grupo, que tem 7. Quantas seleções atendem à condição?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 350,
+    "resolucao": "Escolhemos C(5,3) itens do primeiro grupo e C(7,3) do segundo: 10 × 35 = 350."
+  },
+  {
+    "id": "SC-F4-019",
+    "fase": 4,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Combinação",
+    "enunciado": "O módulo de reserva precisa reunir 5 itens: exatamente 2 do primeiro grupo, que tem 6, e os demais de um segundo grupo, que tem 5. Quantas seleções atendem à condição?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "149",
+      "151",
+      "150",
+      "152"
+    ],
+    "resposta": 150,
+    "resolucao": "Escolhemos C(6,2) itens do primeiro grupo e C(5,3) do segundo: 15 × 10 = 150."
+  },
+  {
+    "id": "SC-F4-020",
+    "fase": 4,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Combinação",
+    "enunciado": "O lote de amostras precisa reunir 6 itens: exatamente 3 do primeiro grupo, que tem 4, e os demais de um segundo grupo, que tem 7. Quantas seleções atendem à condição?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 140,
+    "resolucao": "Escolhemos C(4,3) itens do primeiro grupo e C(7,3) do segundo: 4 × 35 = 140."
+  },
+  {
+    "id": "SC-F4-021",
+    "fase": 4,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Combinação",
+    "enunciado": "O plano de evacuação precisa reunir 5 itens: exatamente 2 do primeiro grupo, que tem 5, e os demais de um segundo grupo, que tem 5. Quantas seleções atendem à condição?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "101",
+      "102",
+      "99",
+      "100"
+    ],
+    "resposta": 100,
+    "resolucao": "Escolhemos C(5,2) itens do primeiro grupo e C(5,3) do segundo: 10 × 10 = 100."
+  },
+  {
+    "id": "SC-F4-022",
+    "fase": 4,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Combinação",
+    "enunciado": "O protocolo de segurança precisa reunir 6 itens: exatamente 3 do primeiro grupo, que tem 6, e os demais de um segundo grupo, que tem 7. Quantas seleções atendem à condição?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 700,
+    "resolucao": "Escolhemos C(6,3) itens do primeiro grupo e C(7,3) do segundo: 20 × 35 = 700."
+  },
+  {
+    "id": "SC-F4-023",
+    "fase": 4,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Combinação",
+    "enunciado": "O pacote de sensores precisa reunir 5 itens: exatamente 2 do primeiro grupo, que tem 4, e os demais de um segundo grupo, que tem 5. Quantas seleções atendem à condição?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "59",
+      "62",
+      "60",
+      "61"
+    ],
+    "resposta": 60,
+    "resolucao": "Escolhemos C(4,2) itens do primeiro grupo e C(5,3) do segundo: 6 × 10 = 60."
+  },
+  {
+    "id": "SC-F4-024",
+    "fase": 4,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Combinação",
+    "enunciado": "O comitê do Projeto Espelho precisa reunir 6 itens: exatamente 3 do primeiro grupo, que tem 5, e os demais de um segundo grupo, que tem 7. Quantas seleções atendem à condição?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 350,
+    "resolucao": "Escolhemos C(5,3) itens do primeiro grupo e C(7,3) do segundo: 10 × 35 = 350."
+  },
+  {
+    "id": "SC-F4-025",
+    "fase": 4,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Para o sistema de manutenção, escolhem-se 4 itens entre 9; 3 deles pertencem a uma categoria prioritária. A seleção deve conter ao menos um item prioritário. Quantas seleções existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 111,
+    "resolucao": "De todas as C(9,4) = 126 seleções, retiramos as que usam apenas os 6 itens não prioritários: C(6,4) = 15. Restam 111."
+  },
+  {
+    "id": "SC-F4-026",
+    "fase": 4,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Para o grupo de pesquisa, escolhem-se 4 itens entre 10; 4 deles pertencem a uma categoria prioritária. A seleção deve conter ao menos um item prioritário. Quantas seleções existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "197",
+      "194",
+      "195",
+      "196"
+    ],
+    "resposta": 195,
+    "resolucao": "De todas as C(10,4) = 210 seleções, retiramos as que usam apenas os 6 itens não prioritários: C(6,4) = 15. Restam 195."
+  },
+  {
+    "id": "SC-F4-027",
+    "fase": 4,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Para o módulo de reserva, escolhem-se 4 itens entre 11; 5 deles pertencem a uma categoria prioritária. A seleção deve conter ao menos um item prioritário. Quantas seleções existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 315,
+    "resolucao": "De todas as C(11,4) = 330 seleções, retiramos as que usam apenas os 6 itens não prioritários: C(6,4) = 15. Restam 315."
+  },
+  {
+    "id": "SC-F4-028",
+    "fase": 4,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Para o lote de amostras, escolhem-se 4 itens entre 9; 3 deles pertencem a uma categoria prioritária. A seleção deve conter ao menos um item prioritário. Quantas seleções existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "111",
+      "110",
+      "113",
+      "112"
+    ],
+    "resposta": 111,
+    "resolucao": "De todas as C(9,4) = 126 seleções, retiramos as que usam apenas os 6 itens não prioritários: C(6,4) = 15. Restam 111."
+  },
+  {
+    "id": "SC-F4-029",
+    "fase": 4,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Para o plano de evacuação, escolhem-se 4 itens entre 10; 4 deles pertencem a uma categoria prioritária. A seleção deve conter ao menos um item prioritário. Quantas seleções existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 195,
+    "resolucao": "De todas as C(10,4) = 210 seleções, retiramos as que usam apenas os 6 itens não prioritários: C(6,4) = 15. Restam 195."
+  },
+  {
+    "id": "SC-F4-030",
+    "fase": 4,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Para o protocolo de segurança, escolhem-se 4 itens entre 11; 5 deles pertencem a uma categoria prioritária. A seleção deve conter ao menos um item prioritário. Quantas seleções existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "316",
+      "315",
+      "317",
+      "314"
+    ],
+    "resposta": 315,
+    "resolucao": "De todas as C(11,4) = 330 seleções, retiramos as que usam apenas os 6 itens não prioritários: C(6,4) = 15. Restam 315."
+  },
+  {
+    "id": "SC-F4-031",
+    "fase": 4,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Para o pacote de sensores, escolhem-se 4 itens entre 9; 3 deles pertencem a uma categoria prioritária. A seleção deve conter ao menos um item prioritário. Quantas seleções existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 111,
+    "resolucao": "De todas as C(9,4) = 126 seleções, retiramos as que usam apenas os 6 itens não prioritários: C(6,4) = 15. Restam 111."
+  },
+  {
+    "id": "SC-F4-032",
+    "fase": 4,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Combinação",
+    "enunciado": "Para o comitê do Projeto Espelho, escolhem-se 4 itens entre 10; 4 deles pertencem a uma categoria prioritária. A seleção deve conter ao menos um item prioritário. Quantas seleções existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "195",
+      "196",
+      "197",
+      "194"
+    ],
+    "resposta": 195,
+    "resolucao": "De todas as C(10,4) = 210 seleções, retiramos as que usam apenas os 6 itens não prioritários: C(6,4) = 15. Restam 195."
+  },
+  {
+    "id": "SC-F4-033",
+    "fase": 4,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Combinação",
+    "enunciado": "O sistema de manutenção seleciona 4 itens de dois grupos: 5 itens do grupo A e 5 do grupo B. A seleção deve conter pelo menos dois itens de A. Quantas seleções são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "155",
+      "156",
+      "154",
+      "157"
+    ],
+    "resposta": 155,
+    "resolucao": "Somamos os casos com 2, 3, … itens de A: C(5,2)×C(5,2) + C(5,3)×C(5,1) + C(5,4)×C(5,0) = 155."
+  },
+  {
+    "id": "SC-F4-034",
+    "fase": 4,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Combinação",
+    "enunciado": "O grupo de pesquisa seleciona 4 itens de dois grupos: 6 itens do grupo A e 7 do grupo B. A seleção deve conter pelo menos dois itens de A. Quantas seleções são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 470,
+    "resolucao": "Somamos os casos com 2, 3, … itens de A: C(6,2)×C(7,2) + C(6,3)×C(7,1) + C(6,4)×C(7,0) = 470."
+  },
+  {
+    "id": "SC-F4-035",
+    "fase": 4,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Combinação",
+    "enunciado": "O módulo de reserva seleciona 4 itens de dois grupos: 7 itens do grupo A e 6 do grupo B. A seleção deve conter pelo menos dois itens de A. Quantas seleções são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "559",
+      "562",
+      "560",
+      "561"
+    ],
+    "resposta": 560,
+    "resolucao": "Somamos os casos com 2, 3, … itens de A: C(7,2)×C(6,2) + C(7,3)×C(6,1) + C(7,4)×C(6,0) = 560."
+  },
+  {
+    "id": "SC-F4-036",
+    "fase": 4,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Combinação",
+    "enunciado": "O lote de amostras seleciona 4 itens de dois grupos: 5 itens do grupo A e 5 do grupo B. A seleção deve conter pelo menos dois itens de A. Quantas seleções são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 155,
+    "resolucao": "Somamos os casos com 2, 3, … itens de A: C(5,2)×C(5,2) + C(5,3)×C(5,1) + C(5,4)×C(5,0) = 155."
+  },
+  {
+    "id": "SC-F4-037",
+    "fase": 4,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Combinação",
+    "enunciado": "O plano de evacuação seleciona 4 itens de dois grupos: 6 itens do grupo A e 7 do grupo B. A seleção deve conter pelo menos dois itens de A. Quantas seleções são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "470",
+      "471",
+      "472",
+      "469"
+    ],
+    "resposta": 470,
+    "resolucao": "Somamos os casos com 2, 3, … itens de A: C(6,2)×C(7,2) + C(6,3)×C(7,1) + C(6,4)×C(7,0) = 470."
+  },
+  {
+    "id": "SC-F4-038",
+    "fase": 4,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Combinação",
+    "enunciado": "O protocolo de segurança seleciona 4 itens de dois grupos: 7 itens do grupo A e 6 do grupo B. A seleção deve conter pelo menos dois itens de A. Quantas seleções são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 560,
+    "resolucao": "Somamos os casos com 2, 3, … itens de A: C(7,2)×C(6,2) + C(7,3)×C(6,1) + C(7,4)×C(6,0) = 560."
+  },
+  {
+    "id": "SC-F4-039",
+    "fase": 4,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Combinação",
+    "enunciado": "O pacote de sensores seleciona 4 itens de dois grupos: 5 itens do grupo A e 5 do grupo B. A seleção deve conter pelo menos dois itens de A. Quantas seleções são possíveis?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "156",
+      "154",
+      "155",
+      "157"
+    ],
+    "resposta": 155,
+    "resolucao": "Somamos os casos com 2, 3, … itens de A: C(5,2)×C(5,2) + C(5,3)×C(5,1) + C(5,4)×C(5,0) = 155."
+  },
+  {
+    "id": "SC-F4-040",
+    "fase": 4,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Combinação",
+    "enunciado": "O comitê do Projeto Espelho seleciona 4 itens de dois grupos: 6 itens do grupo A e 7 do grupo B. A seleção deve conter pelo menos dois itens de A. Quantas seleções são possíveis?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 470,
+    "resolucao": "Somamos os casos com 2, 3, … itens de A: C(6,2)×C(7,2) + C(6,3)×C(7,1) + C(6,4)×C(7,0) = 470."
+  },
+  {
+    "id": "SC-F5-001",
+    "fase": 5,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o plano de contingência, primeiro escolhem-se 2 módulos entre 5; depois os módulos escolhidos são instalados em 2 posições diferentes. Quantos planos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 20,
+    "resolucao": "Há C(5,2) = 10 grupos e 2! = 2 ordens para cada grupo. Total: 10 × 2 = 20."
+  },
+  {
+    "id": "SC-F5-002",
+    "fase": 5,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o protocolo do ATLAS, primeiro escolhem-se 3 módulos entre 6; depois os módulos escolhidos são instalados em 3 posições diferentes. Quantos planos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "119",
+      "121",
+      "122",
+      "120"
+    ],
+    "resposta": 120,
+    "resolucao": "Há C(6,3) = 20 grupos e 3! = 6 ordens para cada grupo. Total: 20 × 6 = 120."
+  },
+  {
+    "id": "SC-F5-003",
+    "fase": 5,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o sistema do núcleo, primeiro escolhem-se 2 módulos entre 7; depois os módulos escolhidos são instalados em 2 posições diferentes. Quantos planos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 42,
+    "resolucao": "Há C(7,2) = 21 grupos e 2! = 2 ordens para cada grupo. Total: 21 × 2 = 42."
+  },
+  {
+    "id": "SC-F5-004",
+    "fase": 5,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o plano de evacuação, primeiro escolhem-se 3 módulos entre 5; depois os módulos escolhidos são instalados em 3 posições diferentes. Quantos planos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "62",
+      "59",
+      "60",
+      "61"
+    ],
+    "resposta": 60,
+    "resolucao": "Há C(5,3) = 10 grupos e 3! = 6 ordens para cada grupo. Total: 10 × 6 = 60."
+  },
+  {
+    "id": "SC-F5-005",
+    "fase": 5,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o pacote experimental, primeiro escolhem-se 2 módulos entre 6; depois os módulos escolhidos são instalados em 2 posições diferentes. Quantos planos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 30,
+    "resolucao": "Há C(6,2) = 15 grupos e 2! = 2 ordens para cada grupo. Total: 15 × 2 = 30."
+  },
+  {
+    "id": "SC-F5-006",
+    "fase": 5,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o protocolo de recuperação, primeiro escolhem-se 3 módulos entre 7; depois os módulos escolhidos são instalados em 3 posições diferentes. Quantos planos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "212",
+      "211",
+      "210",
+      "209"
+    ],
+    "resposta": 210,
+    "resolucao": "Há C(7,3) = 35 grupos e 3! = 6 ordens para cada grupo. Total: 35 × 6 = 210."
+  },
+  {
+    "id": "SC-F5-007",
+    "fase": 5,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o sistema da Instalação Ômega, primeiro escolhem-se 2 módulos entre 5; depois os módulos escolhidos são instalados em 2 posições diferentes. Quantos planos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 20,
+    "resolucao": "Há C(5,2) = 10 grupos e 2! = 2 ordens para cada grupo. Total: 10 × 2 = 20."
+  },
+  {
+    "id": "SC-F5-008",
+    "fase": 5,
+    "nivel": "Fácil",
+    "dificuldade": "Fácil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o relatório da NEXUS, primeiro escolhem-se 3 módulos entre 6; depois os módulos escolhidos são instalados em 3 posições diferentes. Quantos planos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "122",
+      "121",
+      "119",
+      "120"
+    ],
+    "resposta": 120,
+    "resolucao": "Há C(6,3) = 20 grupos e 3! = 6 ordens para cada grupo. Total: 20 × 6 = 120."
+  },
+  {
+    "id": "SC-F5-009",
+    "fase": 5,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "No plano de contingência, escolhem-se 3 módulos entre 7 para formar uma equipe e, independentemente, um entre 2 códigos é associado ao plano. Quantos planos distintos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "70",
+      "69",
+      "72",
+      "71"
+    ],
+    "resposta": 70,
+    "resolucao": "Pelo princípio multiplicativo: C(7,3) × 2 = 35 × 2 = 70."
+  },
+  {
+    "id": "SC-F5-010",
+    "fase": 5,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "No protocolo do ATLAS, escolhem-se 3 módulos entre 8 para formar uma equipe e, independentemente, um entre 3 códigos é associado ao plano. Quantos planos distintos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 168,
+    "resolucao": "Pelo princípio multiplicativo: C(8,3) × 3 = 56 × 3 = 168."
+  },
+  {
+    "id": "SC-F5-011",
+    "fase": 5,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "No sistema do núcleo, escolhem-se 3 módulos entre 9 para formar uma equipe e, independentemente, um entre 4 códigos é associado ao plano. Quantos planos distintos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "337",
+      "338",
+      "336",
+      "335"
+    ],
+    "resposta": 336,
+    "resolucao": "Pelo princípio multiplicativo: C(9,3) × 4 = 84 × 4 = 336."
+  },
+  {
+    "id": "SC-F5-012",
+    "fase": 5,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "No plano de evacuação, escolhem-se 3 módulos entre 7 para formar uma equipe e, independentemente, um entre 5 códigos é associado ao plano. Quantos planos distintos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 175,
+    "resolucao": "Pelo princípio multiplicativo: C(7,3) × 5 = 35 × 5 = 175."
+  },
+  {
+    "id": "SC-F5-013",
+    "fase": 5,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "No pacote experimental, escolhem-se 3 módulos entre 8 para formar uma equipe e, independentemente, um entre 2 códigos é associado ao plano. Quantos planos distintos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "111",
+      "114",
+      "113",
+      "112"
+    ],
+    "resposta": 112,
+    "resolucao": "Pelo princípio multiplicativo: C(8,3) × 2 = 56 × 2 = 112."
+  },
+  {
+    "id": "SC-F5-014",
+    "fase": 5,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "No protocolo de recuperação, escolhem-se 3 módulos entre 9 para formar uma equipe e, independentemente, um entre 3 códigos é associado ao plano. Quantos planos distintos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 252,
+    "resolucao": "Pelo princípio multiplicativo: C(9,3) × 3 = 84 × 3 = 252."
+  },
+  {
+    "id": "SC-F5-015",
+    "fase": 5,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "No sistema da Instalação Ômega, escolhem-se 3 módulos entre 7 para formar uma equipe e, independentemente, um entre 4 códigos é associado ao plano. Quantos planos distintos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "141",
+      "140",
+      "142",
+      "139"
+    ],
+    "resposta": 140,
+    "resolucao": "Pelo princípio multiplicativo: C(7,3) × 4 = 35 × 4 = 140."
+  },
+  {
+    "id": "SC-F5-016",
+    "fase": 5,
+    "nivel": "Básico",
+    "dificuldade": "Básico",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "No relatório da NEXUS, escolhem-se 3 módulos entre 8 para formar uma equipe e, independentemente, um entre 5 códigos é associado ao plano. Quantos planos distintos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 280,
+    "resolucao": "Pelo princípio multiplicativo: C(8,3) × 5 = 56 × 5 = 280."
+  },
+  {
+    "id": "SC-F5-017",
+    "fase": 5,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O plano de contingência escolhe um especialista entre 3 técnicos certificados e 2 auxiliares entre 6 pessoas; depois distribui a equipe em 3 funções distintas. Quantos planos completos há?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 270,
+    "resolucao": "Escolhemos o especialista (3 maneiras), os auxiliares C(6,2) = 15 e ordenamos a equipe em 3! = 6 funções: 3 × 15 × 6 = 270."
+  },
+  {
+    "id": "SC-F5-018",
+    "fase": 5,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O protocolo do ATLAS escolhe um especialista entre 4 técnicos certificados e 2 auxiliares entre 7 pessoas; depois distribui a equipe em 3 funções distintas. Quantos planos completos há?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "506",
+      "505",
+      "503",
+      "504"
+    ],
+    "resposta": 504,
+    "resolucao": "Escolhemos o especialista (4 maneiras), os auxiliares C(7,2) = 21 e ordenamos a equipe em 3! = 6 funções: 4 × 21 × 6 = 504."
+  },
+  {
+    "id": "SC-F5-019",
+    "fase": 5,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O sistema do núcleo escolhe um especialista entre 5 técnicos certificados e 2 auxiliares entre 8 pessoas; depois distribui a equipe em 3 funções distintas. Quantos planos completos há?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 840,
+    "resolucao": "Escolhemos o especialista (5 maneiras), os auxiliares C(8,2) = 28 e ordenamos a equipe em 3! = 6 funções: 5 × 28 × 6 = 840."
+  },
+  {
+    "id": "SC-F5-020",
+    "fase": 5,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O plano de evacuação escolhe um especialista entre 3 técnicos certificados e 2 auxiliares entre 6 pessoas; depois distribui a equipe em 3 funções distintas. Quantos planos completos há?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "272",
+      "271",
+      "269",
+      "270"
+    ],
+    "resposta": 270,
+    "resolucao": "Escolhemos o especialista (3 maneiras), os auxiliares C(6,2) = 15 e ordenamos a equipe em 3! = 6 funções: 3 × 15 × 6 = 270."
+  },
+  {
+    "id": "SC-F5-021",
+    "fase": 5,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O pacote experimental escolhe um especialista entre 4 técnicos certificados e 2 auxiliares entre 7 pessoas; depois distribui a equipe em 3 funções distintas. Quantos planos completos há?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 504,
+    "resolucao": "Escolhemos o especialista (4 maneiras), os auxiliares C(7,2) = 21 e ordenamos a equipe em 3! = 6 funções: 4 × 21 × 6 = 504."
+  },
+  {
+    "id": "SC-F5-022",
+    "fase": 5,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O protocolo de recuperação escolhe um especialista entre 5 técnicos certificados e 2 auxiliares entre 8 pessoas; depois distribui a equipe em 3 funções distintas. Quantos planos completos há?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "840",
+      "842",
+      "839",
+      "841"
+    ],
+    "resposta": 840,
+    "resolucao": "Escolhemos o especialista (5 maneiras), os auxiliares C(8,2) = 28 e ordenamos a equipe em 3! = 6 funções: 5 × 28 × 6 = 840."
+  },
+  {
+    "id": "SC-F5-023",
+    "fase": 5,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O sistema da Instalação Ômega escolhe um especialista entre 3 técnicos certificados e 2 auxiliares entre 6 pessoas; depois distribui a equipe em 3 funções distintas. Quantos planos completos há?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 270,
+    "resolucao": "Escolhemos o especialista (3 maneiras), os auxiliares C(6,2) = 15 e ordenamos a equipe em 3! = 6 funções: 3 × 15 × 6 = 270."
+  },
+  {
+    "id": "SC-F5-024",
+    "fase": 5,
+    "nivel": "Intermediário",
+    "dificuldade": "Intermediário",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O relatório da NEXUS escolhe um especialista entre 4 técnicos certificados e 2 auxiliares entre 7 pessoas; depois distribui a equipe em 3 funções distintas. Quantos planos completos há?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "505",
+      "503",
+      "504",
+      "506"
+    ],
+    "resposta": 504,
+    "resolucao": "Escolhemos o especialista (4 maneiras), os auxiliares C(7,2) = 21 e ordenamos a equipe em 3! = 6 funções: 4 × 21 × 6 = 504."
+  },
+  {
+    "id": "SC-F5-025",
+    "fase": 5,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o plano de contingência, escolhem-se 4 módulos entre 8 e depois se ordenam. Se dois módulos de segurança forem escolhidos juntos, eles devem ficar lado a lado. Quantos planos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "1499",
+      "1501",
+      "1500",
+      "1502"
+    ],
+    "resposta": 1500,
+    "resolucao": "Com os dois módulos especiais escolhidos: C(6,2) grupos e 2×(3)! ordens. Sem ambos: [C(8,4)−C(6,2)] grupos e 4! ordens. Somando os casos disjuntos: 180 + 1320 = 1500."
+  },
+  {
+    "id": "SC-F5-026",
+    "fase": 5,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o protocolo do ATLAS, escolhem-se 4 módulos entre 9 e depois se ordenam. Se dois módulos de segurança forem escolhidos juntos, eles devem ficar lado a lado. Quantos planos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 2772,
+    "resolucao": "Com os dois módulos especiais escolhidos: C(7,2) grupos e 2×(3)! ordens. Sem ambos: [C(9,4)−C(7,2)] grupos e 4! ordens. Somando os casos disjuntos: 252 + 2520 = 2772."
+  },
+  {
+    "id": "SC-F5-027",
+    "fase": 5,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o sistema do núcleo, escolhem-se 4 módulos entre 10 e depois se ordenam. Se dois módulos de segurança forem escolhidos juntos, eles devem ficar lado a lado. Quantos planos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "4703",
+      "4706",
+      "4704",
+      "4705"
+    ],
+    "resposta": 4704,
+    "resolucao": "Com os dois módulos especiais escolhidos: C(8,2) grupos e 2×(3)! ordens. Sem ambos: [C(10,4)−C(8,2)] grupos e 4! ordens. Somando os casos disjuntos: 336 + 4368 = 4704."
+  },
+  {
+    "id": "SC-F5-028",
+    "fase": 5,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o plano de evacuação, escolhem-se 4 módulos entre 8 e depois se ordenam. Se dois módulos de segurança forem escolhidos juntos, eles devem ficar lado a lado. Quantos planos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 1500,
+    "resolucao": "Com os dois módulos especiais escolhidos: C(6,2) grupos e 2×(3)! ordens. Sem ambos: [C(8,4)−C(6,2)] grupos e 4! ordens. Somando os casos disjuntos: 180 + 1320 = 1500."
+  },
+  {
+    "id": "SC-F5-029",
+    "fase": 5,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o pacote experimental, escolhem-se 4 módulos entre 9 e depois se ordenam. Se dois módulos de segurança forem escolhidos juntos, eles devem ficar lado a lado. Quantos planos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "2774",
+      "2772",
+      "2773",
+      "2771"
+    ],
+    "resposta": 2772,
+    "resolucao": "Com os dois módulos especiais escolhidos: C(7,2) grupos e 2×(3)! ordens. Sem ambos: [C(9,4)−C(7,2)] grupos e 4! ordens. Somando os casos disjuntos: 252 + 2520 = 2772."
+  },
+  {
+    "id": "SC-F5-030",
+    "fase": 5,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o protocolo de recuperação, escolhem-se 4 módulos entre 10 e depois se ordenam. Se dois módulos de segurança forem escolhidos juntos, eles devem ficar lado a lado. Quantos planos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 4704,
+    "resolucao": "Com os dois módulos especiais escolhidos: C(8,2) grupos e 2×(3)! ordens. Sem ambos: [C(10,4)−C(8,2)] grupos e 4! ordens. Somando os casos disjuntos: 336 + 4368 = 4704."
+  },
+  {
+    "id": "SC-F5-031",
+    "fase": 5,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o sistema da Instalação Ômega, escolhem-se 4 módulos entre 8 e depois se ordenam. Se dois módulos de segurança forem escolhidos juntos, eles devem ficar lado a lado. Quantos planos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "1499",
+      "1502",
+      "1501",
+      "1500"
+    ],
+    "resposta": 1500,
+    "resolucao": "Com os dois módulos especiais escolhidos: C(6,2) grupos e 2×(3)! ordens. Sem ambos: [C(8,4)−C(6,2)] grupos e 4! ordens. Somando os casos disjuntos: 180 + 1320 = 1500."
+  },
+  {
+    "id": "SC-F5-032",
+    "fase": 5,
+    "nivel": "Avançado",
+    "dificuldade": "Avançado",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "Para o relatório da NEXUS, escolhem-se 4 módulos entre 9 e depois se ordenam. Se dois módulos de segurança forem escolhidos juntos, eles devem ficar lado a lado. Quantos planos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 2772,
+    "resolucao": "Com os dois módulos especiais escolhidos: C(7,2) grupos e 2×(3)! ordens. Sem ambos: [C(9,4)−C(7,2)] grupos e 4! ordens. Somando os casos disjuntos: 252 + 2520 = 2772."
+  },
+  {
+    "id": "SC-F5-033",
+    "fase": 5,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O plano de contingência exige uma equipe de 4 módulos entre 10, com ao menos um dos 3 módulos de uma categoria crítica. A equipe é ordenada em 4 posições e recebe um de 2 códigos independentes. Quantos protocolos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 8400,
+    "resolucao": "Equipes elegíveis: C(10,4)−C(7,4) = 175. Para cada uma há 4! ordens e 2 códigos: 175 × 24 × 2 = 8400."
+  },
+  {
+    "id": "SC-F5-034",
+    "fase": 5,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O protocolo do ATLAS exige uma equipe de 4 módulos entre 10, com ao menos um dos 4 módulos de uma categoria crítica. A equipe é ordenada em 4 posições e recebe um de 3 códigos independentes. Quantos protocolos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "14039",
+      "14040",
+      "14041",
+      "14042"
+    ],
+    "resposta": 14040,
+    "resolucao": "Equipes elegíveis: C(10,4)−C(6,4) = 195. Para cada uma há 4! ordens e 3 códigos: 195 × 24 × 3 = 14040."
+  },
+  {
+    "id": "SC-F5-035",
+    "fase": 5,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O sistema do núcleo exige uma equipe de 4 módulos entre 10, com ao menos um dos 3 módulos de uma categoria crítica. A equipe é ordenada em 4 posições e recebe um de 4 códigos independentes. Quantos protocolos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 16800,
+    "resolucao": "Equipes elegíveis: C(10,4)−C(7,4) = 175. Para cada uma há 4! ordens e 4 códigos: 175 × 24 × 4 = 16800."
+  },
+  {
+    "id": "SC-F5-036",
+    "fase": 5,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O plano de evacuação exige uma equipe de 4 módulos entre 10, com ao menos um dos 4 módulos de uma categoria crítica. A equipe é ordenada em 4 posições e recebe um de 5 códigos independentes. Quantos protocolos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "23400",
+      "23401",
+      "23402",
+      "23399"
+    ],
+    "resposta": 23400,
+    "resolucao": "Equipes elegíveis: C(10,4)−C(6,4) = 195. Para cada uma há 4! ordens e 5 códigos: 195 × 24 × 5 = 23400."
+  },
+  {
+    "id": "SC-F5-037",
+    "fase": 5,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O pacote experimental exige uma equipe de 4 módulos entre 10, com ao menos um dos 3 módulos de uma categoria crítica. A equipe é ordenada em 4 posições e recebe um de 2 códigos independentes. Quantos protocolos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 8400,
+    "resolucao": "Equipes elegíveis: C(10,4)−C(7,4) = 175. Para cada uma há 4! ordens e 2 códigos: 175 × 24 × 2 = 8400."
+  },
+  {
+    "id": "SC-F5-038",
+    "fase": 5,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O protocolo de recuperação exige uma equipe de 4 módulos entre 10, com ao menos um dos 4 módulos de uma categoria crítica. A equipe é ordenada em 4 posições e recebe um de 3 códigos independentes. Quantos protocolos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "14040",
+      "14042",
+      "14039",
+      "14041"
+    ],
+    "resposta": 14040,
+    "resolucao": "Equipes elegíveis: C(10,4)−C(6,4) = 195. Para cada uma há 4! ordens e 3 códigos: 195 × 24 × 3 = 14040."
+  },
+  {
+    "id": "SC-F5-039",
+    "fase": 5,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O sistema da Instalação Ômega exige uma equipe de 4 módulos entre 10, com ao menos um dos 3 módulos de uma categoria crítica. A equipe é ordenada em 4 posições e recebe um de 4 códigos independentes. Quantos protocolos completos existem?",
+    "tipo_resposta": "numeric",
+    "alternativas": [],
+    "resposta": 16800,
+    "resolucao": "Equipes elegíveis: C(10,4)−C(7,4) = 175. Para cada uma há 4! ordens e 4 códigos: 175 × 24 × 4 = 16800."
+  },
+  {
+    "id": "SC-F5-040",
+    "fase": 5,
+    "nivel": "Difícil",
+    "dificuldade": "Difícil",
+    "conteudo": "Análise combinatória integrada",
+    "enunciado": "O relatório da NEXUS exige uma equipe de 4 módulos entre 10, com ao menos um dos 4 módulos de uma categoria crítica. A equipe é ordenada em 4 posições e recebe um de 5 códigos independentes. Quantos protocolos completos existem?",
+    "tipo_resposta": "choice",
+    "alternativas": [
+      "23402",
+      "23400",
+      "23399",
+      "23401"
+    ],
+    "resposta": 23400,
+    "resolucao": "Equipes elegíveis: C(10,4)−C(6,4) = 195. Para cada uma há 4! ordens e 5 códigos: 195 × 24 × 5 = 23400."
   }
 ]
