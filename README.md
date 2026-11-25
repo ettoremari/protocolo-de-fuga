@@ -1,24 +1,53 @@
 # PROTOCOLO DE FUGA — Instalação Ômega
 
-Versão **2.4-preview** — branch `feat/salas-cenograficas`, jogo de escape room narrativo em Godot 4.7.2.
+Versão **2.4-preview**, integrada à branch `main` (commit `84e95aa`). Jogo de escape room narrativo desenvolvido em Godot 4.7.2.
 
-## Downloads
+## Downloads e instalação
 
-Os links abaixo continuam apontando para a release estável assinada **v2.3**. Os builds de prévia desta branch são entregues separadamente; o APK debug não substitui uma instalação assinada da v2.3.
-- [APK Android arm64 — v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.3/ProtocoloDeFuga_v2.3.apk)
-- [Executável Windows x86_64 — v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.3/ProtocoloDeFuga_v2.3.exe)
-- [Notas e todos os arquivos da release v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/tag/v2.3)
+### Android — APK arm64 v2.4-preview
 
-## Versão Web/PWA para iPhone
+[Baixar APK Android v2.4-preview](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.4-preview/ProtocoloDeFuga_OMEGA_v2.4_debug.apk)
 
-[Jogue Protocolo de Fuga no Safari](https://ettoremari.github.io/protocolo-de-fuga/). Para instalar na Tela de Início do iPhone:
+1. Baixe o APK em um dispositivo Android arm64.
+2. Abra o arquivo baixado. Se solicitado, permita a instalação de aplicativos para o navegador ou gerenciador de arquivos usado no download.
+3. Confirme **Instalar** e abra o jogo em orientação paisagem.
 
-1. Abra o link no Safari e toque em **Compartilhar**.
+**Atenção:** este é um APK de depuração (debug), assinado com uma chave diferente da release v2.3. Ele não atualiza por cima da versão v2.3 instalada. Para testar a prévia, desinstale a versão anterior antes de instalar este APK; desinstalar pode apagar dados locais do aplicativo. Para atualizar sem desinstalar, é necessário um APK assinado com a chave original da release.
+
+### Windows — EXE x86-64 v2.4-preview
+
+[Baixar executável Windows v2.4-preview](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.4-preview/ProtocoloDeFuga_v2.4.exe)
+
+Baixe o arquivo e abra-o com duplo clique. É um executável para Windows x86-64 e não requer instalador. Como o arquivo não possui assinatura de código, o Windows pode exibir um aviso de editor desconhecido.
+
+### iPhone e iPad — versão Web/PWA
+
+[Jogue Protocolo de Fuga no Safari](https://ettoremari.github.io/protocolo-de-fuga/). Para adicionar à Tela de Início:
+
+1. Abra o link no **Safari** e toque em **Compartilhar**.
 2. Escolha **Adicionar à Tela de Início**.
-3. Se a opção **Abrir como App da Web** aparecer, deixe-a ativada e confirme em **Adicionar**.
-4. Abra o ícone criado na Tela de Início e use o aparelho em paisagem.
+3. Se aparecer **Abrir como App da Web**, mantenha a opção ativada e confirme em **Adicionar**.
+4. Abra o ícone criado e use o aparelho em paisagem.
 
-O manifesto do PWA declara modo standalone e orientação paisagem. O export Web/PWA atualizado nesta branch ocupa aproximadamente 61 MiB e requer conexão na primeira carga. Para compatibilidade/performance nos navegadores, esta versão Web pula os dois vídeos Ogg de introdução. A página publicada e os arquivos principais foram verificados, mas ainda não houve teste em um iPhone físico.
+O PWA declara modo standalone e orientação paisagem. A primeira carga requer conexão e pode levar mais tempo por causa do tamanho dos recursos. Para compatibilidade e desempenho nos navegadores, a versão Web omite os dois vídeos Ogg de introdução. O comportamento de rotação pode variar conforme a versão do iOS/Safari; não foi testado em um iPhone físico.
+
+### Rodar o projeto no Godot
+
+1. Instale o **Godot 4.7.2**.
+2. Clone ou baixe este repositório e importe `project.godot` no Godot.
+3. Selecione `main.tscn` como cena principal e pressione **Executar Projeto (F6/F5)**.
+4. Para exportar, configure os templates de exportação e os SDKs necessários à plataforma. O preset Android gera `build/ProtocoloDeFuga_OMEGA_v2.4.apk` (arm64).
+
+O repositório não contém chave privada nem credenciais de assinatura Android. Uma release Android assinada para atualização in-place requer a chave original da release correspondente.
+
+### Release estável anterior
+
+A versão **v2.3** permanece disponível como release estável assinada. Ela é separada da prévia 2.4:
+
+- [APK Android arm64 — v2.3 estável](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.3/ProtocoloDeFuga_v2.3.apk)
+- [Executável Windows x86-64 — v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/download/v2.3/ProtocoloDeFuga_v2.3.exe)
+- [Notas e arquivos da release v2.3](https://github.com/ettoremari/protocolo-de-fuga/releases/tag/v2.3)
+- [Todos os arquivos da prévia v2.4](https://github.com/ettoremari/protocolo-de-fuga/releases/tag/v2.4-preview)
 
 ## Premissa
 
@@ -48,14 +77,6 @@ A música atual **Tense Future Loop**, de gmason, permanece na tela inicial. Dur
 As quatro faixas dos setores são do pacote [Dark Sci-Fi Audio Pack](https://opengameart.org/content/dark-sci-fi-audio-pack), de **SRG774**, publicado sob **CC0 1.0**. O crédito é voluntário, mas registrado aqui em agradecimento. A licença permite copiar, adaptar, distribuir e usar comercialmente sem exigir atribuição.
 
 O player aplica compensação de ganho individual medida para cada faixa, aproximando o loudness de reprodução a **−21 LUFS** e mantendo os picos previstos abaixo de **−2 dBTP**. Os arquivos originais são preservados; o ganho geral do player passou de −11 dB para −3 dB.
-
-## Executar
-
-1. Abra esta pasta no Godot **4.7.2**.
-2. Importe `project.godot` e execute `main.tscn`.
-3. O preset Android exporta para `build/ProtocoloDeFuga_OMEGA_v2.4.apk` (arm64).
-
-Para exportar um APK de lançamento em outro computador, configure o Android SDK, o JDK e uma chave de assinatura própria no preset Android. O pacote-fonte não inclui a chave privada nem as credenciais usadas para assinar o APK entregue.
 
 ## Controles
 
